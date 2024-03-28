@@ -1,5 +1,69 @@
+import { Button, Label, TextInput } from 'flowbite-react'
+
 function AddStaff() {
-  return <div></div>
+  return (
+    <div className='mt-[68px] h-full'>
+      <div className='text-center mt-20 mb-10'>
+        <h1 className='mb-4 text-5xl font-extrabold text-gray-900'>
+          <span className='text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400'>
+            Thêm nhân viên
+          </span>
+        </h1>
+        <p className='text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400'>
+          Điền thông tin vào form dưới đây để thêm nhân viên mới
+        </p>
+      </div>
+      <form className='grid grid-cols-2 gap-10 mx-10'>
+        <div>
+          <div className='mb-5'>
+            <div className='mb-2 block'>
+              <Label htmlFor='name' value='Tên khách hàng' />
+            </div>
+            <TextInput id='name' type='text' placeholder='Vui lòng nhập tên khách hàng' />
+          </div>
+          <div className='mb-5'>
+            <div className='mb-2 block'>
+              <Label htmlFor='email' value='Email khách hàng' />
+            </div>
+            <TextInput id='email' type='email' placeholder='Vui lòng nhập email khách hàng' />
+          </div>
+          <div className='mb-5'>
+            <div className='mb-2 block'>
+              <Label htmlFor='phone' value='SĐT khách hàng' />
+            </div>
+            <TextInput id='phone' type='text' placeholder='Vui lòng nhập SĐT khách hàng' />
+          </div>
+        </div>
+        <div>
+          <div className='mb-5'>
+            <div className='mb-2 block'>
+              <Label htmlFor='address' value='Địa chỉ khách hàng' />
+            </div>
+            <TextInput id='address' type='text' placeholder='Vui lòng nhập dịa chỉ khách hàng' />
+          </div>
+          <div className='mb-5'>
+            <div className='mb-2 block'>
+              <Label htmlFor='password' value='Mật khẩu' />
+            </div>
+            <TextInput id='password' type='password' placeholder='Mật khẩu' />
+          </div>
+          <div className='mb-5'>
+            <div className='mb-2 block'>
+              <Label htmlFor='confirm-password' value='Xác nhận mật khẩu' />
+            </div>
+            <TextInput id='confirm-password' type='password' placeholder='Xác nhận mật khẩu' />
+          </div>
+        </div>
+        <div className='col-span-2'>
+          <div className='flex justify-center'>
+            <Button className='mt-10' gradientMonochrome='cyan'>
+              Thêm nhân viên
+            </Button>
+          </div>
+        </div>
+      </form>
+    </div>
+  )
 }
 
 export default AddStaff

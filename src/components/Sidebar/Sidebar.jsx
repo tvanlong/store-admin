@@ -10,7 +10,6 @@ import {
   HiOutlineMinusSm,
   HiOutlinePlusSm
 } from 'react-icons/hi'
-import { Link } from 'react-router-dom'
 import { twMerge } from 'tailwind-merge'
 import { path } from '~/constants/path'
 import { sidebarTheme } from '~/utils/theme'
@@ -30,8 +29,8 @@ function Sidebar() {
       </SideBar.Logo>
       <SideBar.Items>
         <SideBar.ItemGroup>
-          <SideBar.Item icon={HiChartPie}>
-            <Link to={path.dashboard}>Bảng tin</Link>
+          <SideBar.Item href={path.dashboard} icon={HiChartPie}>
+            Bảng tin
           </SideBar.Item>
           <SideBar.Collapse
             icon={HiMenu}
@@ -42,18 +41,10 @@ function Sidebar() {
               return <IconComponent aria-hidden className={twMerge(theme.label.icon.open[open ? 'on' : 'off'])} />
             }}
           >
-            <SideBar.Item>
-              <Link to={path.category}>Tất cả danh mục</Link>
-            </SideBar.Item>
-            <SideBar.Item>
-              <Link to={path.addCategory}>Thêm danh mục mới</Link>
-            </SideBar.Item>
-            <SideBar.Item>
-              <Link to={path.subcategory}>Tất cả danh mục nhỏ</Link>
-            </SideBar.Item>
-            <SideBar.Item>
-              <Link to={path.addSubcategory}>Thêm danh mục nhỏ mới</Link>
-            </SideBar.Item>
+            <SideBar.Item href={path.category}>Tất cả danh mục</SideBar.Item>
+            <SideBar.Item href={path.addCategory}>Thêm danh mục mới</SideBar.Item>
+            <SideBar.Item href={path.subcategory}>Tất cả danh mục nhỏ</SideBar.Item>
+            <SideBar.Item href={path.addSubcategory}>Thêm danh mục nhỏ mới</SideBar.Item>
           </SideBar.Collapse>
           <SideBar.Collapse
             icon={HiDesktopComputer}
@@ -64,12 +55,8 @@ function Sidebar() {
               return <IconComponent aria-hidden className={twMerge(theme.label.icon.open[open ? 'on' : 'off'])} />
             }}
           >
-            <SideBar.Item>
-              <Link to={path.product}>Tất cả sản phẩm</Link>
-            </SideBar.Item>
-            <SideBar.Item>
-              <Link to={path.addProduct}>Thêm sản phẩm mới</Link>
-            </SideBar.Item>
+            <SideBar.Item href={path.product}>Tất cả sản phẩm</SideBar.Item>
+            <SideBar.Item href={path.addProduct}>Thêm sản phẩm mới</SideBar.Item>
           </SideBar.Collapse>
           <SideBar.Collapse
             icon={HiUser}
@@ -79,21 +66,19 @@ function Sidebar() {
               return <IconComponent aria-hidden className={twMerge(theme.label.icon.open[open ? 'on' : 'off'])} />
             }}
           >
-            <SideBar.Item>
-              <Link to={path.customer}>Tất cả khách hàng</Link>
-            </SideBar.Item>
-            <SideBar.Item>
-              <Link to={path.staff}>Tất cả nhân viên</Link>
-            </SideBar.Item>
-            <SideBar.Item>
-              <Link to={path.addStaff}>Thêm nhân viên mới</Link>
-            </SideBar.Item>
+            <SideBar.Item href={path.customer}>Tất cả khách hàng</SideBar.Item>
+            <SideBar.Item href={path.staff}>Tất cả nhân viên</SideBar.Item>
+            <SideBar.Item href={path.addStaff}>Thêm nhân viên mới</SideBar.Item>
           </SideBar.Collapse>
-          <SideBar.Item icon={HiShoppingBag}>
-            <Link to={path.order}>Đơn hàng</Link>
+          <SideBar.Item href={path.order} icon={HiShoppingBag}>
+            Đơn hàng
           </SideBar.Item>
-          <SideBar.Item icon={HiArrowSmRight}>Đăng nhập</SideBar.Item>
-          <SideBar.Item icon={HiArrowSmLeft}>Đăng xuất</SideBar.Item>
+          <SideBar.Item href={path.login} icon={HiArrowSmRight}>
+            Đăng nhập
+          </SideBar.Item>
+          <SideBar.Item href={path.logout} icon={HiArrowSmLeft}>
+            Đăng xuất
+          </SideBar.Item>
         </SideBar.ItemGroup>
       </SideBar.Items>
     </SideBar>

@@ -12,7 +12,9 @@ function Header() {
       case path.dashboard:
         return (
           <Breadcrumb aria-label='Default breadcrumb example'>
-            <Breadcrumb.Item icon={HiChartPie}>Dashboard</Breadcrumb.Item>
+            <Breadcrumb.Item href={path.dashboard} icon={HiChartPie}>
+              Dashboard
+            </Breadcrumb.Item>
           </Breadcrumb>
         )
       case path.category:
@@ -54,65 +56,85 @@ function Header() {
       case path.addCategory:
         return (
           <Breadcrumb aria-label='Default breadcrumb example'>
-            <Breadcrumb.Item icon={HiMenu}>Category</Breadcrumb.Item>
+            <Breadcrumb.Item href={path.category} icon={HiMenu}>
+              Category
+            </Breadcrumb.Item>
             <Breadcrumb.Item>Add</Breadcrumb.Item>
           </Breadcrumb>
         )
       case path.addSubcategory:
         return (
           <Breadcrumb aria-label='Default breadcrumb example'>
-            <Breadcrumb.Item icon={HiMenu}>Subcategory</Breadcrumb.Item>
+            <Breadcrumb.Item href={path.subcategory} icon={HiMenu}>
+              Subcategory
+            </Breadcrumb.Item>
             <Breadcrumb.Item>Add</Breadcrumb.Item>
           </Breadcrumb>
         )
       case path.addProduct:
         return (
           <Breadcrumb aria-label='Default breadcrumb example'>
-            <Breadcrumb.Item icon={HiDesktopComputer}>Product</Breadcrumb.Item>
+            <Breadcrumb.Item href={path.product} icon={HiDesktopComputer}>
+              Product
+            </Breadcrumb.Item>
             <Breadcrumb.Item>Add</Breadcrumb.Item>
           </Breadcrumb>
         )
       case path.addStaff:
         return (
           <Breadcrumb aria-label='Default breadcrumb example'>
-            <Breadcrumb.Item icon={HiUser}>Staff</Breadcrumb.Item>
+            <Breadcrumb.Item href={path.staff} icon={HiUser}>
+              Staff
+            </Breadcrumb.Item>
             <Breadcrumb.Item>Add</Breadcrumb.Item>
-          </Breadcrumb>
-        )
-      case path.updateCategory:
-        return (
-          <Breadcrumb aria-label='Default breadcrumb example'>
-            <Breadcrumb.Item icon={HiMenu}>Category</Breadcrumb.Item>
-            <Breadcrumb.Item>Update</Breadcrumb.Item>
-          </Breadcrumb>
-        )
-      case path.updateSubcategory:
-        return (
-          <Breadcrumb aria-label='Default breadcrumb example'>
-            <Breadcrumb.Item icon={HiMenu}>Subcategory</Breadcrumb.Item>
-            <Breadcrumb.Item>Update</Breadcrumb.Item>
-          </Breadcrumb>
-        )
-      case path.updateProduct:
-        return (
-          <Breadcrumb aria-label='Default breadcrumb example'>
-            <Breadcrumb.Item icon={HiDesktopComputer}>Product</Breadcrumb.Item>
-            <Breadcrumb.Item>Update</Breadcrumb.Item>
-          </Breadcrumb>
-        )
-      case path.updateStaff:
-        return (
-          <Breadcrumb aria-label='Default breadcrumb example'>
-            <Breadcrumb.Item icon={HiUser}>Staff</Breadcrumb.Item>
-            <Breadcrumb.Item>Update</Breadcrumb.Item>
           </Breadcrumb>
         )
     }
   }
 
+  const renderBreadcrumbUpdate = () => {
+    if (pathname.includes('update-category')) {
+      return (
+        <Breadcrumb aria-label='Default breadcrumb example'>
+          <Breadcrumb.Item href={path.category} icon={HiMenu}>
+            Category
+          </Breadcrumb.Item>
+          <Breadcrumb.Item>Update</Breadcrumb.Item>
+        </Breadcrumb>
+      )
+    } else if (pathname.includes('update-subcategory')) {
+      return (
+        <Breadcrumb aria-label='Default breadcrumb example'>
+          <Breadcrumb.Item href={path.subcategory} icon={HiMenu}>
+            Subcategory
+          </Breadcrumb.Item>
+          <Breadcrumb.Item>Update</Breadcrumb.Item>
+        </Breadcrumb>
+      )
+    } else if (pathname.includes('update-product')) {
+      return (
+        <Breadcrumb aria-label='Default breadcrumb example'>
+          <Breadcrumb.Item href={path.product} icon={HiDesktopComputer}>
+            Product
+          </Breadcrumb.Item>
+          <Breadcrumb.Item>Update</Breadcrumb.Item>
+        </Breadcrumb>
+      )
+    } else if (pathname.includes('update-staff')) {
+      return (
+        <Breadcrumb aria-label='Default breadcrumb example'>
+          <Breadcrumb.Item href={path.staff} icon={HiUser}>
+            Staff
+          </Breadcrumb.Item>
+          <Breadcrumb.Item>Update</Breadcrumb.Item>
+        </Breadcrumb>
+      )
+    }
+  }
+
   return (
     <Navbar className='fixed left-64 right-0 top-0 border-b border-b-gray-200' fluid>
-      <Breadcrumb aria-label='Default breadcrumb example'>{renderBreadcrumb()}</Breadcrumb>
+      {pathname.includes('update') ? renderBreadcrumbUpdate() : renderBreadcrumb()}
       <Avatar
         img='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqWfMEUxGoOF_p2t5zw6UWg0jO3fuh3LTfz_MZ-COXOQ&s'
         rounded

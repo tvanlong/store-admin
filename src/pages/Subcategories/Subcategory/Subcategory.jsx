@@ -18,6 +18,7 @@ function Subcategory() {
         <Table theme={tableTheme}>
           <Table.Head>
             <Table.HeadCell>Tên danh mục nhỏ</Table.HeadCell>
+            <Table.HeadCell>Thuộc danh mục</Table.HeadCell>
             <Table.HeadCell>Số lượng sản phẩm</Table.HeadCell>
             <Table.HeadCell>
               <span className='sr-only'>Edit</span>
@@ -27,6 +28,7 @@ function Subcategory() {
             {Array.from({ length: 10 }).map((_, index) => (
               <Table.Row key={index} className='bg-white'>
                 <Table.Cell className='whitespace-nowrap font-medium text-gray-900'>Dell Inspiron</Table.Cell>
+                <Table.Cell className='whitespace-nowrap font-medium text-gray-900'>Laptop Dell</Table.Cell>
                 <Table.Cell>04</Table.Cell>
                 <Table.Cell className='flex gap-5'>
                   <a className='font-medium text-cyan-600 hover:underline'>Cập nhật</a>
