@@ -1,4 +1,5 @@
 import { Button, Label, TextInput } from 'flowbite-react'
+import { textInputTheme } from '~/utils/theme'
 
 function AddCategory() {
   return (
@@ -9,7 +10,7 @@ function AddCategory() {
             Thêm danh mục sản phẩm
           </span>
         </h1>
-        <p className='text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400'>
+        <p className='text-lg font-normal text-gray-500 lg:text-xl'>
           Điền thông tin vào form dưới đây để thêm danh mục sản phẩm mới
         </p>
       </div>
@@ -17,7 +18,7 @@ function AddCategory() {
         <div className='mb-2 block'>
           <Label htmlFor='name' value='Tên danh mục sản phẩm' />
         </div>
-        <TextInput id='name' type='text' placeholder='Vui lòng nhập tên danh mục sản phẩm' />
+        <TextInput theme={textInputTheme} id='name' type='text' placeholder='Vui lòng nhập tên danh mục sản phẩm' />
         <div className='flex justify-center'>
           <Button className='mt-10' gradientMonochrome='cyan'>
             Thêm danh mục

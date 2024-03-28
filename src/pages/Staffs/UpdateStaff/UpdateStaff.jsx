@@ -1,4 +1,5 @@
 import { Button, Label, TextInput } from 'flowbite-react'
+import { textInputTheme } from '~/utils/theme'
 
 function UpdateStaff() {
   return (
@@ -9,7 +10,7 @@ function UpdateStaff() {
             Cập nhật nhân viên
           </span>
         </h1>
-        <p className='text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400'>
+        <p className='text-lg font-normal text-gray-500 lg:text-xl'>
           Điền thông tin vào form dưới đây để cập nhật nhân viên
         </p>
       </div>
@@ -19,19 +20,19 @@ function UpdateStaff() {
             <div className='mb-2 block'>
               <Label htmlFor='name' value='Tên khách hàng' />
             </div>
-            <TextInput id='name' type='text' placeholder='Vui lòng nhập tên khách hàng' />
+            <TextInput theme={textInputTheme} id='name' type='text' placeholder='Vui lòng nhập tên khách hàng' />
           </div>
           <div className='mb-5'>
             <div className='mb-2 block'>
               <Label htmlFor='email' value='Email khách hàng' />
             </div>
-            <TextInput id='email' type='email' placeholder='Vui lòng nhập email khách hàng' />
+            <TextInput theme={textInputTheme} id='email' type='email' placeholder='Vui lòng nhập email khách hàng' />
           </div>
           <div className='mb-5'>
             <div className='mb-2 block'>
               <Label htmlFor='phone' value='SĐT khách hàng' />
             </div>
-            <TextInput id='phone' type='text' placeholder='Vui lòng nhập SĐT khách hàng' />
+            <TextInput theme={textInputTheme} id='phone' type='text' placeholder='Vui lòng nhập SĐT khách hàng' />
           </div>
         </div>
         <div>
@@ -39,19 +40,19 @@ function UpdateStaff() {
             <div className='mb-2 block'>
               <Label htmlFor='address' value='Địa chỉ khách hàng' />
             </div>
-            <TextInput id='address' type='text' placeholder='Vui lòng nhập dịa chỉ khách hàng' />
+            <TextInput theme={textInputTheme} id='address' type='text' placeholder='Vui lòng nhập dịa chỉ khách hàng' />
           </div>
           <div className='mb-5'>
             <div className='mb-2 block'>
               <Label htmlFor='password' value='Mật khẩu' />
             </div>
-            <TextInput id='password' type='password' placeholder='Mật khẩu' />
+            <TextInput theme={textInputTheme} id='password' type='password' placeholder='Mật khẩu' />
           </div>
           <div className='mb-5'>
             <div className='mb-2 block'>
               <Label htmlFor='confirm-password' value='Xác nhận mật khẩu' />
             </div>
-            <TextInput id='confirm-password' type='password' placeholder='Xác nhận mật khẩu' />
+            <TextInput theme={textInputTheme} id='confirm-password' type='password' placeholder='Xác nhận mật khẩu' />
           </div>
         </div>
         <div className='col-span-2'>

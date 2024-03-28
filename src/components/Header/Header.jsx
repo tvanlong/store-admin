@@ -12,81 +12,79 @@ function Header() {
       case path.dashboard:
         return (
           <Breadcrumb aria-label='Default breadcrumb example'>
-            <Breadcrumb.Item href={path.dashboard} icon={HiChartPie}>
-              Dashboard
-            </Breadcrumb.Item>
+            <Breadcrumb.Item icon={HiChartPie}>Bản điều khiển</Breadcrumb.Item>
           </Breadcrumb>
         )
       case path.category:
         return (
           <Breadcrumb aria-label='Default breadcrumb example'>
-            <Breadcrumb.Item icon={HiMenu}>Category</Breadcrumb.Item>
+            <Breadcrumb.Item icon={HiMenu}>Danh mục sản phẩm</Breadcrumb.Item>
           </Breadcrumb>
         )
       case path.subcategory:
         return (
           <Breadcrumb aria-label='Default breadcrumb example'>
-            <Breadcrumb.Item icon={HiMenu}>Subcategory</Breadcrumb.Item>
+            <Breadcrumb.Item icon={HiMenu}>Danh mục sản phẩm nhỏ</Breadcrumb.Item>
           </Breadcrumb>
         )
       case path.product:
         return (
           <Breadcrumb aria-label='Default breadcrumb example'>
-            <Breadcrumb.Item icon={HiDesktopComputer}>Product</Breadcrumb.Item>
+            <Breadcrumb.Item icon={HiDesktopComputer}>Sản phẩm</Breadcrumb.Item>
           </Breadcrumb>
         )
       case path.customer:
         return (
           <Breadcrumb aria-label='Default breadcrumb example'>
-            <Breadcrumb.Item icon={HiUser}>Customer</Breadcrumb.Item>
+            <Breadcrumb.Item icon={HiUser}>Khách hàng</Breadcrumb.Item>
           </Breadcrumb>
         )
       case path.staff:
         return (
           <Breadcrumb aria-label='Default breadcrumb example'>
-            <Breadcrumb.Item icon={HiUser}>Staff</Breadcrumb.Item>
+            <Breadcrumb.Item icon={HiUser}>Nhân viên</Breadcrumb.Item>
           </Breadcrumb>
         )
       case path.order:
         return (
           <Breadcrumb aria-label='Default breadcrumb example'>
-            <Breadcrumb.Item icon={HiShoppingBag}>Order</Breadcrumb.Item>
+            <Breadcrumb.Item icon={HiShoppingBag}>Đơn hàng</Breadcrumb.Item>
           </Breadcrumb>
         )
       case path.addCategory:
         return (
           <Breadcrumb aria-label='Default breadcrumb example'>
             <Breadcrumb.Item href={path.category} icon={HiMenu}>
-              Category
+              Danh mục sản phẩm
             </Breadcrumb.Item>
-            <Breadcrumb.Item>Add</Breadcrumb.Item>
+            <Breadcrumb.Item>Thêm mới</Breadcrumb.Item>
           </Breadcrumb>
         )
       case path.addSubcategory:
         return (
           <Breadcrumb aria-label='Default breadcrumb example'>
             <Breadcrumb.Item href={path.subcategory} icon={HiMenu}>
-              Subcategory
+              Danh mục sản phẩm nhỏ
             </Breadcrumb.Item>
-            <Breadcrumb.Item>Add</Breadcrumb.Item>
+            <Breadcrumb.Item>Thêm mới</Breadcrumb.Item>
           </Breadcrumb>
         )
       case path.addProduct:
         return (
           <Breadcrumb aria-label='Default breadcrumb example'>
             <Breadcrumb.Item href={path.product} icon={HiDesktopComputer}>
-              Product
+              Sản phẩm
             </Breadcrumb.Item>
-            <Breadcrumb.Item>Add</Breadcrumb.Item>
+            <Breadcrumb.Item>Thêm mới</Breadcrumb.Item>
           </Breadcrumb>
         )
       case path.addStaff:
         return (
           <Breadcrumb aria-label='Default breadcrumb example'>
             <Breadcrumb.Item href={path.staff} icon={HiUser}>
-              Staff
+              Nhân viên
             </Breadcrumb.Item>
-            <Breadcrumb.Item>Add</Breadcrumb.Item>
+            <Breadcrumb.Item>Thêm mới</Breadcrumb.Item>
           </Breadcrumb>
         )
     }

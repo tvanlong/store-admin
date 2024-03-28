@@ -10,7 +10,7 @@ function Staff() {
             Danh sách nhân viên
           </span>
         </h1>
-        <p className='text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400'>
+        <p className='text-lg font-normal text-gray-500 lg:text-xl'>
           Danh sách các nhân viên đã đăng ký tài khoản trên hệ thống
         </p>
       </div>

@@ -155,3 +155,15 @@ export const modalTheme = {
     popup: 'border-t'
   }
 }
+
+export const fileInputTheme = {
+  field: {
+    base: 'w-full'
+  }
+}
+
+export const textInputTheme = {
+  field: {
+    base: 'w-full'
+  }
+}

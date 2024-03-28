@@ -10,7 +10,7 @@ function Customer() {
             Danh sách khách hàng
           </span>
         </h1>
-        <p className='text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400'>
+        <p className='text-lg font-normal text-gray-500 lg:text-xl'>
           Danh sách các khách hàng đã đăng ký tài khoản trên hệ thống
         </p>
       </div>

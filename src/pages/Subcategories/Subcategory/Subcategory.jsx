@@ -10,7 +10,7 @@ function Subcategory() {
             Danh mục sản phẩm nhỏ
           </span>
         </h1>
-        <p className='text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400'>
+        <p className='text-lg font-normal text-gray-500 lg:text-xl'>
           Danh sách các danh mục sản phẩm nhỏ hiện có trong cửa hàng được hiển thị dưới đây
         </p>
       </div>

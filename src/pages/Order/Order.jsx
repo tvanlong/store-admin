@@ -13,7 +13,7 @@ function Order() {
             Danh sách đơn hàng
           </span>
         </h1>
-        <p className='text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400'>
+        <p className='text-lg font-normal text-gray-500 lg:text-xl'>
           Danh sách các đơn hàng đã được đặt hàng trên hệ thống
         </p>
       </div>

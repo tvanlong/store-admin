@@ -30,11 +30,7 @@ function Routes() {
     },
     {
       path: path.login,
-      element: (
-        <MainLayout>
-          <Login />
-        </MainLayout>
-      )
+      element: <Login />
     },
     {
       path: path.category,

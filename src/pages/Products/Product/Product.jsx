@@ -13,7 +13,7 @@ function Product() {
             Danh sách sản phẩm
           </span>
         </h1>
-        <p className='text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400'>
+        <p className='text-lg font-normal text-gray-500 lg:text-xl'>
           Danh sách các sản phẩm hiện có trong cửa hàng được hiển thị dưới đây
         </p>
       </div>

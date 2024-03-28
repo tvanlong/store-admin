@@ -1,4 +1,5 @@
 import { Button, Label, Select, TextInput } from 'flowbite-react'
+import { textInputTheme } from '~/utils/theme'
 
 function UpdateSubcategory() {
   return (
@@ -9,7 +10,7 @@ function UpdateSubcategory() {
             Cập nhật danh mục sản phẩm nhỏ
           </span>
         </h1>
-        <p className='text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400'>
+        <p className='text-lg font-normal text-gray-500 lg:text-xl'>
           Điền thông tin vào form dưới đây để cập nhật danh mục sản phẩm nhỏ
         </p>
       </div>
@@ -18,7 +19,7 @@ function UpdateSubcategory() {
           <div className='mb-2 block'>
             <Label htmlFor='category-name' value='Thuộc danh mục sản phẩm' />
           </div>
-          <Select id='category-name' required>
+          <Select theme={textInputTheme} id='category-name' required>
             <option>Laptop Dell</option>
             <option>Laptop HP</option>
           </Select>
@@ -27,7 +28,7 @@ function UpdateSubcategory() {
           <div className='mb-2 block'>
             <Label htmlFor='name' value='Tên danh mục sản phẩm' />
           </div>
-          <TextInput id='name' type='text' placeholder='Vui lòng nhập tên danh mục sản phẩm' />
+          <TextInput theme={textInputTheme} id='name' type='text' placeholder='Vui lòng nhập tên danh mục sản phẩm' />
         </div>
         <div className='flex justify-center'>
           <Button className='mt-10' gradientMonochrome='cyan'>
