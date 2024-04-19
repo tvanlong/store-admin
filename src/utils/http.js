@@ -1,4 +1,5 @@
 import axios from 'axios'
+import config from '~/constants/config'
 
 /*
 - Áp dụng Singleton Pattern để tạo một instance duy nhất của Http class
@@ -9,7 +10,7 @@ class Http {
   instance
   constructor() {
     this.instance = axios.create({
-      baseURL: 'http://localhost:3000',
+      baseURL: config.baseURL,
       timeout: 10000,
       headers: {
         'Content-Type': 'application/json'
