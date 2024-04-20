@@ -1,8 +1,11 @@
-import Cookies from 'js-cookie'
+export const setUserDataIntoLocalStorage = (data) => {
+  localStorage.setItem('admin', JSON.stringify(data))
+}
 
-export const getAccessTokenFromCookie = () => Cookies.get('access_token')
+export const getUserDataFromLocalStorage = () => {
+  return JSON.parse(localStorage.getItem('admin'))
+}
 
-export const getProfileFromCookie = () => {
-  const profile = Cookies.get('user')
-  return profile ? JSON.parse(profile) : {}
+export const removeUserDataFromLocalStorage = () => {
+  localStorage.removeItem('admin')
 }

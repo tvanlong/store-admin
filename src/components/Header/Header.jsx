@@ -1,10 +1,13 @@
 /* eslint-disable indent */
 import { Avatar, Breadcrumb, Navbar } from 'flowbite-react'
+import { useContext } from 'react'
 import { HiChartPie, HiMenu, HiUser, HiDesktopComputer, HiShoppingBag } from 'react-icons/hi'
 import { useLocation } from 'react-router-dom'
 import { path } from '~/constants/path'
+import { AppContext } from '~/context/app.context'
 
 function Header() {
+  const { profile } = useContext(AppContext)
   const { pathname } = useLocation()
 
   const renderBreadcrumb = () => {
@@ -12,7 +15,7 @@ function Header() {
       case path.dashboard:
         return (
           <Breadcrumb aria-label='Default breadcrumb example'>
-            <Breadcrumb.Item icon={HiChartPie}>Bản điều khiển</Breadcrumb.Item>
+            <Breadcrumb.Item icon={HiChartPie}>Bảng điều khiển</Breadcrumb.Item>
           </Breadcrumb>
         )
       case path.category:
@@ -138,8 +141,8 @@ function Header() {
         rounded
       >
         <div className='space-y-1 font-medium'>
-          <div>Jese Leos</div>
-          <div className='text-sm text-gray-500'>jese@gmail.com</div>
+          <div>{profile.name}</div>
+          <div className='text-sm text-gray-500'>{profile.email}</div>
         </div>
       </Avatar>
     </Navbar>

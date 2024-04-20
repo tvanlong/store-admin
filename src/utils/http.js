@@ -1,6 +1,6 @@
 import axios from 'axios'
 import config from '~/constants/config'
-import { getAccessTokenFromCookie } from './auth'
+import { removeUserDataFromLocalStorage, setUserDataIntoLocalStorage } from './auth'
 
 /*
 - Áp dụng Singleton Pattern để tạo một instance duy nhất của Http class
@@ -9,9 +9,7 @@ import { getAccessTokenFromCookie } from './auth'
 
 class Http {
   instance
-  #accessToken
   constructor() {
-    this.#accessToken = getAccessTokenFromCookie()
     this.instance = axios.create({
       baseURL: config.baseURL,
       timeout: 10000,
@@ -23,10 +21,6 @@ class Http {
     // Add a request interceptor
     this.instance.interceptors.request.use(
       (config) => {
-        if (this.#accessToken && config.headers) {
-          config.headers.Authorization = `Bearer ${this.#accessToken}`
-          return config
-        }
         return config
       },
       (error) => {
@@ -39,37 +33,37 @@ class Http {
       (response) => {
         const { url } = response.config
         if (url.includes('signin')) {
-          this.#accessToken = response.data.access_token
+          const userAdmin = response.data.data
+          setUserDataIntoLocalStorage(userAdmin)
         } else if (url.includes('signout')) {
-          this.#accessToken = ''
+          removeUserDataFromLocalStorage()
         }
         return response
       },
       async (error) => {
         const originalRequest = error.config
-        if (error.response.status === 500 && error.response.data.message === 'jwt expired' && !originalRequest._retry) {
-          originalRequest._retry = true
-          const access_token = await this.#handleRefreshToken()
-          originalRequest.headers.Authorization = `Bearer ${access_token}`
+        const { url } = originalRequest
+        if (
+          // Nếu lỗi là do token hết hạn và không phải request gọi API refresh token thì thực hiện refresh token
+          error.response.status === 500 &&
+          error.response.data.message === 'jwt expired' &&
+          !url.includes('refresh-token')
+        ) {
+          const response = await this.#handleRefreshToken()
+          const newAccessToken = response.data.access_token
+          // Cập nhật access token trong request gốc và thực hiện lại request
+          originalRequest.headers.Authorization = `Bearer ${newAccessToken}`
           return this.instance(originalRequest)
         }
+        // Nếu lỗi không phải do token hết hạn thì xóa thông tin user trong localStorage (set isAuthenticated = false)
+        removeUserDataFromLocalStorage()
         return Promise.reject(error)
       }
     )
   }
 
   #handleRefreshToken = async () => {
-    return this.instance
-      .post('/api/auth/refresh-token')
-      .then((response) => {
-        const { access_token } = response.data
-        this.#accessToken = access_token
-        return access_token
-      })
-      .catch((error) => {
-        this.#accessToken = ''
-        throw error
-      })
+    return this.instance.post('/api/auth/refresh-token')
   }
 }
 

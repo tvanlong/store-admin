@@ -1,4 +1,43 @@
+import { useMutation } from '@tanstack/react-query'
+import { useForm } from 'react-hook-form'
+import { signIn } from '~/apis/auth.api'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { signInSchema } from '~/schemas/authSchema'
+import { useContext } from 'react'
+import { AppContext } from '~/context/app.context'
+import { useNavigate } from 'react-router-dom'
+import { toast } from 'sonner'
+
 function Login() {
+  const { setIsAuthenticated, setProfile } = useContext(AppContext)
+  const navigate = useNavigate()
+  const { register, handleSubmit, setValue } = useForm({
+    defaultValues: {
+      email: '',
+      password: ''
+    },
+    resolver: yupResolver(signInSchema)
+  })
+
+  const signInMutation = useMutation({
+    mutationFn: (data) => signIn(data)
+  })
+
+  const onSubmit = handleSubmit((data) => {
+    signInMutation.mutate(data, {
+      onSuccess: (data) => {
+        setProfile(data.data.data)
+        setIsAuthenticated(true)
+        navigate('/')
+        toast.success('Đăng nhập thành công')
+      }
+    })
+  })
+
+  const onChange = (e) => {
+    setValue(e.target.name, e.target.value)
+  }
+
   return (
     <div className='flex items-center min-h-screen p-4 bg-gray-100 lg:justify-center'>
       <div className='flex flex-col overflow-hidden bg-white rounded-md shadow-lg max md:flex-row md:flex-1 lg:max-w-screen-md'>
@@ -16,7 +55,7 @@ function Login() {
         </div>
         <div className='p-5 bg-white md:flex-1'>
           <h3 className='my-4 text-2xl font-semibold text-gray-700'>Hãy nhập thông tin tài khoản</h3>
-          <form action='#' className='flex flex-col space-y-5'>
+          <form className='flex flex-col space-y-5' onSubmit={onSubmit}>
             <div className='flex flex-col space-y-1'>
               <label htmlFor='email' className='text-sm font-semibold text-gray-500'>
                 Email
@@ -26,6 +65,8 @@ function Login() {
                 id='email'
                 autoFocus
                 className='px-4 py-2 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200'
+                onChange={(e) => onChange(e)}
+                {...register('email')}
               />
             </div>
             <div className='flex flex-col space-y-1'>
@@ -41,6 +82,8 @@ function Login() {
                 type='password'
                 id='password'
                 className='px-4 py-2 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200'
+                onChange={(e) => onChange(e)}
+                {...register('password')}
               />
             </div>
             <div className='flex items-center space-x-2'>

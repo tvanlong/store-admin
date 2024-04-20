@@ -33,7 +33,7 @@ function RejectedRoute() {
 }
 
 function Routes() {
-  return useRoutes([
+  const element = useRoutes([
     {
       path: '',
       element: <ProtectedRoute />,
@@ -172,6 +172,8 @@ function Routes() {
       ]
     }
   ])
+
+  return element
 }
 
 export default Routes

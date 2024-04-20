@@ -1,10 +1,10 @@
 import { createContext, useState } from 'react'
-import { getAccessTokenFromCookie, getProfileFromCookie } from '~/utils/auth'
+import { getUserDataFromLocalStorage } from '~/utils/auth'
 
 const initalAppContext = {
-  isAuthenticated: Boolean(getAccessTokenFromCookie()),
+  isAuthenticated: Boolean(getUserDataFromLocalStorage()),
   setIsAuthenticated: () => null,
-  profile: getProfileFromCookie(),
+  profile: getUserDataFromLocalStorage(),
   setProfile: () => null,
   reset: () => null
 }
