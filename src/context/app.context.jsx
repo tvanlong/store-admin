@@ -1,8 +1,8 @@
 import { createContext, useState } from 'react'
-import { getUserDataFromLocalStorage } from '~/utils/auth'
+import { getIsSignedIn, getUserDataFromLocalStorage } from '~/utils/auth'
 
 const initalAppContext = {
-  isAuthenticated: Boolean(getUserDataFromLocalStorage()),
+  isAuthenticated: Boolean(getIsSignedIn()),
   setIsAuthenticated: () => null,
   profile: getUserDataFromLocalStorage(),
   setProfile: () => null,

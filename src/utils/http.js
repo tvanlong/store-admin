@@ -1,6 +1,6 @@
 import axios from 'axios'
 import config from '~/constants/config'
-import { removeUserDataFromLocalStorage, setUserDataIntoLocalStorage } from './auth'
+import { removeUserDataFromLocalStorage, setIsSignedIn, setUserDataIntoLocalStorage } from './auth'
 
 /*
 - Áp dụng Singleton Pattern để tạo một instance duy nhất của Http class
@@ -11,9 +11,11 @@ class Http {
   instance
   constructor() {
     this.instance = axios.create({
+      withCredentials: true, // Sử dụng cookie để gửi request qua CORS (Cross-Origin Resource Sharing)
       baseURL: config.baseURL,
       timeout: 10000,
       headers: {
+        'Access-Control-Allow-Origin': '*',
         'Content-Type': 'application/json'
       }
     })
@@ -33,6 +35,7 @@ class Http {
       (response) => {
         const { url } = response.config
         if (url.includes('signin')) {
+          setIsSignedIn(true)
           setUserDataIntoLocalStorage(response.data.data)
         } else if (url.includes('signout')) {
           removeUserDataFromLocalStorage()

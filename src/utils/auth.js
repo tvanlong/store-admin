@@ -9,3 +9,11 @@ export const getUserDataFromLocalStorage = () => {
 export const removeUserDataFromLocalStorage = () => {
   localStorage.removeItem('admin')
 }
+
+export const setIsSignedIn = (value) => {
+  localStorage.setItem('isSignedIn', value)
+}
+
+export const getIsSignedIn = () => {
+  return localStorage.getItem('isSignedIn')
+}
