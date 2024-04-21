@@ -1,9 +1,16 @@
 import { Badge, Button, Modal, Table } from 'flowbite-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { modalTheme, tableTheme } from '~/utils/theme'
 
-function Product() {
+function Product({ setProgress }) {
   const [openModal, setOpenModal] = useState(false)
+
+  useEffect(() => {
+    setProgress(20)
+    setTimeout(() => {
+      setProgress(100)
+    }, 200)
+  }, [setProgress])
 
   return (
     <div className='mt-[68px] h-full'>

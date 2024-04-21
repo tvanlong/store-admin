@@ -23,13 +23,17 @@ function Login() {
     mutationFn: (data) => signIn(data)
   })
 
-  const onSubmit = handleSubmit((data) => {
-    signInMutation.mutate(data, {
-      onSuccess: (data) => {
-        setProfile(data.data.data)
+  const onSubmit = handleSubmit(async (data) => {
+    toast.promise(signInMutation.mutateAsync(data), {
+      loading: 'Đang tiến hành đăng nhập...',
+      success: (data) => {
         setIsAuthenticated(true)
+        setProfile(data.data.data)
         navigate('/')
-        toast.success('Đăng nhập thành công')
+        return 'Đăng nhập thành công'
+      },
+      error: (err) => {
+        return err?.response?.data?.message || 'Đăng nhập thất bại'
       }
     })
   })

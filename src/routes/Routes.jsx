@@ -1,5 +1,6 @@
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { Navigate, Outlet, useRoutes } from 'react-router-dom'
+import LoadingBar from 'react-top-loading-bar'
 import { path } from '~/constants/path'
 import { AppContext } from '~/context/app.context'
 import MainLayout from '~/layouts/MainLayout'
@@ -33,6 +34,7 @@ function RejectedRoute() {
 }
 
 function Routes() {
+  const [progress, setProgress] = useState(0)
   const element = useRoutes([
     {
       path: '',
@@ -42,7 +44,7 @@ function Routes() {
           path: path.dashboard,
           element: (
             <MainLayout>
-              <Dashboard />
+              <Dashboard setProgress={setProgress} />
             </MainLayout>
           )
         },
@@ -51,7 +53,7 @@ function Routes() {
           path: path.category,
           element: (
             <MainLayout>
-              <Category />
+              <Category setProgress={setProgress} />
             </MainLayout>
           )
         },
@@ -59,7 +61,7 @@ function Routes() {
           path: path.addCategory,
           element: (
             <MainLayout>
-              <AddCategory />
+              <AddCategory setProgress={setProgress} />
             </MainLayout>
           )
         },
@@ -67,7 +69,7 @@ function Routes() {
           path: path.updateCategory,
           element: (
             <MainLayout>
-              <UpdateCategory />
+              <UpdateCategory setProgress={setProgress} />
             </MainLayout>
           )
         },
@@ -75,7 +77,7 @@ function Routes() {
           path: path.subcategory,
           element: (
             <MainLayout>
-              <Subcategory />
+              <Subcategory setProgress={setProgress} />
             </MainLayout>
           )
         },
@@ -83,7 +85,7 @@ function Routes() {
           path: path.addSubcategory,
           element: (
             <MainLayout>
-              <AddSubcategory />
+              <AddSubcategory setProgress={setProgress} />
             </MainLayout>
           )
         },
@@ -91,7 +93,7 @@ function Routes() {
           path: path.updateSubcategory,
           element: (
             <MainLayout>
-              <UpdateSubcategory />
+              <UpdateSubcategory setProgress={setProgress} />
             </MainLayout>
           )
         },
@@ -99,7 +101,7 @@ function Routes() {
           path: path.product,
           element: (
             <MainLayout>
-              <Product />
+              <Product setProgress={setProgress} />
             </MainLayout>
           )
         },
@@ -107,7 +109,7 @@ function Routes() {
           path: path.addProduct,
           element: (
             <MainLayout>
-              <AddProduct />
+              <AddProduct setProgress={setProgress} />
             </MainLayout>
           )
         },
@@ -115,7 +117,7 @@ function Routes() {
           path: path.updateProduct,
           element: (
             <MainLayout>
-              <UpdateProduct />
+              <UpdateProduct setProgress={setProgress} />
             </MainLayout>
           )
         },
@@ -123,7 +125,7 @@ function Routes() {
           path: path.staff,
           element: (
             <MainLayout>
-              <Staff />
+              <Staff setProgress={setProgress} />
             </MainLayout>
           )
         },
@@ -131,7 +133,7 @@ function Routes() {
           path: path.addStaff,
           element: (
             <MainLayout>
-              <AddStaff />
+              <AddStaff setProgress={setProgress} />
             </MainLayout>
           )
         },
@@ -139,7 +141,7 @@ function Routes() {
           path: path.updateStaff,
           element: (
             <MainLayout>
-              <UpdateStaff />
+              <UpdateStaff setProgress={setProgress} />
             </MainLayout>
           )
         },
@@ -147,7 +149,7 @@ function Routes() {
           path: path.customer,
           element: (
             <MainLayout>
-              <Customer />
+              <Customer setProgress={setProgress} />
             </MainLayout>
           )
         },
@@ -155,7 +157,7 @@ function Routes() {
           path: path.order,
           element: (
             <MainLayout>
-              <Order />
+              <Order setProgress={setProgress} />
             </MainLayout>
           )
         }
@@ -173,7 +175,12 @@ function Routes() {
     }
   ])
 
-  return element
+  return (
+    <div>
+      <LoadingBar color='#337AB7' progress={progress} onLoaderFinished={() => setProgress(0)} />
+      {element}
+    </div>
+  )
 }
 
 export default Routes

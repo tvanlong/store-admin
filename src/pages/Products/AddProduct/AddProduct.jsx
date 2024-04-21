@@ -1,9 +1,16 @@
 import { Button, FileInput, Label, Select, TextInput, Textarea } from 'flowbite-react'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { fileInputTheme, textInputTheme } from '~/utils/theme'
 
-function AddProduct() {
+function AddProduct({ setProgress }) {
   const [file, setFile] = useState([])
+
+  useEffect(() => {
+    setProgress(20)
+    setTimeout(() => {
+      setProgress(100)
+    }, 200)
+  }, [setProgress])
 
   const previewImage = useMemo(() => {
     if (file.length === 0)

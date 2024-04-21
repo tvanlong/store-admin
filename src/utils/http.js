@@ -33,8 +33,7 @@ class Http {
       (response) => {
         const { url } = response.config
         if (url.includes('signin')) {
-          const userAdmin = response.data.data
-          setUserDataIntoLocalStorage(userAdmin)
+          setUserDataIntoLocalStorage(response.data.data)
         } else if (url.includes('signout')) {
           removeUserDataFromLocalStorage()
         }

@@ -1,7 +1,14 @@
 import { Table } from 'flowbite-react'
+import { useEffect } from 'react'
 import { tableTheme } from '~/utils/theme'
 
-function Subcategory() {
+function Subcategory({ setProgress }) {
+  useEffect(() => {
+    setProgress(20)
+    setTimeout(() => {
+      setProgress(100)
+    }, 200)
+  }, [setProgress])
   return (
     <div className='mt-[68px] h-full'>
       <div className='text-center mt-20 mb-10'>
