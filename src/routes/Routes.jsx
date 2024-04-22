@@ -1,25 +1,27 @@
-import { useContext, useState } from 'react'
+import { Suspense, lazy, useContext, useState } from 'react'
 import { Navigate, Outlet, useRoutes } from 'react-router-dom'
 import LoadingBar from 'react-top-loading-bar'
 import { path } from '~/constants/path'
 import { AppContext } from '~/context/app.context'
 import MainLayout from '~/layouts/MainLayout'
-import AddCategory from '~/pages/Categories/AddCategory'
-import Category from '~/pages/Categories/Category'
-import UpdateCategory from '~/pages/Categories/UpdateCategory'
-import Customer from '~/pages/Customers/Customer'
-import Dashboard from '~/pages/Dashboard'
-import Login from '~/pages/Login'
-import Order from '~/pages/Order'
-import AddProduct from '~/pages/Products/AddProduct'
-import Product from '~/pages/Products/Product'
-import UpdateProduct from '~/pages/Products/UpdateProduct'
-import AddStaff from '~/pages/Staffs/AddStaff'
-import Staff from '~/pages/Staffs/Staff'
-import UpdateStaff from '~/pages/Staffs/UpdateStaff'
-import AddSubcategory from '~/pages/Subcategories/AddSubcategory'
-import Subcategory from '~/pages/Subcategories/Subcategory'
-import UpdateSubcategory from '~/pages/Subcategories/UpdateSubcategory'
+import Loading from '~/pages/Loading'
+
+const Dashboard = lazy(() => import('~/pages/Dashboard'))
+const AddCategory = lazy(() => import('~/pages/Categories/AddCategory'))
+const Category = lazy(() => import('~/pages/Categories/Category'))
+const UpdateCategory = lazy(() => import('~/pages/Categories/UpdateCategory'))
+const Customer = lazy(() => import('~/pages/Customers/Customer'))
+const Login = lazy(() => import('~/pages/Login'))
+const Order = lazy(() => import('~/pages/Order'))
+const AddProduct = lazy(() => import('~/pages/Products/AddProduct'))
+const Product = lazy(() => import('~/pages/Products/Product'))
+const UpdateProduct = lazy(() => import('~/pages/Products/UpdateProduct'))
+const AddStaff = lazy(() => import('~/pages/Staffs/AddStaff'))
+const Staff = lazy(() => import('~/pages/Staffs/Staff'))
+const UpdateStaff = lazy(() => import('~/pages/Staffs/UpdateStaff'))
+const AddSubcategory = lazy(() => import('~/pages/Subcategories/AddSubcategory'))
+const Subcategory = lazy(() => import('~/pages/Subcategories/Subcategory'))
+const UpdateSubcategory = lazy(() => import('~/pages/Subcategories/UpdateSubcategory'))
 
 function ProtectedRoute() {
   const { isAuthenticated } = useContext(AppContext)
@@ -44,16 +46,19 @@ function Routes() {
           path: path.dashboard,
           element: (
             <MainLayout>
-              <Dashboard setProgress={setProgress} />
+              <Suspense fallback={<Loading />}>
+                <Dashboard setProgress={setProgress} />
+              </Suspense>
             </MainLayout>
           )
         },
-
         {
           path: path.category,
           element: (
             <MainLayout>
-              <Category setProgress={setProgress} />
+              <Suspense fallback={<Loading />}>
+                <Category setProgress={setProgress} />
+              </Suspense>
             </MainLayout>
           )
         },
@@ -61,7 +66,9 @@ function Routes() {
           path: path.addCategory,
           element: (
             <MainLayout>
-              <AddCategory setProgress={setProgress} />
+              <Suspense fallback={<Loading />}>
+                <AddCategory setProgress={setProgress} />
+              </Suspense>
             </MainLayout>
           )
         },
@@ -69,7 +76,9 @@ function Routes() {
           path: path.updateCategory,
           element: (
             <MainLayout>
-              <UpdateCategory setProgress={setProgress} />
+              <Suspense fallback={<Loading />}>
+                <UpdateCategory setProgress={setProgress} />
+              </Suspense>
             </MainLayout>
           )
         },
@@ -77,7 +86,9 @@ function Routes() {
           path: path.subcategory,
           element: (
             <MainLayout>
-              <Subcategory setProgress={setProgress} />
+              <Suspense fallback={<Loading />}>
+                <Subcategory setProgress={setProgress} />
+              </Suspense>
             </MainLayout>
           )
         },
@@ -85,7 +96,9 @@ function Routes() {
           path: path.addSubcategory,
           element: (
             <MainLayout>
-              <AddSubcategory setProgress={setProgress} />
+              <Suspense fallback={<Loading />}>
+                <AddSubcategory setProgress={setProgress} />
+              </Suspense>
             </MainLayout>
           )
         },
@@ -93,7 +106,9 @@ function Routes() {
           path: path.updateSubcategory,
           element: (
             <MainLayout>
-              <UpdateSubcategory setProgress={setProgress} />
+              <Suspense fallback={<Loading />}>
+                <UpdateSubcategory setProgress={setProgress} />
+              </Suspense>
             </MainLayout>
           )
         },
@@ -101,7 +116,9 @@ function Routes() {
           path: path.product,
           element: (
             <MainLayout>
-              <Product setProgress={setProgress} />
+              <Suspense fallback={<Loading />}>
+                <Product setProgress={setProgress} />
+              </Suspense>
             </MainLayout>
           )
         },
@@ -109,7 +126,9 @@ function Routes() {
           path: path.addProduct,
           element: (
             <MainLayout>
-              <AddProduct setProgress={setProgress} />
+              <Suspense fallback={<Loading />}>
+                <AddProduct setProgress={setProgress} />
+              </Suspense>
             </MainLayout>
           )
         },
@@ -117,7 +136,9 @@ function Routes() {
           path: path.updateProduct,
           element: (
             <MainLayout>
-              <UpdateProduct setProgress={setProgress} />
+              <Suspense fallback={<Loading />}>
+                <UpdateProduct setProgress={setProgress} />
+              </Suspense>
             </MainLayout>
           )
         },
@@ -125,7 +146,9 @@ function Routes() {
           path: path.staff,
           element: (
             <MainLayout>
-              <Staff setProgress={setProgress} />
+              <Suspense fallback={<Loading />}>
+                <Staff setProgress={setProgress} />
+              </Suspense>
             </MainLayout>
           )
         },
@@ -133,7 +156,9 @@ function Routes() {
           path: path.addStaff,
           element: (
             <MainLayout>
-              <AddStaff setProgress={setProgress} />
+              <Suspense fallback={<Loading />}>
+                <AddStaff setProgress={setProgress} />
+              </Suspense>
             </MainLayout>
           )
         },
@@ -141,7 +166,9 @@ function Routes() {
           path: path.updateStaff,
           element: (
             <MainLayout>
-              <UpdateStaff setProgress={setProgress} />
+              <Suspense fallback={<Loading />}>
+                <UpdateStaff setProgress={setProgress} />
+              </Suspense>
             </MainLayout>
           )
         },
@@ -149,7 +176,9 @@ function Routes() {
           path: path.customer,
           element: (
             <MainLayout>
-              <Customer setProgress={setProgress} />
+              <Suspense fallback={<Loading />}>
+                <Customer setProgress={setProgress} />
+              </Suspense>
             </MainLayout>
           )
         },
@@ -157,7 +186,9 @@ function Routes() {
           path: path.order,
           element: (
             <MainLayout>
-              <Order setProgress={setProgress} />
+              <Suspense fallback={<Loading />}>
+                <Order setProgress={setProgress} />
+              </Suspense>
             </MainLayout>
           )
         }
