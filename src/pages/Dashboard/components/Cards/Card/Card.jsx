@@ -4,8 +4,18 @@ function Card({ color, icon, title, animatedValue, label }) {
   const springProps = useSpring({ [label]: animatedValue, from: { [label]: 0 } })
 
   return (
-    <div className={`border border-[${color}] rounded-lg overflow-hidden`}>
-      <div className={`flex items-center text-white bg-[${color}] py-2 px-2`}>
+    <div
+      className={'border rounded-lg overflow-hidden'}
+      style={{
+        borderColor: color
+      }}
+    >
+      <div
+        className={'flex items-center text-white py-2 px-2'}
+        style={{
+          backgroundColor: color
+        }}
+      >
         <div className='mr-3'>{icon}</div>
         <div className='text-right'>
           <div className='text-2xl font-bold'>
