@@ -1,6 +1,6 @@
 import axios from 'axios'
 import config from '~/constants/config'
-import { removeUserDataFromLocalStorage, setIsSignedIn, setUserDataIntoLocalStorage } from './auth'
+import { removeLocalStorage, setIsSignedIn, setUserDataIntoLocalStorage } from './auth'
 
 /*
 - Áp dụng Singleton Pattern để tạo một instance duy nhất của Http class
@@ -38,7 +38,7 @@ class Http {
           setIsSignedIn(true)
           setUserDataIntoLocalStorage(response.data.data)
         } else if (url.includes('signout')) {
-          removeUserDataFromLocalStorage()
+          removeLocalStorage()
         }
         return response
       },
@@ -57,8 +57,6 @@ class Http {
           originalRequest.headers.Authorization = `Bearer ${newAccessToken}`
           return this.instance(originalRequest)
         }
-        // Nếu lỗi không phải do token hết hạn thì xóa thông tin user trong localStorage (set isAuthenticated = false)
-        removeUserDataFromLocalStorage()
         return Promise.reject(error)
       }
     )

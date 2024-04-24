@@ -6,7 +6,8 @@ export const getUserDataFromLocalStorage = () => {
   return JSON.parse(localStorage.getItem('admin'))
 }
 
-export const removeUserDataFromLocalStorage = () => {
+export const removeLocalStorage = () => {
+  localStorage.removeItem('isSignedIn')
   localStorage.removeItem('admin')
 }
 
@@ -15,5 +16,5 @@ export const setIsSignedIn = (value) => {
 }
 
 export const getIsSignedIn = () => {
-  return localStorage.getItem('isSignedIn')
+  return localStorage.getItem('isSignedIn') || ''
 }

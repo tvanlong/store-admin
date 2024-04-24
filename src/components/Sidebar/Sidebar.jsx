@@ -1,3 +1,4 @@
+import { useMutation } from '@tanstack/react-query'
 import { Sidebar as SideBar } from 'flowbite-react'
 import {
   HiArrowSmRight,
@@ -10,11 +11,28 @@ import {
   HiOutlineMinusSm,
   HiOutlinePlusSm
 } from 'react-icons/hi'
+import { toast } from 'sonner'
 import { twMerge } from 'tailwind-merge'
+import { signOut } from '~/apis/auth.api'
 import { path } from '~/constants/path'
 import { sidebarTheme } from '~/utils/theme'
 
 function Sidebar() {
+  const { mutateAsync } = useMutation({
+    mutationFn: signOut,
+    onSuccess: () => {
+      window.location.href = path.login
+    }
+  })
+
+  const handleSignOut = () => {
+    toast.promise(mutateAsync(), {
+      loading: 'Đang đăng xuất...',
+      success: 'Đăng xuất thành công',
+      error: 'Đăng xuất thất bại'
+    })
+  }
+
   return (
     <SideBar
       theme={sidebarTheme}
@@ -86,7 +104,7 @@ function Sidebar() {
           <SideBar.Item href={path.login} icon={HiArrowSmRight}>
             Đăng nhập
           </SideBar.Item>
-          <SideBar.Item href={path.logout} icon={HiArrowSmLeft}>
+          <SideBar.Item to={''} icon={HiArrowSmLeft} onClick={handleSignOut}>
             Đăng xuất
           </SideBar.Item>
         </SideBar.ItemGroup>
