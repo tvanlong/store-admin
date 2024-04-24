@@ -1,14 +1,47 @@
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Table } from 'flowbite-react'
 import { useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import { toast } from 'sonner'
+import { deleteSubcategory, getAllSubcategories } from '~/apis/subcategories.api'
 import { tableTheme } from '~/utils/theme'
 
 function Subcategory({ setProgress }) {
+  const queryClient = useQueryClient()
+  const { data } = useQuery({
+    queryKey: ['subcategories'],
+    queryFn: getAllSubcategories
+  })
+
+  const subcategories = data?.data.data || []
+
   useEffect(() => {
     setProgress(20)
     setTimeout(() => {
       setProgress(100)
     }, 200)
   }, [setProgress])
+
+  const { mutateAsync } = useMutation({
+    mutationFn: deleteSubcategory,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['subcategories'] })
+    }
+  })
+
+  const handleDeleteSubcategory = (subcategory) => {
+    if (subcategory.products.length > 0) {
+      return toast.error('Không thể xóa danh mục sản phẩm này!')
+    }
+
+    toast.promise(mutateAsync(subcategory._id), {
+      loading: 'Đang tiến hành xóa danh mục sản phẩm...',
+      success: () => 'Xóa danh mục sản phẩm thành công',
+      error: (err) => {
+        return err?.response?.data?.message || 'Xóa danh mục sản phẩm thất bại'
+      }
+    })
+  }
   return (
     <div className='mt-[68px] h-full'>
       <div className='text-center mt-20 mb-10'>
@@ -32,14 +65,29 @@ function Subcategory({ setProgress }) {
             </Table.HeadCell>
           </Table.Head>
           <Table.Body className='divide-y'>
-            {Array.from({ length: 10 }).map((_, index) => (
-              <Table.Row key={index} className='bg-white'>
-                <Table.Cell className='whitespace-nowrap font-medium text-gray-900'>Dell Inspiron</Table.Cell>
-                <Table.Cell className='whitespace-nowrap font-medium text-gray-900'>Laptop Dell</Table.Cell>
-                <Table.Cell>04</Table.Cell>
+            {subcategories.map((subcategory) => (
+              <Table.Row key={subcategory._id} className='bg-white'>
+                <Table.Cell className='whitespace-nowrap font-medium text-gray-900'>{subcategory.name}</Table.Cell>
+                <Table.Cell className='whitespace-nowrap font-medium text-gray-900'>
+                  {subcategory.category.name}
+                </Table.Cell>
+                <Table.Cell>
+                  <span className='text-sm font-medium text-gray-900'>{subcategory.products.length || 0}</span>
+                </Table.Cell>
                 <Table.Cell className='flex gap-5'>
-                  <a className='font-medium text-cyan-600 hover:underline'>Cập nhật</a>
-                  <a className='font-medium text-red-600 hover:underline'>Xóa</a>
+                  <Link
+                    to={`/update-subcategory/${subcategory._id}`}
+                    className='font-medium text-cyan-600 hover:underline'
+                  >
+                    Cập nhật
+                  </Link>
+                  <Link
+                    to={''}
+                    className='font-medium text-red-600 hover:underline'
+                    onClick={() => handleDeleteSubcategory(subcategory)}
+                  >
+                    Xóa
+                  </Link>
                 </Table.Cell>
               </Table.Row>
             ))}

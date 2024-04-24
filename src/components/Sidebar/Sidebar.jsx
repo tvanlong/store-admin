@@ -34,7 +34,7 @@ function Sidebar() {
           </SideBar.Item>
           <SideBar.Collapse
             icon={HiMenu}
-            label='Danh mục'
+            label='Danh mục lớn'
             renderChevronIcon={(theme, open) => {
               const IconComponent = open ? HiOutlineMinusSm : HiOutlinePlusSm
 
@@ -43,6 +43,16 @@ function Sidebar() {
           >
             <SideBar.Item href={path.category}>Tất cả danh mục</SideBar.Item>
             <SideBar.Item href={path.addCategory}>Thêm danh mục mới</SideBar.Item>
+          </SideBar.Collapse>
+          <SideBar.Collapse
+            icon={HiMenu}
+            label='Danh mục nhỏ'
+            renderChevronIcon={(theme, open) => {
+              const IconComponent = open ? HiOutlineMinusSm : HiOutlinePlusSm
+
+              return <IconComponent aria-hidden className={twMerge(theme.label.icon.open[open ? 'on' : 'off'])} />
+            }}
+          >
             <SideBar.Item href={path.subcategory}>Tất cả danh mục nhỏ</SideBar.Item>
             <SideBar.Item href={path.addSubcategory}>Thêm danh mục nhỏ mới</SideBar.Item>
           </SideBar.Collapse>

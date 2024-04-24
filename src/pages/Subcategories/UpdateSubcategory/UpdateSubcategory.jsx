@@ -1,14 +1,83 @@
-import { Button, Label, Select, TextInput } from 'flowbite-react'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { Button, Label, TextInput } from 'flowbite-react'
 import { useEffect } from 'react'
+import { useForm } from 'react-hook-form'
+import { useNavigate, useParams } from 'react-router-dom'
+import Select from 'react-select'
+import { toast } from 'sonner'
+import { getAllCategories } from '~/apis/categories.api'
+import { getSubcategory, updateSubcategory } from '~/apis/subcategories.api'
+import { subcategorySchema } from '~/schemas/subcategorySchema'
 import { textInputTheme } from '~/utils/theme'
 
 function UpdateSubcategory({ setProgress }) {
+  const queryClient = useQueryClient()
+  const navigate = useNavigate()
+  const { id } = useParams()
+  const { data: subcategoryData } = useQuery({
+    queryKey: ['subcategories', id],
+    queryFn: () => getSubcategory(id)
+  })
+  const { data } = useQuery({
+    queryKey: ['categories'],
+    queryFn: getAllCategories
+  })
+
   useEffect(() => {
     setProgress(20)
     setTimeout(() => {
       setProgress(100)
     }, 200)
   }, [setProgress])
+
+  const categoryOptions = data?.data?.data.map((category) => {
+    return {
+      value: category._id,
+      label: category.name
+    }
+  })
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+    clearErrors,
+    watch
+  } = useForm({
+    defaultValues: {
+      name: '',
+      category: ''
+    },
+    resolver: yupResolver(subcategorySchema)
+  })
+
+  useEffect(() => {
+    const subcategory = subcategoryData?.data?.data
+    if (subcategory) {
+      setValue('name', subcategory.name)
+      setValue('category', subcategory.category._id)
+    }
+  }, [subcategoryData, setValue])
+
+  const { mutateAsync } = useMutation({
+    mutationFn: (data) => updateSubcategory(id, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['subcategories'] })
+      navigate('/subcategory')
+    }
+  })
+
+  const onSubmit = handleSubmit((data) => {
+    toast.promise(mutateAsync(data), {
+      loading: 'Đang tiến hành thêm danh mục sản phẩm nhỏ...',
+      success: () => 'Thêm danh mục sản phẩm nhỏ thành công',
+      error: (err) => {
+        return err?.response?.data?.message || 'Thêm danh mục sản phẩm nhỏ thất bại'
+      }
+    })
+  })
   return (
     <div className='mt-[68px] h-full'>
       <div className='text-center mt-20 mb-10'>
@@ -21,24 +90,46 @@ function UpdateSubcategory({ setProgress }) {
           Điền thông tin vào form dưới đây để cập nhật danh mục sản phẩm nhỏ
         </p>
       </div>
-      <form className='mx-40'>
+      <form className='mx-40' onSubmit={onSubmit}>
         <div className='mb-5'>
           <div className='mb-2 block'>
             <Label htmlFor='category-name' value='Thuộc danh mục sản phẩm' />
           </div>
-          <Select theme={textInputTheme} id='category-name' required>
-            <option>Laptop Dell</option>
-            <option>Laptop HP</option>
-          </Select>
+          <div className='remove-input-txt-border'>
+            <Select
+              placeholder='Chọn danh mục sản phẩm'
+              options={categoryOptions}
+              className='text-sm'
+              isClearable
+              isSearchable
+              {...register('category')}
+              value={categoryOptions ? categoryOptions.find((option) => option.value === watch('category')) : null}
+              onChange={(selectedOption) => {
+                if (errors.category) clearErrors('category')
+                setValue('category', selectedOption?.value)
+              }}
+            />
+          </div>
+          {errors.category && <span className='text-red-500 text-sm'>{errors.category.message}</span>}
         </div>
         <div className='mb-5'>
           <div className='mb-2 block'>
             <Label htmlFor='name' value='Tên danh mục sản phẩm' />
           </div>
-          <TextInput theme={textInputTheme} id='name' type='text' placeholder='Vui lòng nhập tên danh mục sản phẩm' />
+          <TextInput
+            theme={textInputTheme}
+            id='name'
+            type='text'
+            placeholder='Vui lòng nhập tên danh mục sản phẩm'
+            {...register('name')}
+            onChange={() => {
+              clearErrors('name')
+            }}
+          />
+          {errors.name && <span className='text-red-500 text-sm'>{errors.name.message}</span>}
         </div>
         <div className='flex justify-center'>
-          <Button className='mt-10' gradientMonochrome='cyan'>
+          <Button className='mt-10' type='submit' gradientMonochrome='cyan'>
             Cập nhật danh mục nhỏ
           </Button>
         </div>

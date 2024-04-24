@@ -17,3 +17,7 @@
   border-radius: 10px;
   background-color: #e0e0e0;
 }
+
+.remove-input-txt-border input[type='text']:focus {
+  box-shadow: none;
+}
