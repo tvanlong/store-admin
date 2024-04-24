@@ -1,14 +1,48 @@
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Table } from 'flowbite-react'
 import { useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import { toast } from 'sonner'
+import { deleteCategory, getAllCategories } from '~/apis/categories.api'
 import { tableTheme } from '~/utils/theme'
 
 function Category({ setProgress }) {
+  const queryClient = useQueryClient()
+  const { data } = useQuery({
+    queryKey: ['categories'],
+    queryFn: getAllCategories
+  })
+
+  const categories = data?.data.data || []
+
   useEffect(() => {
     setProgress(20)
     setTimeout(() => {
       setProgress(100)
     }, 200)
   }, [setProgress])
+
+  const { mutateAsync } = useMutation({
+    mutationFn: deleteCategory,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['categories'] })
+    }
+  })
+
+  const handleDeleteCategory = (category) => {
+    if (category.subcategories.length > 0) {
+      return toast.error('Không thể xóa danh mục sản phẩm này!')
+    }
+
+    toast.promise(mutateAsync(category._id), {
+      loading: 'Đang tiến hành xóa danh mục sản phẩm...',
+      success: () => 'Xóa danh mục sản phẩm thành công',
+      error: (err) => {
+        return err?.response?.data?.message || 'Xóa danh mục sản phẩm thất bại'
+      }
+    })
+  }
+
   return (
     <div className='mt-[68px] h-full'>
       <div className='text-center mt-20 mb-10'>
@@ -31,13 +65,21 @@ function Category({ setProgress }) {
             </Table.HeadCell>
           </Table.Head>
           <Table.Body className='divide-y'>
-            {Array.from({ length: 10 }).map((_, index) => (
-              <Table.Row key={index} className='bg-white'>
-                <Table.Cell className='whitespace-nowrap font-medium text-gray-900'>Laptop Dell</Table.Cell>
-                <Table.Cell>04</Table.Cell>
+            {categories.map((category) => (
+              <Table.Row key={category._id} className='bg-white'>
+                <Table.Cell className='whitespace-nowrap font-medium text-gray-900'>{category.name}</Table.Cell>
+                <Table.Cell>{category.subcategories.length || 0}</Table.Cell>
                 <Table.Cell className='flex gap-5'>
-                  <a className='font-medium text-cyan-600 hover:underline'>Cập nhật</a>
-                  <a className='font-medium text-red-600 hover:underline'>Xóa</a>
+                  <Link to={`/update-category/${category._id}`} className='font-medium text-cyan-600 hover:underline'>
+                    Cập nhật
+                  </Link>
+                  <Link
+                    to={''}
+                    className='font-medium text-red-600 hover:underline'
+                    onClick={() => handleDeleteCategory(category)}
+                  >
+                    Xóa
+                  </Link>
                 </Table.Cell>
               </Table.Row>
             ))}
