@@ -27,10 +27,14 @@ function Login() {
     toast.promise(signInMutation.mutateAsync(data), {
       loading: 'Đang tiến hành đăng nhập...',
       success: (data) => {
-        setIsAuthenticated(true)
-        setProfile(data.data.data)
-        navigate('/')
-        return 'Đăng nhập thành công'
+        if (data.data.data.role === 'admin') {
+          setIsAuthenticated(true)
+          setProfile(data.data.data)
+          navigate('/')
+          return 'Đăng nhập thành công'
+        } else {
+          return 'Bạn không có quyền truy cập vào trang quản trị'
+        }
       },
       error: (err) => {
         return err?.response?.data?.message || 'Đăng nhập thất bại'
