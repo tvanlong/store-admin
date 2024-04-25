@@ -33,7 +33,13 @@ function Header() {
       case path.product:
         return (
           <Breadcrumb aria-label='Default breadcrumb example'>
-            <Breadcrumb.Item icon={HiDesktopComputer}>Sản phẩm</Breadcrumb.Item>
+            <Breadcrumb.Item icon={HiDesktopComputer}>Dòng sản phẩm</Breadcrumb.Item>
+          </Breadcrumb>
+        )
+      case path.version:
+        return (
+          <Breadcrumb aria-label='Default breadcrumb example'>
+            <Breadcrumb.Item icon={HiDesktopComputer}>Phiên bản sản phẩm</Breadcrumb.Item>
           </Breadcrumb>
         )
       case path.customer:
@@ -76,7 +82,16 @@ function Header() {
         return (
           <Breadcrumb aria-label='Default breadcrumb example'>
             <Breadcrumb.Item href={path.product} icon={HiDesktopComputer}>
-              Sản phẩm
+              Dòng sản phẩm
+            </Breadcrumb.Item>
+            <Breadcrumb.Item>Thêm mới</Breadcrumb.Item>
+          </Breadcrumb>
+        )
+      case path.addVersion:
+        return (
+          <Breadcrumb aria-label='Default breadcrumb example'>
+            <Breadcrumb.Item href={path.product} icon={HiDesktopComputer}>
+              Phiên bản sản phẩm
             </Breadcrumb.Item>
             <Breadcrumb.Item>Thêm mới</Breadcrumb.Item>
           </Breadcrumb>
@@ -98,36 +113,45 @@ function Header() {
       return (
         <Breadcrumb aria-label='Default breadcrumb example'>
           <Breadcrumb.Item href={path.category} icon={HiMenu}>
-            Category
+            Danh mục sản phẩm
           </Breadcrumb.Item>
-          <Breadcrumb.Item>Update</Breadcrumb.Item>
+          <Breadcrumb.Item>Cập nhật</Breadcrumb.Item>
         </Breadcrumb>
       )
     } else if (pathname.includes('update-subcategory')) {
       return (
         <Breadcrumb aria-label='Default breadcrumb example'>
           <Breadcrumb.Item href={path.subcategory} icon={HiMenu}>
-            Subcategory
+            Danh mục sản phẩm nhỏ
           </Breadcrumb.Item>
-          <Breadcrumb.Item>Update</Breadcrumb.Item>
+          <Breadcrumb.Item>Cập nhật</Breadcrumb.Item>
         </Breadcrumb>
       )
     } else if (pathname.includes('update-product')) {
       return (
         <Breadcrumb aria-label='Default breadcrumb example'>
           <Breadcrumb.Item href={path.product} icon={HiDesktopComputer}>
-            Product
+            Dòng sản phẩm
           </Breadcrumb.Item>
-          <Breadcrumb.Item>Update</Breadcrumb.Item>
+          <Breadcrumb.Item>Cập nhật</Breadcrumb.Item>
+        </Breadcrumb>
+      )
+    } else if (pathname.includes('update-version')) {
+      return (
+        <Breadcrumb aria-label='Default breadcrumb example'>
+          <Breadcrumb.Item href={path.product} icon={HiDesktopComputer}>
+            Phiên bản sản phẩm
+          </Breadcrumb.Item>
+          <Breadcrumb.Item>Cập nhật</Breadcrumb.Item>
         </Breadcrumb>
       )
     } else if (pathname.includes('update-staff')) {
       return (
         <Breadcrumb aria-label='Default breadcrumb example'>
           <Breadcrumb.Item href={path.staff} icon={HiUser}>
-            Staff
+            Nhân viên
           </Breadcrumb.Item>
-          <Breadcrumb.Item>Update</Breadcrumb.Item>
+          <Breadcrumb.Item>Cập nhật</Breadcrumb.Item>
         </Breadcrumb>
       )
     }

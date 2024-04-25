@@ -16,6 +16,9 @@ const Order = lazy(() => import('~/pages/Order'))
 const AddProduct = lazy(() => import('~/pages/Products/AddProduct'))
 const Product = lazy(() => import('~/pages/Products/Product'))
 const UpdateProduct = lazy(() => import('~/pages/Products/UpdateProduct'))
+const Version = lazy(() => import('~/pages/Versions/Version'))
+const AddVersion = lazy(() => import('~/pages/Versions/AddVersion'))
+const UpdateVersion = lazy(() => import('~/pages/Versions/UpdateVersion'))
 const AddStaff = lazy(() => import('~/pages/Staffs/AddStaff'))
 const Staff = lazy(() => import('~/pages/Staffs/Staff'))
 const UpdateStaff = lazy(() => import('~/pages/Staffs/UpdateStaff'))
@@ -138,6 +141,36 @@ function Routes() {
             <MainLayout>
               <Suspense fallback={<Loading />}>
                 <UpdateProduct setProgress={setProgress} />
+              </Suspense>
+            </MainLayout>
+          )
+        },
+        {
+          path: path.version,
+          element: (
+            <MainLayout>
+              <Suspense fallback={<Loading />}>
+                <Version setProgress={setProgress} />
+              </Suspense>
+            </MainLayout>
+          )
+        },
+        {
+          path: path.addVersion,
+          element: (
+            <MainLayout>
+              <Suspense fallback={<Loading />}>
+                <AddVersion setProgress={setProgress} />
+              </Suspense>
+            </MainLayout>
+          )
+        },
+        {
+          path: path.updateVersion,
+          element: (
+            <MainLayout>
+              <Suspense fallback={<Loading />}>
+                <UpdateVersion setProgress={setProgress} />
               </Suspense>
             </MainLayout>
           )

@@ -76,7 +76,7 @@ function Sidebar() {
           </SideBar.Collapse>
           <SideBar.Collapse
             icon={HiDesktopComputer}
-            label='Sản phẩm'
+            label='Dòng sản phẩm'
             renderChevronIcon={(theme, open) => {
               const IconComponent = open ? HiOutlineMinusSm : HiOutlinePlusSm
 
@@ -85,6 +85,18 @@ function Sidebar() {
           >
             <SideBar.Item href={path.product}>Tất cả sản phẩm</SideBar.Item>
             <SideBar.Item href={path.addProduct}>Thêm sản phẩm mới</SideBar.Item>
+          </SideBar.Collapse>
+          <SideBar.Collapse
+            icon={HiDesktopComputer}
+            label='Phiên bản sản phẩm'
+            renderChevronIcon={(theme, open) => {
+              const IconComponent = open ? HiOutlineMinusSm : HiOutlinePlusSm
+
+              return <IconComponent aria-hidden className={twMerge(theme.label.icon.open[open ? 'on' : 'off'])} />
+            }}
+          >
+            <SideBar.Item href={path.version}>Tất cả phiên bản</SideBar.Item>
+            <SideBar.Item href={path.addVersion}>Thêm phiên bản mới</SideBar.Item>
           </SideBar.Collapse>
           <SideBar.Collapse
             icon={HiUser}
