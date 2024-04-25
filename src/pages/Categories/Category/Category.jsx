@@ -4,11 +4,12 @@ import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { toast } from 'sonner'
 import { deleteCategory, getAllCategories } from '~/apis/categories.api'
+import NoData from '~/components/NoData'
 import { tableTheme } from '~/utils/theme'
 
 function Category({ setProgress }) {
   const queryClient = useQueryClient()
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ['categories'],
     queryFn: getAllCategories
   })
@@ -42,6 +43,8 @@ function Category({ setProgress }) {
       }
     })
   }
+
+  if (isLoading) return <NoData />
 
   return (
     <div className='mt-[68px] h-full'>

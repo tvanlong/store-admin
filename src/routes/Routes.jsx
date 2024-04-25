@@ -4,7 +4,7 @@ import LoadingBar from 'react-top-loading-bar'
 import { path } from '~/constants/path'
 import { AppContext } from '~/context/app.context'
 import MainLayout from '~/layouts/MainLayout'
-import Loading from '~/pages/Loading'
+import Loading from '~/components/Loading'
 
 const Dashboard = lazy(() => import('~/pages/Dashboard'))
 const AddCategory = lazy(() => import('~/pages/Categories/AddCategory'))

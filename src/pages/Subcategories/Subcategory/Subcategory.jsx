@@ -4,11 +4,12 @@ import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { toast } from 'sonner'
 import { deleteSubcategory, getAllSubcategories } from '~/apis/subcategories.api'
+import NoData from '~/components/NoData'
 import { tableTheme } from '~/utils/theme'
 
 function Subcategory({ setProgress }) {
   const queryClient = useQueryClient()
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ['subcategories'],
     queryFn: getAllSubcategories
   })
@@ -42,6 +43,9 @@ function Subcategory({ setProgress }) {
       }
     })
   }
+
+  if (isLoading) return <NoData />
+
   return (
     <div className='mt-[68px] h-full'>
       <div className='text-center mt-20 mb-10'>
