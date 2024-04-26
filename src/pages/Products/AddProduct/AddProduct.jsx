@@ -1,9 +1,46 @@
-import { Button, FileInput, Label, Select, TextInput, Textarea } from 'flowbite-react'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { Button, FileInput, Label, TextInput } from 'flowbite-react'
+import Select from 'react-select'
 import { useEffect, useMemo, useState } from 'react'
+import { getAllSubcategories } from '~/apis/subcategories.api'
 import { fileInputTheme, textInputTheme } from '~/utils/theme'
+import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { productSchema } from '~/schemas/productSchema'
+import { uploadImages } from '~/apis/images.api'
+import { addProduct } from '~/apis/products.api'
+import { toast } from 'sonner'
+import { useNavigate } from 'react-router-dom'
 
 function AddProduct({ setProgress }) {
+  const queryClient = useQueryClient()
+  const navigate = useNavigate()
   const [file, setFile] = useState([])
+  const { data } = useQuery({
+    queryKey: ['subcategories'],
+    queryFn: getAllSubcategories
+  })
+  const subcategoryOptions = data?.data?.data.map((subcategory) => {
+    return {
+      value: subcategory._id,
+      label: subcategory.name
+    }
+  })
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+    clearErrors
+  } = useForm({
+    defaultValues: {
+      name: '',
+      subcategory: '',
+      images: []
+    },
+    resolver: yupResolver(productSchema)
+  })
 
   useEffect(() => {
     setProgress(20)
@@ -31,29 +68,64 @@ function AddProduct({ setProgress }) {
     ))
   }, [file])
 
+  const { mutateAsync: uploadImagesMutateAsync } = useMutation({
+    mutationFn: (data) => uploadImages(data)
+  })
+
+  const { mutateAsync: addProductMutateAsync } = useMutation({
+    mutationFn: (data) => addProduct(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['products'] })
+      navigate('/product')
+    }
+  })
+
   const handleFileChange = (files) => {
+    if (errors.images) clearErrors('images')
     const fileList = Array.from(files)
     setFile(fileList)
   }
+
+  const onSubmit = handleSubmit(async (data) => {
+    const fileList = Array.from(data.images)
+    const formData = new FormData()
+    fileList.forEach((file) => {
+      formData.append('files', file)
+    })
+    const response = await uploadImagesMutateAsync(formData)
+    toast.promise(addProductMutateAsync({ ...data, images: response.data.files }), {
+      loading: 'Đang thêm sản phẩm...',
+      success: 'Thêm sản phẩm thành công',
+      error: 'Thêm sản phẩm thất bại'
+    })
+  })
 
   return (
     <div className='mt-[68px] h-full'>
       <div className='text-center mt-20 mb-10'>
         <h1 className='mb-4 text-5xl font-extrabold text-gray-900'>
           <span className='text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400'>
-            Thêm sản phẩm
+            Thêm dòng sản phẩm
           </span>
         </h1>
         <p className='text-lg font-normal text-gray-500 lg:text-xl'>
-          Điền thông tin vào form dưới đây để thêm sản phẩm mới
+          Điền thông tin vào form dưới đây để thêm dòng sản phẩm mới
         </p>
       </div>
-      <form className='mx-40'>
+      <form className='mx-40' onSubmit={onSubmit}>
         <div className='mb-5'>
           <div className='mb-2 block'>
             <Label htmlFor='name' value='Tên sản phẩm' />
           </div>
-          <TextInput theme={textInputTheme} id='name' type='text' placeholder='Vui lòng nhập tên sản phẩm' />
+          <TextInput
+            theme={textInputTheme}
+            id='name'
+            type='text'
+            placeholder='Vui lòng nhập tên sản phẩm'
+            {...register('name')}
+            onChange={() => clearErrors('name')}
+          />
+          {errors.name && <span className='text-red-500 text-sm'>{errors.name.message}</span>}
         </div>
         <div id='fileUpload' className='mb-5'>
           <div className='mb-2 block'>
@@ -63,55 +135,35 @@ function AddProduct({ setProgress }) {
             theme={fileInputTheme}
             id='file'
             helperText={file.length === 0 ? 'Chọn ảnh sản phẩm để upload' : 'Ảnh đã được chọn'}
-            onChange={(e) => handleFileChange(e.target.files)}
             multiple
+            {...register('images')}
+            onChange={(e) => handleFileChange(e.target.files)}
           />
+          {errors.images && <span className='text-red-500 text-sm'>{errors.images.message}</span>}
         </div>
         <div className='flex gap-3 mb-5'>{previewImage}</div>
         <div className='mb-5'>
           <div className='mb-2 block'>
-            <Label htmlFor='category-name' value='Thuộc danh mục sản phẩm' />
+            <Label htmlFor='subcategory' value='Thuộc danh mục sản phẩm' />
           </div>
-          <Select theme={textInputTheme} id='category-name'>
-            <option>Laptop Dell</option>
-            <option>Laptop HP</option>
-          </Select>
-        </div>
-        <div className='mb-5'>
-          <div className='mb-2 block'>
-            <Label htmlFor='config' value='Tên cấu hình sản phẩm' />
+          <div className='remove-input-txt-border'>
+            <Select
+              placeholder='Chọn danh mục sản phẩm'
+              options={subcategoryOptions}
+              className='text-sm'
+              isClearable
+              isSearchable
+              {...register('subcategory')}
+              onChange={(selectedOption) => {
+                if (errors.subcategory) clearErrors('subcategory')
+                setValue('subcategory', selectedOption?.value)
+              }}
+            />
           </div>
-          <TextInput theme={textInputTheme} id='config' type='text' placeholder='Vui lòng nhập tên cấu hình sản phẩm' />
-        </div>
-        <div className='mb-5'>
-          <div className='mb-2 block'>
-            <Label htmlFor='price' value='Giá gốc sản phẩm' />
-          </div>
-          <TextInput theme={textInputTheme} id='price' type='number' placeholder='Vui lòng nhập giá gốc sản phẩm' />
-        </div>
-        <div className='mb-5'>
-          <div className='mb-2 block'>
-            <Label htmlFor='discount' value='Giảm giá sản phẩm' />
-          </div>
-          <TextInput theme={textInputTheme} id='discount' type='number' placeholder='Vui lòng nhập giảm giá sản phẩm' />
-        </div>
-        <div className='mb-5'>
-          <div className='mb-2 block'>
-            <Label htmlFor='status' value='Tình trạng hàng' />
-          </div>
-          <Select theme={textInputTheme} id='status'>
-            <option>Còn hàng</option>
-            <option>Hết hàng</option>
-          </Select>
-        </div>
-        <div className='mb-5'>
-          <div className='mb-2 block'>
-            <Label htmlFor='details' value='Thông tin chi tiết' />
-          </div>
-          <Textarea id='details' placeholder='Vui lòng nhập thông tin chi tiết' required rows={8} />
+          {errors.subcategory && <span className='text-red-500 text-sm'>{errors.subcategory.message}</span>}
         </div>
         <div className='flex justify-center'>
-          <Button className='mt-10' gradientMonochrome='cyan'>
+          <Button className='mt-10' type='submit' gradientMonochrome='cyan'>
             Thêm sản phẩm
           </Button>
         </div>
