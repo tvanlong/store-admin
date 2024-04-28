@@ -1,8 +1,9 @@
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Table } from 'flowbite-react'
 import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { getAllVersions } from '~/apis/version.api'
+import { toast } from 'sonner'
+import { deleteVersion, getAllVersions } from '~/apis/version.api'
 import NoData from '~/components/NoData'
 import PopupModal from '~/components/PopupModal'
 import config from '~/constants/config'
@@ -10,6 +11,7 @@ import { formatCurrency } from '~/utils/format'
 import { tableTheme } from '~/utils/theme'
 
 function Version({ setProgress }) {
+  const queryClient = useQueryClient()
   const { data, isLoading } = useQuery({
     queryKey: ['versions'],
     queryFn: getAllVersions
@@ -23,6 +25,23 @@ function Version({ setProgress }) {
       setProgress(100)
     }, 200)
   }, [setProgress])
+
+  const { mutateAsync: deleteVersionMutateAsync } = useMutation({
+    mutationFn: (id) => deleteVersion(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['versions'] })
+    }
+  })
+
+  const handleDeleteVersion = (version) => {
+    toast.promise(deleteVersionMutateAsync(version._id), {
+      loading: 'Đang tiến hành xóa dòng sản phẩm...',
+      success: () => 'Xóa dòng sản phẩm thành công',
+      error: (err) => {
+        return err?.response?.data?.message || 'Xóa dòng sản phẩm thất bại'
+      }
+    })
+  }
 
   if (isLoading) return <NoData />
 
@@ -83,7 +102,12 @@ function Version({ setProgress }) {
                     <Link to={`/update-version/${version._id}`} className='font-medium text-cyan-600 hover:underline'>
                       Cập nhật
                     </Link>
-                    <Link className='font-medium text-red-600 hover:underline'>Xóa</Link>
+                    <Link
+                      className='font-medium text-red-600 hover:underline'
+                      onClick={() => handleDeleteVersion(version)}
+                    >
+                      Xóa
+                    </Link>
                   </div>
                 </Table.Cell>
               </Table.Row>

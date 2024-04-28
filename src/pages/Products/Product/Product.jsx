@@ -32,7 +32,7 @@ function Product({ setProgress }) {
   const { mutateAsync: deleteProductMutateAsync } = useMutation({
     mutationFn: (id) => deleteProduct(id),
     onSuccess: () => {
-      queryClient.invalidateQueries('products')
+      queryClient.invalidateQueries({ queryKey: ['products'] })
     }
   })
 
