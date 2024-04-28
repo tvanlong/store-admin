@@ -36,8 +36,7 @@ function AddProduct({ setProgress }) {
   } = useForm({
     defaultValues: {
       name: '',
-      subcategory: '',
-      images: []
+      subcategory: ''
     },
     resolver: yupResolver(productSchema)
   })
