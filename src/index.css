@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ---------------------Global CSS------------------------ */
+body {
+  -webkit-user-select: none; /* Chrome all / Safari all */
+  -moz-user-select: none; /* Firefox all */
+  -ms-user-select: none; /* IE 10+ */
+  user-select: none; /* Likely future */
+}
+
 /* ---------------------Srollbar CSS------------------------ */
 ::-webkit-scrollbar-track {
   border-radius: 10px;
