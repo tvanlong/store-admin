@@ -1,40 +1,42 @@
+import { useQuery } from '@tanstack/react-query'
+import { useEffect, useState } from 'react'
 import { Area, AreaChart, CartesianGrid, Tooltip, XAxis, YAxis } from 'recharts'
-
-const data = [
-  {
-    month: 'Tháng 1',
-    revenue: 50000000
-  },
-  {
-    month: 'Tháng 2',
-    revenue: 300000000
-  },
-  {
-    month: 'Tháng 3',
-    revenue: 280000000
-  },
-  {
-    month: 'Tháng 4',
-    revenue: 278000000
-  },
-  {
-    month: 'Tháng 5',
-    revenue: 189000000
-  },
-  {
-    month: 'Tháng 6',
-    revenue: 239000000
-  },
-  {
-    month: 'Tháng 7',
-    revenue: 349000000
-  },
-  {
-    month: 'Tháng 8'
-  }
-]
+import { getAllOrders } from '~/apis/orders.api'
 
 function DashboardChart() {
+  const [revenueData, setRevenueData] = useState([])
+  const { data: ordersData } = useQuery({
+    queryKey: ['orders'],
+    queryFn: getAllOrders
+  })
+
+  useEffect(() => {
+    const initialData = Array.from({ length: 12 }, (_, index) => ({
+      month: `T${index + 1}`,
+      revenue: 0
+    }))
+
+    const orders = ordersData?.data?.data || []
+
+    const revenueByMonth = {}
+    orders.forEach((order) => {
+      const orderDate = new Date(order.createdAt)
+      const month = orderDate.getMonth() + 1
+      if (!revenueByMonth[month]) {
+        revenueByMonth[month] = 0
+      }
+      revenueByMonth[month] += order.total_price
+    })
+
+    const updatedData = initialData.map((monthData) => {
+      const month = parseInt(monthData.month.split('T')[1])
+      const revenue = revenueByMonth[month] || 0
+      return { ...monthData, revenue }
+    })
+
+    setRevenueData(updatedData)
+  }, [ordersData])
+
   return (
     <div className='border border-gray-200 overflow-hidden rounded-lg mx-10'>
       <div className='flex items-center p-3 gap-3 bg-gray-200'>
@@ -50,7 +52,7 @@ function DashboardChart() {
         <h2 className='text-sm font-bold'>Area Chart</h2>
       </div>
       <div className='p-4 flex justify-center'>
-        <AreaChart width={850} height={300} data={data} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
+        <AreaChart width={850} height={300} data={revenueData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
           <defs>
             <linearGradient id='colorRevenue' x1='0' y1='0' x2='0' y2='1'>
               <stop offset='5%' stopColor='#8884d8' stopOpacity={0.8} />
