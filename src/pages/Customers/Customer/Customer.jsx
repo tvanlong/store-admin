@@ -1,14 +1,28 @@
+import { useQuery } from '@tanstack/react-query'
 import { Table } from 'flowbite-react'
 import { useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import { getAllCustomers } from '~/apis/users.api'
+import NoData from '~/components/NoData'
+import { formatDateTime } from '~/utils/format'
 import { tableTheme } from '~/utils/theme'
 
 function Customer({ setProgress }) {
+  const { data, isLoading } = useQuery({
+    queryKey: ['customers'],
+    queryFn: getAllCustomers
+  })
+  const customers = data?.data?.data || []
+
   useEffect(() => {
     setProgress(20)
     setTimeout(() => {
       setProgress(100)
     }, 200)
   }, [setProgress])
+
+  if (isLoading) return <NoData />
+
   return (
     <div className='mt-[68px] h-full'>
       <div className='text-center mt-20 mb-10'>
@@ -25,21 +39,21 @@ function Customer({ setProgress }) {
         <Table theme={tableTheme}>
           <Table.Head>
             <Table.HeadCell>Tên khách hàng</Table.HeadCell>
-            <Table.HeadCell>Địa chỉ hiện tại</Table.HeadCell>
             <Table.HeadCell>Email</Table.HeadCell>
+            <Table.HeadCell>Ngày tạo</Table.HeadCell>
             <Table.HeadCell>
               <span className='sr-only'>Edit</span>
             </Table.HeadCell>
           </Table.Head>
           <Table.Body className='divide-y'>
-            {Array.from({ length: 10 }).map((_, index) => (
-              <Table.Row key={index} className='bg-white'>
-                <Table.Cell className='whitespace-nowrap font-medium text-gray-900'>Nguyễn Văn A</Table.Cell>
-                <Table.Cell>Hà Nội, Việt Nam</Table.Cell>
-                <Table.Cell>khachhang@gmail.com</Table.Cell>
+            {customers.map((customer) => (
+              <Table.Row key={customer._id} className='bg-white'>
+                <Table.Cell className='whitespace-nowrap font-medium text-gray-900'>{customer.name}</Table.Cell>
+                <Table.Cell>{customer.email}</Table.Cell>
+                <Table.Cell>{formatDateTime(customer.createdAt)}</Table.Cell>
                 <Table.Cell className='flex gap-5'>
-                  <a className='font-medium text-cyan-600 hover:underline'>Cập nhật</a>
-                  <a className='font-medium text-red-600 hover:underline'>Xóa</a>
+                  <Link className='font-medium text-cyan-600 hover:underline'>Cập nhật</Link>
+                  <Link className='font-medium text-red-600 hover:underline'>Xóa</Link>
                 </Table.Cell>
               </Table.Row>
             ))}

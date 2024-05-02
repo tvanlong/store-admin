@@ -5,6 +5,7 @@ import { getAllSubcategories } from '~/apis/subcategories.api'
 import { getAllVersions } from '~/apis/version.api'
 import { getAllCustomers } from '~/apis/users.api'
 import { getAllOrders } from '~/apis/orders.api'
+import { path } from '~/constants/path'
 import Card from './Card'
 
 function Cards() {
@@ -57,6 +58,7 @@ function Cards() {
         title='Danh mục lớn'
         animatedValue={categories?.length || 0}
         label='categories'
+        path={path.category}
       />
       <Card
         color='#00bae8'
@@ -74,6 +76,7 @@ function Cards() {
         title='Danh mục nhỏ'
         animatedValue={subcategories?.length || 0}
         label='subcategories'
+        path={path.subcategory}
       />
       <Card
         color='#5cb85c'
@@ -95,6 +98,7 @@ function Cards() {
         title='Tổng sản phẩm'
         animatedValue={versions?.length || 0}
         label='products'
+        path={path.version}
       />
       <Card
         color='#f0ad4e'
@@ -134,6 +138,7 @@ function Cards() {
         title='Tổng đơn hàng'
         animatedValue={orders?.length || 0}
         label='orders'
+        path={path.order}
       />
     </div>
   )

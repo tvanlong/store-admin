@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query'
 import { Sidebar as SideBar } from 'flowbite-react'
+import { useContext } from 'react'
 import {
-  HiArrowSmRight,
   HiChartPie,
   HiArrowSmLeft,
   HiShoppingBag,
@@ -15,9 +15,11 @@ import { toast } from 'sonner'
 import { twMerge } from 'tailwind-merge'
 import { signOut } from '~/apis/auth.api'
 import { path } from '~/constants/path'
+import { AppContext } from '~/context/app.context'
 import { sidebarTheme } from '~/utils/theme'
 
 function Sidebar() {
+  const { isAuthenticated } = useContext(AppContext)
   const { mutateAsync } = useMutation({
     mutationFn: signOut,
     onSuccess: () => {
@@ -113,12 +115,11 @@ function Sidebar() {
           <SideBar.Item href={path.order} icon={HiShoppingBag}>
             Đơn hàng
           </SideBar.Item>
-          <SideBar.Item href={path.login} icon={HiArrowSmRight}>
-            Đăng nhập
-          </SideBar.Item>
-          <SideBar.Item to={''} icon={HiArrowSmLeft} onClick={handleSignOut}>
-            Đăng xuất
-          </SideBar.Item>
+          {isAuthenticated && (
+            <SideBar.Item to={''} icon={HiArrowSmLeft} onClick={handleSignOut}>
+              Đăng xuất
+            </SideBar.Item>
+          )}
         </SideBar.ItemGroup>
       </SideBar.Items>
     </SideBar>

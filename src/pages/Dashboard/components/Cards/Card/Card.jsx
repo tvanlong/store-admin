@@ -1,6 +1,7 @@
 import { useSpring, animated } from '@react-spring/web'
+import { Link } from 'react-router-dom'
 
-function Card({ color, icon, title, animatedValue, label }) {
+function Card({ color, icon, title, animatedValue, label, path }) {
   const springProps = useSpring({ [label]: animatedValue, from: { [label]: 0 } })
 
   return (
@@ -25,7 +26,9 @@ function Card({ color, icon, title, animatedValue, label }) {
         </div>
       </div>
       <div className='bg-[#f9fafb] text-[#337ab7] flex justify-between px-2 py-3'>
-        <div className='text-xs font-medium'>View Details</div>
+        <Link to={path} className='text-xs font-medium'>
+          View Details
+        </Link>
         <svg className='w-4 h-4' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24'>
           <path
             stroke='currentColor'
