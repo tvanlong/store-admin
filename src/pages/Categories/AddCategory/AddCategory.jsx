@@ -31,7 +31,7 @@ function AddCategory({ setProgress }) {
     }, 200)
   }, [setProgress])
 
-  const { mutateAsync } = useMutation({
+  const { mutateAsync, isPending } = useMutation({
     mutationFn: (data) => createCategory(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['categories'] })
@@ -75,7 +75,13 @@ function AddCategory({ setProgress }) {
         />
         {errors.name && <span className='text-red-500 text-sm mt-1'>{errors.name.message}</span>}
         <div className='flex justify-center'>
-          <Button className='mt-10' gradientMonochrome='cyan' type='submit'>
+          <Button
+            className='mt-10'
+            gradientMonochrome='cyan'
+            type='submit'
+            isProcessing={isPending}
+            disabled={isPending}
+          >
             Thêm danh mục
           </Button>
         </div>

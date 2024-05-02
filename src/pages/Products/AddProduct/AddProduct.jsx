@@ -71,7 +71,7 @@ function AddProduct({ setProgress }) {
     mutationFn: (data) => uploadImages(data)
   })
 
-  const { mutateAsync: addProductMutateAsync } = useMutation({
+  const { mutateAsync: addProductMutateAsync, isPending } = useMutation({
     mutationFn: (data) => addProduct(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['products'] })
@@ -162,7 +162,13 @@ function AddProduct({ setProgress }) {
           {errors.subcategory && <span className='text-red-500 text-sm'>{errors.subcategory.message}</span>}
         </div>
         <div className='flex justify-center'>
-          <Button className='mt-10' type='submit' gradientMonochrome='cyan'>
+          <Button
+            className='mt-10'
+            type='submit'
+            gradientMonochrome='cyan'
+            isProcessing={isPending}
+            disabled={isPending}
+          >
             Thêm sản phẩm
           </Button>
         </div>

@@ -95,7 +95,7 @@ function UpdateProduct({ setProgress }) {
     mutationFn: (name) => deleteImage(name)
   })
 
-  const { mutateAsync: updateProductMutateAsync } = useMutation({
+  const { mutateAsync: updateProductMutateAsync, isPending } = useMutation({
     mutationFn: (data) => updateProduct(id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['products'] })
@@ -200,7 +200,13 @@ function UpdateProduct({ setProgress }) {
           {errors.subcategory && <span className='text-red-500 text-sm'>{errors.subcategory.message}</span>}
         </div>
         <div className='flex justify-center'>
-          <Button className='mt-10' type='submit' gradientMonochrome='cyan'>
+          <Button
+            className='mt-10'
+            type='submit'
+            gradientMonochrome='cyan'
+            isProcessing={isPending}
+            disabled={isPending}
+          >
             Thêm sản phẩm
           </Button>
         </div>

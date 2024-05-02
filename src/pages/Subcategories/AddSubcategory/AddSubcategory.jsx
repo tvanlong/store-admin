@@ -47,7 +47,7 @@ function AddSubcategory({ setProgress }) {
     resolver: yupResolver(subcategorySchema)
   })
 
-  const { mutateAsync } = useMutation({
+  const { mutateAsync, isPending } = useMutation({
     mutationFn: (data) => createSubcategory(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['subcategories'] })
@@ -113,7 +113,13 @@ function AddSubcategory({ setProgress }) {
           {errors.name && <span className='text-red-500 text-sm'>{errors.name.message}</span>}
         </div>
         <div className='flex justify-center'>
-          <Button className='mt-10' type='submit' gradientMonochrome='cyan'>
+          <Button
+            className='mt-10'
+            type='submit'
+            gradientMonochrome='cyan'
+            isProcessing={isPending}
+            disabled={isPending}
+          >
             Thêm danh mục nhỏ
           </Button>
         </div>

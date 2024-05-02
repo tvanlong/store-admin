@@ -68,7 +68,7 @@ function UpdateVersion({ setProgress }) {
     }
   }, [versionData, setValue])
 
-  const { mutateAsync: updateVersionMutateAsync } = useMutation({
+  const { mutateAsync: updateVersionMutateAsync, isPending } = useMutation({
     mutationFn: (data) => updateVersion(id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['versions'] })
@@ -188,7 +188,13 @@ function UpdateVersion({ setProgress }) {
           {errors.description && <span className='text-red-500 text-sm'>{errors.description.message}</span>}
         </div>
         <div className='flex justify-center'>
-          <Button className='mt-10' type='submit' gradientMonochrome='cyan'>
+          <Button
+            className='mt-10'
+            type='submit'
+            gradientMonochrome='cyan'
+            isProcessing={isPending}
+            disabled={isPending}
+          >
             Thêm sản phẩm
           </Button>
         </div>
