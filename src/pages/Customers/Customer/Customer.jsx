@@ -39,7 +39,8 @@ function Customer({ setProgress }) {
         <Table theme={tableTheme}>
           <Table.Head>
             <Table.HeadCell>Tên khách hàng</Table.HeadCell>
-            <Table.HeadCell>Email</Table.HeadCell>
+            <Table.HeadCell>Số điện thoãi</Table.HeadCell>
+            <Table.HeadCell>Địa chỉ Email</Table.HeadCell>
             <Table.HeadCell>Ngày tạo</Table.HeadCell>
             <Table.HeadCell>
               <span className='sr-only'>Edit</span>
@@ -49,6 +50,7 @@ function Customer({ setProgress }) {
             {customers.map((customer) => (
               <Table.Row key={customer._id} className='bg-white'>
                 <Table.Cell className='whitespace-nowrap font-medium text-gray-900'>{customer.name}</Table.Cell>
+                <Table.Cell>{customer.phone}</Table.Cell>
                 <Table.Cell>{customer.email}</Table.Cell>
                 <Table.Cell>{formatDateTime(customer.createdAt)}</Table.Cell>
                 <Table.Cell className='flex gap-5'>

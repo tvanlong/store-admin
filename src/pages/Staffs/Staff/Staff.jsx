@@ -1,13 +1,16 @@
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Table } from 'flowbite-react'
 import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { getAllStaffs } from '~/apis/users.api'
+import { toast } from 'sonner'
+import { deleteStaff, getAllStaffs } from '~/apis/users.api'
 import NoData from '~/components/NoData'
+import { getUserDataFromLocalStorage } from '~/utils/auth'
 import { formatDateTime } from '~/utils/format'
 import { tableTheme } from '~/utils/theme'
 
 function Staff({ setProgress }) {
+  const queryClient = useQueryClient()
   const { data, isLoading } = useQuery({
     queryKey: ['staffs'],
     queryFn: getAllStaffs
@@ -20,6 +23,27 @@ function Staff({ setProgress }) {
       setProgress(100)
     }, 200)
   }, [setProgress])
+
+  const { mutateAsync } = useMutation({
+    mutationFn: deleteStaff,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['staffs'] })
+    }
+  })
+
+  const handleDelete = (id) => {
+    const user = getUserDataFromLocalStorage()
+    if (user._id === id) {
+      toast.warning('Tài khoản đang đăng nhập không thể xóa')
+      return
+    }
+
+    toast.promise(mutateAsync(id), {
+      loading: 'Đang tiến hành xóa nhân viên...',
+      success: 'Xóa nhân viên thành công',
+      error: (err) => err?.response?.data?.message || 'Thêm nhân viên thất bại'
+    })
+  }
 
   if (isLoading) return <NoData />
 
@@ -39,8 +63,9 @@ function Staff({ setProgress }) {
         <Table theme={tableTheme}>
           <Table.Head>
             <Table.HeadCell>Tên nhân viên</Table.HeadCell>
-            <Table.HeadCell>Địa chỉ hiện tại</Table.HeadCell>
-            <Table.HeadCell>Email</Table.HeadCell>
+            <Table.HeadCell>Số điện thoại</Table.HeadCell>
+            <Table.HeadCell>Địa chỉ email</Table.HeadCell>
+            <Table.HeadCell>Ngày tạo</Table.HeadCell>
             <Table.HeadCell>
               <span className='sr-only'>Edit</span>
             </Table.HeadCell>
@@ -49,11 +74,16 @@ function Staff({ setProgress }) {
             {staffs.map((staff) => (
               <Table.Row key={staff._id} className='bg-white'>
                 <Table.Cell className='whitespace-nowrap font-medium text-gray-900'>{staff.name}</Table.Cell>
+                <Table.Cell>{staff.phone}</Table.Cell>
                 <Table.Cell>{staff.email}</Table.Cell>
                 <Table.Cell>{formatDateTime(staff.createdAt)}</Table.Cell>
                 <Table.Cell className='flex gap-5'>
-                  <Link className='font-medium text-cyan-600 hover:underline'>Cập nhật</Link>
-                  <Link className='font-medium text-red-600 hover:underline'>Xóa</Link>
+                  <Link to={`/update-staff/${staff._id}`} className='font-medium text-cyan-600 hover:underline'>
+                    Cập nhật
+                  </Link>
+                  <Link onClick={() => handleDelete(staff._id)} className='font-medium text-red-600 hover:underline'>
+                    Xóa
+                  </Link>
                 </Table.Cell>
               </Table.Row>
             ))}
