@@ -6,7 +6,7 @@ import { getAllSubcategories } from '~/apis/subcategories.api'
 import { fileInputTheme, textInputTheme } from '~/utils/theme'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { productSchema } from '~/schemas/productSchema'
+import { productUpdateSchema } from '~/schemas/productSchema'
 import { deleteImage, uploadImages } from '~/apis/images.api'
 import { getProduct, updateProduct } from '~/apis/products.api'
 import { toast } from 'sonner'
@@ -43,10 +43,9 @@ function UpdateProduct({ setProgress }) {
   } = useForm({
     defaultValues: {
       name: '',
-      subcategory: '',
-      images: []
+      subcategory: ''
     },
-    resolver: yupResolver(productSchema)
+    resolver: yupResolver(productUpdateSchema)
   })
 
   useEffect(() => {
@@ -207,7 +206,7 @@ function UpdateProduct({ setProgress }) {
             isProcessing={isPending}
             disabled={isPending}
           >
-            Thêm sản phẩm
+            Cập nhật sản phẩm
           </Button>
         </div>
       </form>

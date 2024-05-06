@@ -1,6 +1,12 @@
 import http from '~/utils/http'
 
-export const getAllProducts = () => http.get('/api/products')
+export const getAllProducts = (page, limit = 2) =>
+  http.get('/api/products', {
+    params: {
+      _page: page,
+      _limit: limit
+    }
+  })
 
 export const getProduct = (id) => http.get(`/api/products/${id}`)
 

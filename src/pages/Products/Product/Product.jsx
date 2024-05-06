@@ -1,6 +1,6 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { Table } from 'flowbite-react'
-import { useEffect } from 'react'
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { Pagination, Table } from 'flowbite-react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { toast } from 'sonner'
 import { deleteImage } from '~/apis/images.api'
@@ -11,9 +11,11 @@ import { tableTheme } from '~/utils/theme'
 
 function Product({ setProgress }) {
   const queryClient = useQueryClient()
+  const [currentPage, setCurrentPage] = useState(1)
   const { data, isLoading } = useQuery({
-    queryKey: ['products'],
-    queryFn: getAllProducts
+    queryKey: ['products', currentPage],
+    queryFn: () => getAllProducts(currentPage),
+    placeholderData: keepPreviousData
   })
 
   const products = data?.data?.data.docs || []
@@ -54,6 +56,8 @@ function Product({ setProgress }) {
     })
   }
 
+  const onPageChange = (page) => setCurrentPage(page)
+
   if (isLoading) return <NoData />
 
   return (
@@ -81,11 +85,13 @@ function Product({ setProgress }) {
           <Table.Body className='divide-y'>
             {products.map((product) => (
               <Table.Row key={product._id} className='bg-white dark:border-gray-700'>
-                <Table.Cell className='font-medium text-gray-900 max-w-sm'>{product.name}</Table.Cell>
-                <Table.Cell>{product.subcategory.name}</Table.Cell>
-                <Table.Cell>
+                <Table.Cell width='30%' className='font-medium text-gray-900 max-w-sm'>
+                  {product.name}
+                </Table.Cell>
+                <Table.Cell width='20%'>{product.subcategory.name}</Table.Cell>
+                <Table.Cell width='35%'>
                   <div className='flex items-center gap-3'>
-                    {product.images.map((image, index) => (
+                    {product.images.slice(0, 2).map((image, index) => (
                       <img
                         key={index}
                         src={`${config.baseURL}/api/upload/${image}`}
@@ -93,24 +99,43 @@ function Product({ setProgress }) {
                         className='w-20 h-20 object-cover rounded-lg border border-gray-300'
                       />
                     ))}
+                    {product.images.length > 2 && (
+                      <div className='w-20 h-20 flex items-center justify-center rounded-lg border border-gray-300'>
+                        <span className='text-gray-400'>+{product.images.length - 2}</span>
+                      </div>
+                    )}
                   </div>
                 </Table.Cell>
-                <Table.Cell className='flex gap-5'>
-                  <Link to={`/update-product/${product._id}`} className='font-medium text-cyan-600 hover:underline'>
-                    Cập nhật
-                  </Link>
-                  <Link
-                    className='font-medium text-red-600 hover:underline'
-                    onClick={() => handleDeleteProduct(product)}
-                  >
-                    Xóa
-                  </Link>
+                <Table.Cell width='15%'>
+                  <div className='flex gap-4 items-center'>
+                    <Link to={`/update-product/${product._id}`} className='font-medium text-cyan-600 hover:underline'>
+                      Cập nhật
+                    </Link>
+                    <Link
+                      className='font-medium text-red-600 hover:underline'
+                      onClick={() => handleDeleteProduct(product)}
+                    >
+                      Xóa
+                    </Link>
+                  </div>
                 </Table.Cell>
               </Table.Row>
             ))}
           </Table.Body>
         </Table>
       </div>
+      {data?.data?.data.totalPages > 1 && (
+        <div className='flex overflow-x-auto sm:justify-center mt-10'>
+          <Pagination
+            className='text-sm'
+            currentPage={currentPage}
+            totalPages={data?.data?.data.totalPages}
+            onPageChange={onPageChange}
+            previousLabel='Trang trước'
+            nextLabel='Trang sau'
+          />
+        </div>
+      )}
     </div>
   )
 }
