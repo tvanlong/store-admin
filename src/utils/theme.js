@@ -9,7 +9,7 @@ export const sidebarTheme = {
   },
   collapse: {
     button:
-      'group flex w-full items-center rounded-lg p-2 text-base font-normal text-white transition duration-75 hover:border hover:border-gray-100',
+      'group flex w-full items-center rounded-lg p-2 text-base font-normal text-white transition duration-75 hover:bg-[#2d5171]',
     icon: {
       base: 'h-6 w-6 text-white transition duration-75',
       open: {
@@ -45,7 +45,7 @@ export const sidebarTheme = {
     }
   },
   item: {
-    base: 'flex items-center justify-center rounded-lg p-2 text-base font-normal text-white hover:border hover:border-gray-100',
+    base: 'flex items-center justify-center rounded-lg p-2 text-base font-normal text-white hover:bg-[#2d5171]',
     active: 'bg-gray-100',
     collapsed: {
       insideCollapse: 'group w-full pl-8 transition duration-75',

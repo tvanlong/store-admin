@@ -3,13 +3,15 @@ import { Sidebar as SideBar } from 'flowbite-react'
 import { useContext } from 'react'
 import {
   HiChartPie,
-  HiArrowSmLeft,
-  HiShoppingBag,
+  HiLogout,
+  HiShoppingCart,
   HiDesktopComputer,
   HiMenu,
   HiUser,
   HiOutlineMinusSm,
-  HiOutlinePlusSm
+  HiOutlinePlusSm,
+  HiMenuAlt4,
+  HiChip
 } from 'react-icons/hi'
 import { toast } from 'sonner'
 import { twMerge } from 'tailwind-merge'
@@ -65,7 +67,7 @@ function Sidebar() {
             <SideBar.Item href={path.addCategory}>Thêm danh mục mới</SideBar.Item>
           </SideBar.Collapse>
           <SideBar.Collapse
-            icon={HiMenu}
+            icon={HiMenuAlt4}
             label='Danh mục nhỏ'
             renderChevronIcon={(theme, open) => {
               const IconComponent = open ? HiOutlineMinusSm : HiOutlinePlusSm
@@ -89,7 +91,7 @@ function Sidebar() {
             <SideBar.Item href={path.addProduct}>Thêm sản phẩm mới</SideBar.Item>
           </SideBar.Collapse>
           <SideBar.Collapse
-            icon={HiDesktopComputer}
+            icon={HiChip}
             label='Phiên bản sản phẩm'
             renderChevronIcon={(theme, open) => {
               const IconComponent = open ? HiOutlineMinusSm : HiOutlinePlusSm
@@ -112,11 +114,11 @@ function Sidebar() {
             <SideBar.Item href={path.staff}>Tất cả nhân viên</SideBar.Item>
             <SideBar.Item href={path.addStaff}>Thêm nhân viên mới</SideBar.Item>
           </SideBar.Collapse>
-          <SideBar.Item href={path.order} icon={HiShoppingBag}>
+          <SideBar.Item href={path.order} icon={HiShoppingCart}>
             Đơn hàng
           </SideBar.Item>
           {isAuthenticated && (
-            <SideBar.Item to={''} icon={HiArrowSmLeft} onClick={handleSignOut}>
+            <SideBar.Item to={''} icon={HiLogout} onClick={handleSignOut}>
               Đăng xuất
             </SideBar.Item>
           )}

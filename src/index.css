@@ -2,8 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.cdnfonts.com/css/segoe-ui-4');
+
 /* ---------------------Global CSS------------------------ */
 body {
+  font-family: 'Segoe UI', sans-serif;
   -webkit-user-select: none; /* Chrome all / Safari all */
   -moz-user-select: none; /* Firefox all */
   -ms-user-select: none; /* IE 10+ */

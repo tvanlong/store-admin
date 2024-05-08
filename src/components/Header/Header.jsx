@@ -1,7 +1,7 @@
 /* eslint-disable indent */
 import { Avatar, Breadcrumb, Navbar } from 'flowbite-react'
 import { useContext } from 'react'
-import { HiChartPie, HiMenu, HiUser, HiDesktopComputer, HiShoppingBag } from 'react-icons/hi'
+import { HiChartPie, HiShoppingCart, HiDesktopComputer, HiMenu, HiUser, HiMenuAlt4, HiChip } from 'react-icons/hi'
 import { useLocation } from 'react-router-dom'
 import { path } from '~/constants/path'
 import { AppContext } from '~/context/app.context'
@@ -27,7 +27,7 @@ function Header() {
       case path.subcategory:
         return (
           <Breadcrumb aria-label='Default breadcrumb example'>
-            <Breadcrumb.Item icon={HiMenu}>Danh mục sản phẩm nhỏ</Breadcrumb.Item>
+            <Breadcrumb.Item icon={HiMenuAlt4}>Danh mục sản phẩm nhỏ</Breadcrumb.Item>
           </Breadcrumb>
         )
       case path.product:
@@ -39,7 +39,7 @@ function Header() {
       case path.version:
         return (
           <Breadcrumb aria-label='Default breadcrumb example'>
-            <Breadcrumb.Item icon={HiDesktopComputer}>Phiên bản sản phẩm</Breadcrumb.Item>
+            <Breadcrumb.Item icon={HiChip}>Phiên bản sản phẩm</Breadcrumb.Item>
           </Breadcrumb>
         )
       case path.customer:
@@ -57,7 +57,7 @@ function Header() {
       case path.order:
         return (
           <Breadcrumb aria-label='Default breadcrumb example'>
-            <Breadcrumb.Item icon={HiShoppingBag}>Đơn hàng</Breadcrumb.Item>
+            <Breadcrumb.Item icon={HiShoppingCart}>Đơn hàng</Breadcrumb.Item>
           </Breadcrumb>
         )
       case path.addCategory:
