@@ -81,10 +81,10 @@ function Product({ setProgress }) {
     })
   }
 
-  const onSortChange = (value) => {
+  const onSortChange = (sort_by, value) => {
     newQueryParamsConfig = {
       ...newQueryParamsConfig,
-      sort: 'createdAt',
+      sort: sort_by,
       order: value
     }
     refetch()
@@ -115,8 +115,8 @@ function Product({ setProgress }) {
         />
         <FilterField
           options={[
-            { value: 'desc', label: 'Mới nhất' },
-            { value: 'asc', label: 'Cũ nhất' }
+            { sort_by: 'createdAt', value: 'new', label: 'Mới nhất' },
+            { sort_by: 'createdAt', value: 'old', label: 'Cũ nhất' }
           ]}
           onSortChange={onSortChange}
         />
@@ -146,11 +146,11 @@ function Product({ setProgress }) {
                           key={index}
                           src={`${config.baseURL}/api/upload/${image}`}
                           alt={product.name}
-                          className='w-20 h-20 object-cover rounded-lg border border-gray-300'
+                          className='w-16 h-16 object-cover rounded-lg border border-gray-300'
                         />
                       ))}
                       {product.images.length > 2 && (
-                        <div className='w-20 h-20 flex items-center justify-center rounded-lg border border-gray-300'>
+                        <div className='w-16 h-16 flex items-center justify-center rounded-lg border border-gray-300'>
                           <span className='text-gray-400'>+{product.images.length - 2}</span>
                         </div>
                       )}
