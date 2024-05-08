@@ -195,7 +195,7 @@ function UpdateVersion({ setProgress }) {
             isProcessing={isPending}
             disabled={isPending}
           >
-            Thêm sản phẩm
+            Cập nhật
           </Button>
         </div>
       </form>

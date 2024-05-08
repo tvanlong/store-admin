@@ -10,7 +10,9 @@ import { AppProvider } from './context/app.context.jsx'
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      refetchOnWindowFocus: false
+      cacheTime: Infinity, // Thời gian cache data, cache data sẽ không bao giờ bị xóa
+      refetchOnWindowFocus: false,
+      staleTime: Infinity // Thời gian mà data được coi là cũ, sau thời gian này thì data sẽ được fetch lại, Infinity là không bao giờ coi data là cũ
     }
   }
 })
