@@ -2,6 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Button, Label, TextInput } from 'flowbite-react'
 import { useEffect } from 'react'
+import { Helmet } from 'react-helmet-async'
 import { useForm } from 'react-hook-form'
 import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'sonner'
@@ -64,6 +65,10 @@ function UpdateCategory({ setProgress }) {
 
   return (
     <div className='mt-[68px] h-full'>
+      <Helmet>
+        <title>Cập nhật danh mục sản phẩm | Trang quản trị cập nhật danh mục sản phẩm</title>
+        <meta name='description' content='Trang quản trị | Cập nhật danh mục sản phẩm' />
+      </Helmet>
       <div className='text-center mt-20 mb-10'>
         <h1 className='mb-4 text-5xl font-extrabold text-gray-900'>
           <span className='text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400'>

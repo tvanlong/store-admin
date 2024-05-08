@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom'
 import { createVersion } from '~/apis/version.api'
 import { versionSchema } from '~/schemas/versionSchema'
 import { toast } from 'sonner'
+import { Helmet } from 'react-helmet-async'
 
 function AddVersion({ setProgress }) {
   const queryClient = useQueryClient()
@@ -69,6 +70,10 @@ function AddVersion({ setProgress }) {
 
   return (
     <div className='mt-[68px] h-full'>
+      <Helmet>
+        <title>Thêm phiên bản sản phẩm | Trang quản trị thêm phiên bản sản phẩm</title>
+        <meta name='description' content='Trang quản trị | Thêm phiên bản sản phẩm' />
+      </Helmet>
       <div className='text-center mt-20 mb-10'>
         <h1 className='mb-4 text-5xl font-extrabold text-gray-900'>
           <span className='text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400'>

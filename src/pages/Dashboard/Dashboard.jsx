@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import Cards from './components/Cards'
 import DashboardChart from './components/DashboardChart'
+import { Helmet } from 'react-helmet-async'
 
 function Dashboard({ setProgress }) {
   useEffect(() => {
@@ -12,6 +13,10 @@ function Dashboard({ setProgress }) {
 
   return (
     <div className='mt-[68px]'>
+      <Helmet>
+        <title>Trang quản trị | Thông tin tổng quan</title>
+        <meta name='description' content='Trang quản trị | Thông tin tổng quan' />
+      </Helmet>
       <Cards />
       <DashboardChart />
     </div>

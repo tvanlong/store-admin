@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { Badge, Table } from 'flowbite-react'
 import { useEffect } from 'react'
+import { Helmet } from 'react-helmet-async'
 import { getAllOrders } from '~/apis/orders.api'
 import DetailOrderModal from '~/components/DetailOrderModal'
 import NoData from '~/components/NoData'
@@ -26,6 +27,10 @@ function Order({ setProgress }) {
 
   return (
     <div className='mt-[68px] h-full'>
+      <Helmet>
+        <title>Danh sách đơn hàng | Trang quản trị lưu trữ danh sách đơn hàng</title>
+        <meta name='description' content='Trang quản trị | Danh sách đơn hàng' />
+      </Helmet>
       <div className='text-center mt-20 mb-10'>
         <h1 className='mb-4 text-5xl font-extrabold text-gray-900'>
           <span className='text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400'>

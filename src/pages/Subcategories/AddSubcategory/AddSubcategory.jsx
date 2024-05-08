@@ -10,6 +10,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { subcategorySchema } from '~/schemas/subcategorySchema'
 import { createSubcategory } from '~/apis/subcategories.api'
 import { toast } from 'sonner'
+import { Helmet } from 'react-helmet-async'
 
 function AddSubcategory({ setProgress }) {
   const queryClient = useQueryClient()
@@ -67,6 +68,10 @@ function AddSubcategory({ setProgress }) {
 
   return (
     <div className='mt-[68px] h-full'>
+      <Helmet>
+        <title>Thêm danh mục sản phẩm nhỏ | Trang quản trị thêm danh mục sản phẩm nhỏ</title>
+        <meta name='description' content='Trang quản trị | Thêm danh mục sản phẩm nhỏ' />
+      </Helmet>
       <div className='text-center mt-20 mb-10'>
         <h1 className='mb-4 text-5xl font-extrabold text-gray-900'>
           <span className='text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400'>

@@ -10,6 +10,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { getVersionById, updateVersion } from '~/apis/version.api'
 import { versionSchema } from '~/schemas/versionSchema'
 import { toast } from 'sonner'
+import { Helmet } from 'react-helmet-async'
 
 function UpdateVersion({ setProgress }) {
   const queryClient = useQueryClient()
@@ -87,6 +88,10 @@ function UpdateVersion({ setProgress }) {
 
   return (
     <div className='mt-[68px] h-full'>
+      <Helmet>
+        <title>Cập nhật phiên bản sản phẩm | Trang quản trị cập nhật phiên bản sản phẩm</title>
+        <meta name='description' content='Trang quản trị | Cập nhật phiên bản sản phẩm' />
+      </Helmet>
       <div className='text-center mt-20 mb-10'>
         <h1 className='mb-4 text-5xl font-extrabold text-gray-900'>
           <span className='text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400'>

@@ -12,6 +12,7 @@ import { getProduct, updateProduct } from '~/apis/products.api'
 import { toast } from 'sonner'
 import { useNavigate, useParams } from 'react-router-dom'
 import config from '~/constants/config'
+import { Helmet } from 'react-helmet-async'
 
 function UpdateProduct({ setProgress }) {
   const queryClient = useQueryClient()
@@ -135,6 +136,10 @@ function UpdateProduct({ setProgress }) {
 
   return (
     <div className='mt-[68px] h-full'>
+      <Helmet>
+        <title>Cập nhật sản phẩm | Trang quản trị cập nhật sản phẩm</title>
+        <meta name='description' content='Trang quản trị | Cập nhật sản phẩm' />
+      </Helmet>
       <div className='text-center mt-20 mb-10'>
         <h1 className='mb-4 text-5xl font-extrabold text-gray-900'>
           <span className='text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400'>

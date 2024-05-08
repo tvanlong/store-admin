@@ -1,6 +1,7 @@
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Pagination, Table } from 'flowbite-react'
 import { useEffect, useState } from 'react'
+import { Helmet } from 'react-helmet-async'
 import { Link } from 'react-router-dom'
 import { toast } from 'sonner'
 import { deleteVersion, getAllVersions } from '~/apis/version.api'
@@ -85,6 +86,10 @@ function Version({ setProgress }) {
 
   return (
     <div className='mt-[68px] h-full'>
+      <Helmet>
+        <title>Danh sách phiên bản sản phẩm | Trang quản trị lưu trữ danh sách phiên bản sản phẩm</title>
+        <meta name='description' content='Danh sách phiên bản sản phẩm' />
+      </Helmet>
       <div className='text-center mt-20 mb-10'>
         <h1 className='mb-4 text-5xl font-extrabold text-gray-900'>
           <span className='text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400'>

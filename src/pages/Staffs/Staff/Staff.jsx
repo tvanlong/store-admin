@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Table } from 'flowbite-react'
 import { useEffect } from 'react'
+import { Helmet } from 'react-helmet-async'
 import { Link } from 'react-router-dom'
 import { toast } from 'sonner'
 import { deleteStaff, getAllStaffs } from '~/apis/users.api'
@@ -49,6 +50,10 @@ function Staff({ setProgress }) {
 
   return (
     <div className='mt-[68px] h-full'>
+      <Helmet>
+        <title>Danh sách nhân viên | Trang quản trị lưu trữ danh sách nhân viên</title>
+        <meta name='description' content='Trang quản trị | Danh sách nhân viên' />
+      </Helmet>
       <div className='text-center mt-20 mb-10'>
         <h1 className='mb-4 text-5xl font-extrabold text-gray-900'>
           <span className='text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400'>

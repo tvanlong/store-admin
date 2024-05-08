@@ -7,6 +7,7 @@ import { useContext } from 'react'
 import { AppContext } from '~/context/app.context'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
+import { Helmet } from 'react-helmet-async'
 
 function Login() {
   const { setIsAuthenticated, setProfile } = useContext(AppContext)
@@ -48,6 +49,10 @@ function Login() {
 
   return (
     <div className='flex items-center min-h-screen p-4 bg-gray-100 lg:justify-center'>
+      <Helmet>
+        <title>Trang quản trị | Đăng nhập</title>
+        <meta name='description' content='Trang quản trị | Đăng nhập' />
+      </Helmet>
       <div className='flex flex-col overflow-hidden bg-white rounded-md shadow-lg max md:flex-row md:flex-1 lg:max-w-screen-md'>
         <div className='p-4 py-6 text-white bg-black md:w-80 md:flex-shrink-0 md:flex md:flex-col md:items-center md:justify-evenly'>
           <div className='my-3 text-4xl font-bold tracking-wider text-center'>Đăng nhập</div>
