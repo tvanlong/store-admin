@@ -22,13 +22,13 @@ function Product({ setProgress }) {
   const [currentPage, setCurrentPage] = useState(1)
   const [loading, setLoading] = useState(false)
   const debouncedValue = useDebounce(searchValue, 700)
-  const newQueryParamsConfig = {
+  let newQueryParamsConfig = {
     page: currentPage,
     limit: LIMIT,
     ...queryParamsConfig,
     search: debouncedValue === '' ? undefined : debouncedValue
   }
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, refetch } = useQuery({
     queryKey: ['products', newQueryParamsConfig],
     queryFn: () => {
       setLoading(false)
@@ -81,6 +81,15 @@ function Product({ setProgress }) {
     })
   }
 
+  const onSortChange = (value) => {
+    newQueryParamsConfig = {
+      ...newQueryParamsConfig,
+      sort: 'createdAt',
+      order: value
+    }
+    refetch()
+  }
+
   const onPageChange = (page) => setCurrentPage(page)
 
   if (isLoading) return <NoData />
@@ -109,6 +118,7 @@ function Product({ setProgress }) {
             { value: 'desc', label: 'Mới nhất' },
             { value: 'asc', label: 'Cũ nhất' }
           ]}
+          onSortChange={onSortChange}
         />
       </div>
       <div className='overflow-x-auto mx-10'>
