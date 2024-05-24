@@ -4,8 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
+    "dev": "cross-env BUILD_MODE=dev vite",
+    "build": "cross-env BUILD_MODE=prod vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "lint:fix": "eslint --fix --ext .js,.jsx .",
     "prettier": "prettier --check \"src/**/(*.jsx|*.js|*.css|*.scss)\"",
@@ -17,6 +17,7 @@
     "@react-spring/web": "^9.7.3",
     "@tanstack/react-query": "^5.29.2",
     "axios": "^1.6.8",
+    "cross-env": "^7.0.3",
     "flowbite": "^2.3.0",
     "flowbite-react": "^0.7.5",
     "lodash": "^4.17.21",
