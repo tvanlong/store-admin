@@ -6,9 +6,13 @@ import { Helmet } from 'react-helmet-async'
 function Dashboard({ setProgress }) {
   useEffect(() => {
     setProgress(20)
-    setTimeout(() => {
+    const timeoutId = setTimeout(() => {
       setProgress(100)
     }, 200)
+
+    return () => {
+      clearTimeout(timeoutId)
+    }
   }, [setProgress])
 
   return (
