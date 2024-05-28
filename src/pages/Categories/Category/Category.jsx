@@ -1,19 +1,17 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Table } from 'flowbite-react'
 import { useEffect } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { Link } from 'react-router-dom'
 import { toast } from 'sonner'
-import { deleteCategory, getAllCategories } from '~/apis/categories.api'
+import { deleteCategory } from '~/apis/categories.api'
 import NoData from '~/components/NoData'
+import { useCategories } from '~/hooks/useCategories'
 import { tableTheme } from '~/utils/theme'
 
 function Category({ setProgress }) {
   const queryClient = useQueryClient()
-  const { data, isLoading } = useQuery({
-    queryKey: ['categories'],
-    queryFn: getAllCategories
-  })
+  const { data, isLoading } = useCategories()
 
   const categories = data?.data.data || []
 

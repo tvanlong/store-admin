@@ -7,8 +7,8 @@ import { useForm } from 'react-hook-form'
 import { useNavigate, useParams } from 'react-router-dom'
 import Select from 'react-select'
 import { toast } from 'sonner'
-import { getAllCategories } from '~/apis/categories.api'
 import { getSubcategory, updateSubcategory } from '~/apis/subcategories.api'
+import { useCategories } from '~/hooks/useCategories'
 import { subcategorySchema } from '~/schemas/subcategorySchema'
 import { textInputTheme } from '~/utils/theme'
 
@@ -20,10 +20,7 @@ function UpdateSubcategory({ setProgress }) {
     queryKey: ['subcategories', id],
     queryFn: () => getSubcategory(id)
   })
-  const { data } = useQuery({
-    queryKey: ['categories'],
-    queryFn: getAllCategories
-  })
+  const { data } = useCategories()
 
   useEffect(() => {
     setProgress(20)

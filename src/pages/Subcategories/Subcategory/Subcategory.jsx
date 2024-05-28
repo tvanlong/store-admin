@@ -1,20 +1,17 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Table } from 'flowbite-react'
 import { useEffect } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { Link } from 'react-router-dom'
 import { toast } from 'sonner'
-import { deleteSubcategory, getAllSubcategories } from '~/apis/subcategories.api'
+import { deleteSubcategory } from '~/apis/subcategories.api'
 import NoData from '~/components/NoData'
+import { useSubcategories } from '~/hooks/useSubcategories'
 import { tableTheme } from '~/utils/theme'
 
 function Subcategory({ setProgress }) {
   const queryClient = useQueryClient()
-  const { data, isLoading } = useQuery({
-    queryKey: ['subcategories'],
-    queryFn: getAllSubcategories
-  })
-
+  const { data, isLoading } = useSubcategories()
   const subcategories = data?.data.data || []
 
   useEffect(() => {

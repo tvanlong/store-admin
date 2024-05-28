@@ -1,18 +1,14 @@
-import { useQuery } from '@tanstack/react-query'
 import { Table } from 'flowbite-react'
 import { useEffect } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { Link } from 'react-router-dom'
-import { getAllCustomers } from '~/apis/users.api'
 import NoData from '~/components/NoData'
+import { useCustomers } from '~/hooks/useCustomers'
 import { formatDateTime } from '~/utils/format'
 import { tableTheme } from '~/utils/theme'
 
 function Customer({ setProgress }) {
-  const { data, isLoading } = useQuery({
-    queryKey: ['customers'],
-    queryFn: getAllCustomers
-  })
+  const { data, isLoading } = useCustomers()
   const customers = data?.data?.data || []
 
   useEffect(() => {

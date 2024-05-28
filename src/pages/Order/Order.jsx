@@ -1,19 +1,14 @@
-import { useQuery } from '@tanstack/react-query'
 import { Badge, Table } from 'flowbite-react'
 import { useEffect } from 'react'
 import { Helmet } from 'react-helmet-async'
-import { getAllOrders } from '~/apis/orders.api'
 import DetailOrderModal from '~/components/DetailOrderModal'
 import NoData from '~/components/NoData'
+import { useOrders } from '~/hooks/useOrders'
 import { formatCurrency, formatDateTime } from '~/utils/format'
 import { tableTheme } from '~/utils/theme'
 
 function Order({ setProgress }) {
-  const { data, isLoading } = useQuery({
-    queryKey: ['orders'],
-    queryFn: getAllOrders
-  })
-
+  const { data, isLoading } = useOrders()
   const orders = data?.data?.data || []
 
   useEffect(() => {

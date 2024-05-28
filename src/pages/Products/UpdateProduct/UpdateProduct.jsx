@@ -2,7 +2,6 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Button, FileInput, Label, TextInput } from 'flowbite-react'
 import Select from 'react-select'
 import { useEffect, useMemo, useState } from 'react'
-import { getAllSubcategories } from '~/apis/subcategories.api'
 import { fileInputTheme, textInputTheme } from '~/utils/theme'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -13,6 +12,7 @@ import { toast } from 'sonner'
 import { useNavigate, useParams } from 'react-router-dom'
 import config from '~/constants/config'
 import { Helmet } from 'react-helmet-async'
+import { useSubcategories } from '~/hooks/useSubcategories'
 
 function UpdateProduct({ setProgress }) {
   const queryClient = useQueryClient()
@@ -23,10 +23,7 @@ function UpdateProduct({ setProgress }) {
     queryKey: ['product', id],
     queryFn: () => getProduct(id)
   })
-  const { data } = useQuery({
-    queryKey: ['subcategories'],
-    queryFn: getAllSubcategories
-  })
+  const { data } = useSubcategories()
   const subcategoryOptions = data?.data?.data.map((subcategory) => {
     return {
       value: subcategory._id,

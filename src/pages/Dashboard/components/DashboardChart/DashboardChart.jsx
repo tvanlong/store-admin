@@ -1,14 +1,10 @@
-import { useQuery } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { Area, AreaChart, CartesianGrid, Tooltip, XAxis, YAxis } from 'recharts'
-import { getAllOrders } from '~/apis/orders.api'
+import { useOrders } from '~/hooks/useOrders'
 
 function DashboardChart() {
   const [revenueData, setRevenueData] = useState([])
-  const { data: ordersData } = useQuery({
-    queryKey: ['orders'],
-    queryFn: getAllOrders
-  })
+  const { data: ordersData } = useOrders()
 
   useEffect(() => {
     const initialData = Array.from({ length: 12 }, (_, index) => ({

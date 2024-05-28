@@ -2,8 +2,7 @@ import { Button, Label, TextInput } from 'flowbite-react'
 import { useEffect } from 'react'
 import { textInputTheme } from '~/utils/theme'
 import Select from 'react-select'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { getAllCategories } from '~/apis/categories.api'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -11,14 +10,12 @@ import { subcategorySchema } from '~/schemas/subcategorySchema'
 import { createSubcategory } from '~/apis/subcategories.api'
 import { toast } from 'sonner'
 import { Helmet } from 'react-helmet-async'
+import { useCategories } from '~/hooks/useCategories'
 
 function AddSubcategory({ setProgress }) {
   const queryClient = useQueryClient()
   const navigate = useNavigate()
-  const { data } = useQuery({
-    queryKey: ['categories'],
-    queryFn: getAllCategories
-  })
+  const { data } = useCategories()
 
   useEffect(() => {
     setProgress(20)

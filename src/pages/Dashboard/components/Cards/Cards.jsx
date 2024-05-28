@@ -1,38 +1,22 @@
 import { useMemo } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { getAllCategories } from '~/apis/categories.api'
-import { getAllSubcategories } from '~/apis/subcategories.api'
 import { getAllVersions } from '~/apis/version.api'
-import { getAllCustomers } from '~/apis/users.api'
-import { getAllOrders } from '~/apis/orders.api'
 import { path } from '~/constants/path'
 import Card from './Card'
+import { useCategories } from '~/hooks/useCategories'
+import { useSubcategories } from '~/hooks/useSubcategories'
+import { useCustomers } from '~/hooks/useCustomers'
+import { useOrders } from '~/hooks/useOrders'
 
 function Cards() {
-  const { data: categoriesData } = useQuery({
-    queryKey: ['categories'],
-    queryFn: getAllCategories
-  })
-
-  const { data: subcategoriesData } = useQuery({
-    queryKey: ['subcategories'],
-    queryFn: getAllSubcategories
-  })
-
+  const { data: categoriesData } = useCategories()
+  const { data: subcategoriesData } = useSubcategories()
   const { data: versionsData } = useQuery({
     queryKey: ['versions'],
     queryFn: getAllVersions
   })
-
-  const { data: customersData } = useQuery({
-    queryKey: ['customers'],
-    queryFn: getAllCustomers
-  })
-
-  const { data: ordersData } = useQuery({
-    queryKey: ['orders'],
-    queryFn: getAllOrders
-  })
+  const { data: customersData } = useCustomers()
+  const { data: ordersData } = useOrders()
 
   const categories = useMemo(() => categoriesData?.data.data, [categoriesData])
   const subcategories = useMemo(() => subcategoriesData?.data.data, [subcategoriesData])
