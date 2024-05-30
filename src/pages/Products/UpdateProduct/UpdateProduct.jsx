@@ -112,6 +112,7 @@ function UpdateProduct({ setProgress }) {
 
   const onSubmit = handleSubmit(async (data) => {
     if (file.length > 0) {
+      const toastId = toast.loading('Đang upload ảnh sản phẩm...')
       productData?.data?.data.images.forEach(async (image) => {
         const public_id = extractPublicIdFromUrl(image)
         await deleteImageMutateAsync(public_id)
@@ -121,7 +122,10 @@ function UpdateProduct({ setProgress }) {
       fileList.forEach((file) => {
         formData.append('files', file)
       })
+
       const response = await uploadImagesMutateAsync(formData)
+      toast.dismiss(toastId)
+
       toast.promise(updateProductMutateAsync({ ...data, images: response.data.files }), {
         loading: 'Đang cập nhật sản phẩm...',
         success: 'Cập nhật sản phẩm thành công',

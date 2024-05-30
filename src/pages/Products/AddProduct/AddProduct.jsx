@@ -92,12 +92,16 @@ function AddProduct({ setProgress }) {
   }
 
   const onSubmit = handleSubmit(async (data) => {
+    const toastId = toast.loading('Đang upload ảnh...')
     const fileList = Array.from(data.images)
     const formData = new FormData()
     fileList.forEach((file) => {
       formData.append('files', file)
     })
+
     const response = await uploadImagesMutateAsync(formData)
+    toast.dismiss(toastId)
+
     toast.promise(addProductMutateAsync({ ...data, images: response.data.files }), {
       loading: 'Đang thêm sản phẩm...',
       success: 'Thêm sản phẩm thành công',
