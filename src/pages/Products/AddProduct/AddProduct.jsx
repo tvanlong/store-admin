@@ -6,7 +6,7 @@ import { fileInputTheme, textInputTheme } from '~/utils/theme'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { productSchema } from '~/schemas/productSchema'
-import { uploadImages } from '~/apis/images.api'
+import { deleteImage, uploadImages } from '~/apis/images.api'
 import { addProduct } from '~/apis/products.api'
 import { toast } from 'sonner'
 import { useNavigate } from 'react-router-dom'
@@ -73,6 +73,10 @@ function AddProduct({ setProgress }) {
     mutationFn: (data) => uploadImages(data)
   })
 
+  const { mutateAsync: deleteImageMutateAsync } = useMutation({
+    mutationFn: (name) => deleteImage(name)
+  })
+
   const { mutateAsync: addProductMutateAsync, isPending } = useMutation({
     mutationFn: (data) => addProduct(data),
     onSuccess: () => {
@@ -97,7 +101,12 @@ function AddProduct({ setProgress }) {
     toast.promise(addProductMutateAsync({ ...data, images: response.data.files }), {
       loading: 'Đang thêm sản phẩm...',
       success: 'Thêm sản phẩm thành công',
-      error: 'Thêm sản phẩm thất bại'
+      error: (err) => {
+        response.data.files.forEach((file) => {
+          deleteImageMutateAsync(file)
+        })
+        return err.response.data.message || 'Có lỗi xảy ra khi thêm sản phẩm'
+      }
     })
   })
 
