@@ -7,7 +7,7 @@ function useQueryParamsConfig() {
   const queryParamsConfig = {
     sort: queryParams.sort || 'createdAt',
     order: queryParams.order || 'desc',
-    search: queryParams.search
+    keyword: queryParams.keyword
   }
   const filteredQueryParamsConfig = omitBy(queryParamsConfig, (value) => isUndefined(value) || value === '')
   return filteredQueryParamsConfig

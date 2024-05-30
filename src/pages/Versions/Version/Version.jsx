@@ -28,7 +28,7 @@ function Version({ setProgress }) {
     page: currentPage,
     limit: LIMIT,
     ...queryParamsConfig,
-    search: debouncedValue === '' ? undefined : debouncedValue
+    keyword: debouncedValue === '' ? undefined : debouncedValue
   }
   const { data, isLoading, refetch } = useQuery({
     queryKey: ['versions', newQueryParamsConfig],
