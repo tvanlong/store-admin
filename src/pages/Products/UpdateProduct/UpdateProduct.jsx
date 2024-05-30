@@ -10,9 +10,9 @@ import { deleteImage, uploadImages } from '~/apis/images.api'
 import { getProduct, updateProduct } from '~/apis/products.api'
 import { toast } from 'sonner'
 import { useNavigate, useParams } from 'react-router-dom'
-import config from '~/constants/config'
 import { Helmet } from 'react-helmet-async'
 import { useSubcategories } from '~/hooks/useSubcategories'
+import { extractPublicIdFromUrl } from '~/utils/util'
 
 function UpdateProduct({ setProgress }) {
   const queryClient = useQueryClient()
@@ -79,7 +79,7 @@ function UpdateProduct({ setProgress }) {
       return productData?.data?.data.images.map((image, index) => (
         <img
           key={index}
-          src={`${config.baseURL}/api/upload/${image}`}
+          src={image}
           alt={productData?.data?.data.name}
           className='w-20 h-20 object-cover rounded-lg border border-gray-300'
         />
@@ -93,7 +93,7 @@ function UpdateProduct({ setProgress }) {
   })
 
   const { mutateAsync: deleteImageMutateAsync } = useMutation({
-    mutationFn: (name) => deleteImage(name)
+    mutationFn: (public_id) => deleteImage(public_id)
   })
 
   const { mutateAsync: updateProductMutateAsync, isPending } = useMutation({
@@ -113,7 +113,8 @@ function UpdateProduct({ setProgress }) {
   const onSubmit = handleSubmit(async (data) => {
     if (file.length > 0) {
       productData?.data?.data.images.forEach(async (image) => {
-        await deleteImageMutateAsync(image)
+        const public_id = extractPublicIdFromUrl(image)
+        await deleteImageMutateAsync(public_id)
       })
       const fileList = Array.from(data.images)
       const formData = new FormData()

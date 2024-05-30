@@ -1,4 +1,3 @@
-import config from '~/constants/config'
 import { formatCurrency } from '~/utils/format'
 
 function OrderItem({ item }) {
@@ -11,12 +10,7 @@ function OrderItem({ item }) {
       </p>
       <div className='flex gap-3 justify-center'>
         {version.product.images.map((image, index) => (
-          <img
-            key={index}
-            src={`${config.baseURL}/api/upload/${image}`}
-            alt={version.product.name}
-            className='w-28 h-28 object-contain'
-          />
+          <img key={index} src={image} alt={version.product.name} className='w-28 h-28 object-contain' />
         ))}
       </div>
       <p className='text-sm leading-relaxed text-gray-500'>

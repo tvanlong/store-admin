@@ -9,10 +9,10 @@ import { deleteProduct, getAllProducts } from '~/apis/products.api'
 import FilterField from '~/components/FilterField'
 import NoData from '~/components/NoData'
 import SearchField from '~/components/SearchField'
-import config from '~/constants/config'
 import useDebounce from '~/hooks/useDebounce'
 import useQueryParamsConfig from '~/hooks/useQueryParamsConfig'
 import { tableTheme } from '~/utils/theme'
+import { extractPublicIdFromUrl } from '~/utils/util'
 
 const LIMIT = 5
 
@@ -58,7 +58,7 @@ function Product({ setProgress }) {
   }, [debouncedValue])
 
   const { mutateAsync: deleteImageMutateAsync } = useMutation({
-    mutationFn: (name) => deleteImage(name)
+    mutationFn: (public_id) => deleteImage(public_id)
   })
 
   const { mutateAsync: deleteProductMutateAsync } = useMutation({
@@ -82,7 +82,8 @@ function Product({ setProgress }) {
     })
 
     product.images.forEach(async (image) => {
-      await deleteImageMutateAsync(image)
+      const public_id = extractPublicIdFromUrl(image)
+      await deleteImageMutateAsync(public_id)
     })
   }
 
@@ -153,7 +154,7 @@ function Product({ setProgress }) {
                       {product.images.slice(0, 2).map((image, index) => (
                         <img
                           key={index}
-                          src={`${config.baseURL}/api/upload/${image}`}
+                          src={image}
                           alt={product.name}
                           className='w-16 h-16 object-cover rounded-lg border border-gray-300'
                         />

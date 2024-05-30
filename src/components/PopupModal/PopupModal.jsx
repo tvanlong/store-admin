@@ -1,7 +1,6 @@
 import { Button, Modal } from 'flowbite-react'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import config from '~/constants/config'
 import { formatCurrency, formatDateTime } from '~/utils/format'
 
 function PopupModal({ version }) {
@@ -19,7 +18,7 @@ function PopupModal({ version }) {
               {version.product.images.map((image, index) => (
                 <img
                   key={index}
-                  src={`${config.baseURL}/api/upload/${image}`}
+                  src={image}
                   alt={version.product.name}
                   className='w-20 h-20 object-cover rounded-lg border border-gray-300'
                 />

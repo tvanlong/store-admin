@@ -9,7 +9,6 @@ import FilterField from '~/components/FilterField'
 import NoData from '~/components/NoData'
 import PopupModal from '~/components/PopupModal'
 import SearchField from '~/components/SearchField'
-import config from '~/constants/config'
 import useDebounce from '~/hooks/useDebounce'
 import useQueryParamsConfig from '~/hooks/useQueryParamsConfig'
 import { formatCurrency } from '~/utils/format'
@@ -144,7 +143,7 @@ function Version({ setProgress }) {
                       {version.product.images.slice(0, 2).map((image, index) => (
                         <img
                           key={index}
-                          src={`${config.baseURL}/api/upload/${image}`}
+                          src={image}
                           alt={version.product.name}
                           className='w-16 h-16 object-cover rounded-lg border border-gray-300'
                         />

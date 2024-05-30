@@ -7,4 +7,4 @@ export const uploadImages = (data) =>
     }
   })
 
-export const deleteImage = (name) => http.delete(`/api/upload/${name}`)
+export const deleteImage = (public_id) => http.delete(`/api/upload/${public_id}`)
