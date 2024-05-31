@@ -160,10 +160,7 @@ function Header() {
   return (
     <Navbar className='fixed left-64 right-0 top-0 border-b border-b-gray-200' fluid>
       {pathname.includes('update') ? renderBreadcrumbUpdate() : renderBreadcrumb()}
-      <Avatar
-        img='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqWfMEUxGoOF_p2t5zw6UWg0jO3fuh3LTfz_MZ-COXOQ&s'
-        rounded
-      >
+      <Avatar img={profile?.avatar} rounded>
         <div className='space-y-1 font-medium'>
           <div>{profile.name}</div>
           <div className='text-sm text-gray-500'>{profile.email}</div>
