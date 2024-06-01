@@ -169,7 +169,7 @@ function UpdateStaff({ setProgress }) {
             isProcessing={isPending}
             disabled={isPending}
           >
-            Thêm nhân viên
+            Cập nhật nhân viên
           </Button>
         </div>
       </form>
