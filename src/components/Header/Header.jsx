@@ -1,6 +1,7 @@
 /* eslint-disable indent */
+import { useMutation } from '@tanstack/react-query'
 import { Avatar, Breadcrumb, Dropdown, Navbar } from 'flowbite-react'
-import { useContext } from 'react'
+import { useContext, useMemo } from 'react'
 import {
   HiChartPie,
   HiShoppingCart,
@@ -15,12 +16,35 @@ import {
   HiViewGrid
 } from 'react-icons/hi'
 import { useLocation } from 'react-router-dom'
+import { toast } from 'sonner'
+import { signOut } from '~/apis/auth.api'
 import { path } from '~/constants/path'
 import { AppContext } from '~/context/app.context'
+import { useOrders } from '~/hooks/useOrders'
 
 function Header() {
   const { profile } = useContext(AppContext)
   const { pathname } = useLocation()
+  const { data: ordersData } = useOrders()
+  const totalPendingOrders = useMemo(
+    () => ordersData?.data?.data.filter((order) => order.status === 'Chờ xác nhận').length || 0,
+    [ordersData]
+  )
+
+  const { mutateAsync } = useMutation({
+    mutationFn: signOut,
+    onSuccess: () => {
+      window.location.href = path.login
+    }
+  })
+
+  const handleSignOut = () => {
+    toast.promise(mutateAsync(), {
+      loading: 'Đang đăng xuất...',
+      success: 'Đăng xuất thành công',
+      error: 'Đăng xuất thất bại'
+    })
+  }
 
   const renderBreadcrumb = () => {
     switch (pathname) {
@@ -184,11 +208,13 @@ function Header() {
         </Dropdown.Item>
         <Dropdown.Item icon={HiCog}>Thông tin tài khoản</Dropdown.Item>
         <Dropdown.Item href={path.order} icon={HiCurrencyDollar}>
-          Đơn hàng chờ duyệt ({profile?.role === 'admin' ? '10' : '5'})
+          Đơn hàng chờ duyệt ({totalPendingOrders})
         </Dropdown.Item>
         <Dropdown.Item icon={HiCog}>Cài đặt</Dropdown.Item>
         <Dropdown.Divider />
-        <Dropdown.Item icon={HiLogout}>Đăng xuất</Dropdown.Item>
+        <Dropdown.Item onClick={handleSignOut} icon={HiLogout}>
+          Đăng xuất
+        </Dropdown.Item>
       </Dropdown>
     </Navbar>
   )
