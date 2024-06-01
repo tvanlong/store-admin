@@ -49,7 +49,7 @@ function Subcategory({ setProgress }) {
   if (isLoading) return <NoData />
 
   return (
-    <div className='mt-[68px] h-full'>
+    <div className='mt-24 h-full'>
       <Helmet>
         <title>Danh mục sản phẩm nhỏ | Trang quản trị lưu trữ danh mục sản phẩm nhỏ</title>
         <meta name='description' content='Trang quản trị | Danh mục sản phẩm nhỏ' />

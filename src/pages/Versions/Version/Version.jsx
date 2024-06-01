@@ -88,7 +88,7 @@ function Version({ setProgress }) {
   if (isLoading) return <NoData />
 
   return (
-    <div className='mt-[68px] h-full'>
+    <div className='mt-24 h-full'>
       <Helmet>
         <title>Danh sách phiên bản sản phẩm | Trang quản trị lưu trữ danh sách phiên bản sản phẩm</title>
         <meta name='description' content='Danh sách phiên bản sản phẩm' />

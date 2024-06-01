@@ -141,7 +141,7 @@ function UpdateProduct({ setProgress }) {
   })
 
   return (
-    <div className='mt-[68px] h-full'>
+    <div className='mt-24 h-full'>
       <Helmet>
         <title>Cập nhật sản phẩm | Trang quản trị cập nhật sản phẩm</title>
         <meta name='description' content='Trang quản trị | Cập nhật sản phẩm' />

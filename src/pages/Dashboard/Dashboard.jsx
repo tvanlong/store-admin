@@ -16,7 +16,7 @@ function Dashboard({ setProgress }) {
   }, [setProgress])
 
   return (
-    <div className='mt-[68px]'>
+    <div className='mt-24'>
       <Helmet>
         <title>Trang quản trị | Thông tin tổng quan</title>
         <meta name='description' content='Trang quản trị | Thông tin tổng quan' />

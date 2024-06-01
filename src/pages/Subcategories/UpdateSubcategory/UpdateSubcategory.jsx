@@ -81,7 +81,7 @@ function UpdateSubcategory({ setProgress }) {
     })
   })
   return (
-    <div className='mt-[68px] h-full'>
+    <div className='mt-24 h-full'>
       <Helmet>
         <title>Cập nhật danh mục sản phẩm nhỏ | Trang quản trị cập nhật danh mục sản phẩm nhỏ</title>
         <meta name='description' content='Trang quản trị | Cập nhật danh mục sản phẩm nhỏ' />

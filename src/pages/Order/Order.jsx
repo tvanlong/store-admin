@@ -25,7 +25,7 @@ function Order({ setProgress }) {
   if (isLoading) return <NoData />
 
   return (
-    <div className='mt-[68px] h-full'>
+    <div className='mt-24 h-full'>
       <Helmet>
         <title>Danh sách đơn hàng | Trang quản trị lưu trữ danh sách đơn hàng</title>
         <meta name='description' content='Trang quản trị | Danh sách đơn hàng' />

@@ -55,7 +55,7 @@ function AddCategory({ setProgress }) {
   })
 
   return (
-    <div className='mt-[68px] h-full'>
+    <div className='mt-24 h-full'>
       <Helmet>
         <title>Thêm danh mục sản phẩm | Trang quản trị thêm danh mục sản phẩm</title>
         <meta name='description' content='Trang quản trị | Thêm danh mục sản phẩm' />

@@ -25,7 +25,7 @@ function Customer({ setProgress }) {
   if (isLoading) return <NoData />
 
   return (
-    <div className='mt-[68px] h-full'>
+    <div className='mt-24 h-full'>
       <Helmet>
         <title>Khách hàng | Trang quản trị lưu trữ danh sách khách hàng</title>
         <meta name='description' content='Trang quản trị | Danh sách khách hàng' />

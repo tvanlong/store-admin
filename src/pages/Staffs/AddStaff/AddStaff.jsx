@@ -59,7 +59,7 @@ function AddStaff({ setProgress }) {
   })
 
   return (
-    <div className='mt-[68px] h-full'>
+    <div className='mt-24 h-full'>
       <Helmet>
         <title>Thêm nhân viên | Trang quản trị thêm nhân viên</title>
         <meta name='description' content='Trang quản trị | Thêm nhân viên' />

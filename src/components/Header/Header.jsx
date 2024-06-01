@@ -1,7 +1,19 @@
 /* eslint-disable indent */
-import { Avatar, Breadcrumb, Navbar } from 'flowbite-react'
+import { Avatar, Breadcrumb, Dropdown, Navbar } from 'flowbite-react'
 import { useContext } from 'react'
-import { HiChartPie, HiShoppingCart, HiDesktopComputer, HiMenu, HiUser, HiMenuAlt4, HiChip } from 'react-icons/hi'
+import {
+  HiChartPie,
+  HiShoppingCart,
+  HiDesktopComputer,
+  HiMenu,
+  HiUser,
+  HiMenuAlt4,
+  HiChip,
+  HiCog,
+  HiCurrencyDollar,
+  HiLogout,
+  HiViewGrid
+} from 'react-icons/hi'
 import { useLocation } from 'react-router-dom'
 import { path } from '~/constants/path'
 import { AppContext } from '~/context/app.context'
@@ -160,12 +172,24 @@ function Header() {
   return (
     <Navbar className='fixed left-64 right-0 top-0 border-b border-b-gray-200' fluid>
       {pathname.includes('update') ? renderBreadcrumbUpdate() : renderBreadcrumb()}
-      <Avatar img={profile?.avatar} rounded>
-        <div className='space-y-1 font-medium'>
-          <div>{profile.name}</div>
-          <div className='text-sm text-gray-500'>{profile.email}</div>
-        </div>
-      </Avatar>
+      <Dropdown color={'transparent'} label={<Avatar bordered img={profile?.avatar} rounded></Avatar>} arrowIcon={null}>
+        <Dropdown.Header>
+          <span className='block text-sm'>
+            {profile?.name} ({profile?.role === 'admin' ? 'Quản trị viên' : 'Nhân viên'})
+          </span>
+          <span className='block truncate text-sm font-medium'>{profile?.email}</span>
+        </Dropdown.Header>
+        <Dropdown.Item href={path.dashboard} icon={HiViewGrid}>
+          Bảng điều khiển
+        </Dropdown.Item>
+        <Dropdown.Item icon={HiCog}>Thông tin tài khoản</Dropdown.Item>
+        <Dropdown.Item href={path.order} icon={HiCurrencyDollar}>
+          Đơn hàng chờ duyệt ({profile?.role === 'admin' ? '10' : '5'})
+        </Dropdown.Item>
+        <Dropdown.Item icon={HiCog}>Cài đặt</Dropdown.Item>
+        <Dropdown.Divider />
+        <Dropdown.Item icon={HiLogout}>Đăng xuất</Dropdown.Item>
+      </Dropdown>
     </Navbar>
   )
 }

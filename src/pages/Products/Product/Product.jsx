@@ -101,7 +101,7 @@ function Product({ setProgress }) {
   if (isLoading) return <NoData />
 
   return (
-    <div className='mt-[68px] h-full'>
+    <div className='mt-24 h-full'>
       <Helmet>
         <title>Dòng sản phẩm | Trang quản trị lưu trữ danh sách dòng sản phẩm</title>
         <meta name='description' content='Trang quản trị | Danh sách dòng sản phẩm' />

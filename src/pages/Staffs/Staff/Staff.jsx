@@ -53,7 +53,7 @@ function Staff({ setProgress }) {
   if (isLoading) return <NoData />
 
   return (
-    <div className='mt-[68px] h-full'>
+    <div className='mt-24 h-full'>
       <Helmet>
         <title>Danh sách nhân viên | Trang quản trị lưu trữ danh sách nhân viên</title>
         <meta name='description' content='Trang quản trị | Danh sách nhân viên' />

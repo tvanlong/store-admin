@@ -68,7 +68,7 @@ function AddSubcategory({ setProgress }) {
   })
 
   return (
-    <div className='mt-[68px] h-full'>
+    <div className='mt-24 h-full'>
       <Helmet>
         <title>Thêm danh mục sản phẩm nhỏ | Trang quản trị thêm danh mục sản phẩm nhỏ</title>
         <meta name='description' content='Trang quản trị | Thêm danh mục sản phẩm nhỏ' />

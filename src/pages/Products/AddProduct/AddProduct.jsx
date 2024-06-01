@@ -115,7 +115,7 @@ function AddProduct({ setProgress }) {
   })
 
   return (
-    <div className='mt-[68px] h-full'>
+    <div className='mt-24 h-full'>
       <Helmet>
         <title>Thêm sản phẩm | Trang quản trị thêm sản phẩm mới</title>
         <meta name='description' content='Trang quản trị | Thêm sản phẩm mới' />

@@ -73,7 +73,7 @@ function AddVersion({ setProgress }) {
   })
 
   return (
-    <div className='mt-[68px] h-full'>
+    <div className='mt-24 h-full'>
       <Helmet>
         <title>Thêm phiên bản sản phẩm | Trang quản trị thêm phiên bản sản phẩm</title>
         <meta name='description' content='Trang quản trị | Thêm phiên bản sản phẩm' />

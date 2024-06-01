@@ -75,7 +75,7 @@ function UpdateStaff({ setProgress }) {
   })
 
   return (
-    <div className='mt-[68px] h-full'>
+    <div className='mt-24 h-full'>
       <Helmet>
         <title>Cập nhật nhân viên | Trang quản trị cập nhật nhân viên</title>
         <meta name='description' content='Trang quản trị | Cập nhật nhân viên' />
