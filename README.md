@@ -2,8 +2,21 @@
 
 This is a React-based web application for managing an online store. The application is built using Vite for a faster and leaner development experience.
 
+## 🌐 Live Demo
+
+You can access the live demo of the application at [here](https://laptop-kt-admin.vercel.app/).
+
+A demo account is available for testing the application:
+
+- **Email**: longvan12@gmail.com
+- **Password**: 123123123
+
 ## ✨ Features
 
+The application provides the following features:
+
+- **Authentication**: Sign in and sign out to access the application.
+- **Dashboard**: View the statistics of the online store.
 - **Product management**: Add, update, and delete products.
 - **Version management**: Manage different versions of a product.
 - **User management**: Manage users of the online store.
