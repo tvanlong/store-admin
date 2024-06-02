@@ -13,8 +13,6 @@ const queryClient = new QueryClient({
     queries: {
       staleTime: 1000 * 60 * 1, // 1 minute
       retry: 1, // retry once before failing
-      refetchIntervalInBackground: false, // refetch when the tab is in the background
-      refetchInterval: 10000, // 10 seconds (refetch every 10 seconds)
       refetchOnReconnect: false, // refetch when the network reconnects
       refetchOnWindowFocus: false // refetch only when the tab is focused
     }
