@@ -11,10 +11,12 @@ import { HelmetProvider } from 'react-helmet-async'
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      cacheTime: Infinity, // Thời gian cache data, cache data sẽ không bao giờ bị xóa
-      refetchOnWindowFocus: false,
-      staleTime: Infinity, // Thời gian mà data được coi là cũ, sau thời gian này thì data sẽ được fetch lại, Infinity là không bao giờ coi data là cũ
-      retry: 0 // Số lần thử lại khi fetch data thất bại
+      staleTime: 1000 * 60 * 1, // 1 minute
+      retry: 1, // retry once before failing
+      refetchIntervalInBackground: false, // refetch when the tab is in the background
+      refetchInterval: 10000, // 10 seconds (refetch every 10 seconds)
+      refetchOnReconnect: false, // refetch when the network reconnects
+      refetchOnWindowFocus: false // refetch only when the tab is focused
     }
   }
 })

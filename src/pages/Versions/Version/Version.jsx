@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { Link } from 'react-router-dom'
 import { toast } from 'sonner'
-import { deleteVersion, getAllVersions } from '~/apis/version.api'
+import { deleteVersion, getAllVersions, getVersionById } from '~/apis/version.api'
 import FilterField from '~/components/FilterField'
 import NoData from '~/components/NoData'
 import PopupModal from '~/components/PopupModal'
@@ -85,6 +85,13 @@ function Version({ setProgress }) {
     refetch()
   }
 
+  const handlePrefetchOnMouseEnter = (id) => {
+    queryClient.prefetchQuery({
+      queryKey: ['version', id],
+      queryFn: () => getVersionById(id)
+    })
+  }
+
   if (isLoading) return <NoData />
 
   return (
@@ -134,7 +141,11 @@ function Version({ setProgress }) {
           <Table.Body className='divide-y'>
             {versions.length > 0 ? (
               versions.map((version) => (
-                <Table.Row key={version._id} className='bg-white'>
+                <Table.Row
+                  key={version._id}
+                  className='bg-white'
+                  onMouseEnter={() => handlePrefetchOnMouseEnter(version._id)}
+                >
                   <Table.Cell className='font-medium text-gray-900 max-w-sm'>
                     {version.product.name} {version.name}
                   </Table.Cell>

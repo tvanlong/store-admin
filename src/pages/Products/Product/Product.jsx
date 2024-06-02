@@ -5,7 +5,7 @@ import { Helmet } from 'react-helmet-async'
 import { Link } from 'react-router-dom'
 import { toast } from 'sonner'
 import { deleteImage } from '~/apis/images.api'
-import { deleteProduct, getAllProducts } from '~/apis/products.api'
+import { deleteProduct, getAllProducts, getProduct } from '~/apis/products.api'
 import FilterField from '~/components/FilterField'
 import NoData from '~/components/NoData'
 import SearchField from '~/components/SearchField'
@@ -98,6 +98,13 @@ function Product({ setProgress }) {
 
   const onPageChange = (page) => setCurrentPage(page)
 
+  const handlePrefetchOnMouseEnter = (id) => {
+    queryClient.prefetchQuery({
+      queryKey: ['product', id],
+      queryFn: () => getProduct(id)
+    })
+  }
+
   if (isLoading) return <NoData />
 
   return (
@@ -144,7 +151,11 @@ function Product({ setProgress }) {
           <Table.Body className='divide-y'>
             {products.length > 0 ? (
               products.map((product) => (
-                <Table.Row key={product._id} className='bg-white dark:border-gray-700'>
+                <Table.Row
+                  key={product._id}
+                  className='bg-white'
+                  onMouseEnter={() => handlePrefetchOnMouseEnter(product._id)}
+                >
                   <Table.Cell width='30%' className='font-medium text-gray-900 max-w-sm'>
                     {product.name}
                   </Table.Cell>

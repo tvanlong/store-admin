@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { Link } from 'react-router-dom'
 import { toast } from 'sonner'
-import { deleteStaff, getAllStaffs } from '~/apis/users.api'
+import { deleteStaff, getAllStaffs, getStaff } from '~/apis/users.api'
 import NoData from '~/components/NoData'
 import { getUserDataFromLocalStorage } from '~/utils/auth'
 import { formatDateTime } from '~/utils/format'
@@ -50,6 +50,13 @@ function Staff({ setProgress }) {
     })
   }
 
+  const handlePrefetchOnMouseEnter = (id) => {
+    queryClient.prefetchQuery({
+      queryKey: ['staff', id],
+      queryFn: () => getStaff(id)
+    })
+  }
+
   if (isLoading) return <NoData />
 
   return (
@@ -81,7 +88,11 @@ function Staff({ setProgress }) {
           </Table.Head>
           <Table.Body className='divide-y'>
             {staffs.map((staff) => (
-              <Table.Row key={staff._id} className='bg-white'>
+              <Table.Row
+                key={staff._id}
+                className='bg-white'
+                onMouseEnter={() => handlePrefetchOnMouseEnter(staff._id)}
+              >
                 <Table.Cell className='whitespace-nowrap font-medium text-gray-900'>{staff.name}</Table.Cell>
                 <Table.Cell>{staff.phone}</Table.Cell>
                 <Table.Cell>{staff.email}</Table.Cell>

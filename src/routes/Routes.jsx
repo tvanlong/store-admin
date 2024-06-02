@@ -6,6 +6,8 @@ import { AppContext } from '~/context/app.context'
 import MainLayout from '~/layouts/MainLayout'
 import Loading from '~/components/Loading'
 import NotFound from '~/pages/NotFound'
+import { ErrorBoundary } from 'react-error-boundary'
+import ErrorPage from '~/pages/ErrorPage'
 
 const Dashboard = lazy(() => import('~/pages/Dashboard'))
 const AddCategory = lazy(() => import('~/pages/Categories/AddCategory'))
@@ -247,7 +249,7 @@ function Routes() {
   return (
     <div>
       <LoadingBar color='#337AB7' progress={progress} onLoaderFinished={() => setProgress(0)} />
-      {element}
+      <ErrorBoundary fallback={<ErrorPage />}>{element}</ErrorBoundary>
     </div>
   )
 }

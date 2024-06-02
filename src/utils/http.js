@@ -15,7 +15,6 @@ class Http {
       baseURL: config.baseURL,
       timeout: 10000,
       headers: {
-        'Access-Control-Allow-Origin': '*',
         'Content-Type': 'application/json'
       }
     })

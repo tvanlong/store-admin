@@ -17,7 +17,7 @@ function UpdateSubcategory({ setProgress }) {
   const navigate = useNavigate()
   const { id } = useParams()
   const { data: subcategoryData } = useQuery({
-    queryKey: ['subcategories', id],
+    queryKey: ['subcategory', id],
     queryFn: () => getSubcategory(id)
   })
   const { data } = useCategories()

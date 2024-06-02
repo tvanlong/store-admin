@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { Link } from 'react-router-dom'
 import { toast } from 'sonner'
-import { deleteSubcategory } from '~/apis/subcategories.api'
+import { deleteSubcategory, getSubcategory } from '~/apis/subcategories.api'
 import NoData from '~/components/NoData'
 import { useSubcategories } from '~/hooks/useSubcategories'
 import { tableTheme } from '~/utils/theme'
@@ -46,6 +46,13 @@ function Subcategory({ setProgress }) {
     })
   }
 
+  const handlePrefetchOnMouseEnter = (id) => {
+    queryClient.prefetchQuery({
+      queryKey: ['subcategory', id],
+      queryFn: () => getSubcategory(id)
+    })
+  }
+
   if (isLoading) return <NoData />
 
   return (
@@ -76,7 +83,11 @@ function Subcategory({ setProgress }) {
           </Table.Head>
           <Table.Body className='divide-y'>
             {subcategories.map((subcategory) => (
-              <Table.Row key={subcategory._id} className='bg-white'>
+              <Table.Row
+                key={subcategory._id}
+                className='bg-white'
+                onMouseEnter={() => handlePrefetchOnMouseEnter(subcategory._id)}
+              >
                 <Table.Cell className='whitespace-nowrap font-medium text-gray-900'>{subcategory.name}</Table.Cell>
                 <Table.Cell className='whitespace-nowrap font-medium text-gray-900'>
                   {subcategory.category.name}
