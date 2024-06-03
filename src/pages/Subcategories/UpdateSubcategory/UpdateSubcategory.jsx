@@ -86,9 +86,9 @@ function UpdateSubcategory({ setProgress }) {
         <title>Cập nhật danh mục sản phẩm nhỏ | Trang quản trị cập nhật danh mục sản phẩm nhỏ</title>
         <meta name='description' content='Trang quản trị | Cập nhật danh mục sản phẩm nhỏ' />
       </Helmet>
-      <div className='text-center mt-20 mb-10'>
+      <div className='mb-10 mt-20 text-center'>
         <h1 className='mb-4 text-5xl font-extrabold text-gray-900'>
-          <span className='text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400'>
+          <span className='bg-gradient-to-r from-sky-400 to-emerald-600 bg-clip-text text-transparent'>
             Cập nhật danh mục sản phẩm nhỏ
           </span>
         </h1>
@@ -116,7 +116,7 @@ function UpdateSubcategory({ setProgress }) {
               }}
             />
           </div>
-          {errors.category && <span className='text-red-500 text-sm'>{errors.category.message}</span>}
+          {errors.category && <span className='text-sm text-red-500'>{errors.category.message}</span>}
         </div>
         <div className='mb-5'>
           <div className='mb-2 block'>
@@ -132,7 +132,7 @@ function UpdateSubcategory({ setProgress }) {
               clearErrors('name')
             }}
           />
-          {errors.name && <span className='text-red-500 text-sm'>{errors.name.message}</span>}
+          {errors.name && <span className='text-sm text-red-500'>{errors.name.message}</span>}
         </div>
         <div className='flex justify-center'>
           <Button

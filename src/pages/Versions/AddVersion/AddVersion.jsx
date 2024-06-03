@@ -78,9 +78,9 @@ function AddVersion({ setProgress }) {
         <title>Thêm phiên bản sản phẩm | Trang quản trị thêm phiên bản sản phẩm</title>
         <meta name='description' content='Trang quản trị | Thêm phiên bản sản phẩm' />
       </Helmet>
-      <div className='text-center mt-20 mb-10'>
+      <div className='mb-10 mt-20 text-center'>
         <h1 className='mb-4 text-5xl font-extrabold text-gray-900'>
-          <span className='text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400'>
+          <span className='bg-gradient-to-r from-sky-400 to-emerald-600 bg-clip-text text-transparent'>
             Thêm phiên bản sản phẩm
           </span>
         </h1>
@@ -101,7 +101,7 @@ function AddVersion({ setProgress }) {
             {...register('name')}
             onChange={() => clearErrors('name')}
           />
-          {errors.name && <span className='text-red-500 text-sm'>{errors.name.message}</span>}
+          {errors.name && <span className='text-sm text-red-500'>{errors.name.message}</span>}
         </div>
         <div className='mb-5'>
           <div className='mb-2 block'>
@@ -121,7 +121,7 @@ function AddVersion({ setProgress }) {
               }}
             />
           </div>
-          {errors.product && <span className='text-red-500 text-sm'>{errors.product.message}</span>}
+          {errors.product && <span className='text-sm text-red-500'>{errors.product.message}</span>}
         </div>
         <div className='flex gap-5'>
           <div className='mb-5 flex-1'>
@@ -136,7 +136,7 @@ function AddVersion({ setProgress }) {
               {...register('old_price')}
               onChange={() => clearErrors('old_price')}
             />
-            {errors.old_price && <span className='text-red-500 text-sm'>{errors.old_price.message}</span>}
+            {errors.old_price && <span className='text-sm text-red-500'>{errors.old_price.message}</span>}
           </div>
           <div className='mb-5 flex-1'>
             <div className='mb-2 block'>
@@ -150,7 +150,7 @@ function AddVersion({ setProgress }) {
               {...register('current_price')}
               onChange={() => clearErrors('current_price')}
             />
-            {errors.current_price && <span className='text-red-500 text-sm'>{errors.current_price.message}</span>}
+            {errors.current_price && <span className='text-sm text-red-500'>{errors.current_price.message}</span>}
           </div>
         </div>
         <div className='mb-5'>
@@ -161,7 +161,7 @@ function AddVersion({ setProgress }) {
             <option value='Còn hàng'>Còn hàng</option>
             <option value='Hết hàng'>Hết hàng</option>
           </Select>
-          {errors.status && <span className='text-red-500 text-sm'>{errors.status.message}</span>}
+          {errors.status && <span className='text-sm text-red-500'>{errors.status.message}</span>}
         </div>
         <div className='mb-5'>
           <div className='mb-2 block'>
@@ -175,7 +175,7 @@ function AddVersion({ setProgress }) {
             {...register('description')}
             onChange={() => clearErrors('description')}
           />
-          {errors.description && <span className='text-red-500 text-sm'>{errors.description.message}</span>}
+          {errors.description && <span className='text-sm text-red-500'>{errors.description.message}</span>}
         </div>
         <div className='flex justify-center'>
           <Button

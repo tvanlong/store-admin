@@ -6,13 +6,13 @@ function Card({ color, icon, title, animatedValue, label, path }) {
 
   return (
     <div
-      className={'border rounded-lg overflow-hidden'}
+      className={'overflow-hidden rounded-lg border'}
       style={{
         borderColor: color
       }}
     >
       <div
-        className={'flex items-center text-white py-2 px-2'}
+        className={'flex items-center px-2 py-2 text-white'}
         style={{
           backgroundColor: color
         }}
@@ -25,11 +25,11 @@ function Card({ color, icon, title, animatedValue, label, path }) {
           <div className='text-xs font-medium'>{title}</div>
         </div>
       </div>
-      <div className='bg-[#f9fafb] text-[#337ab7] flex justify-between px-2 py-3'>
+      <div className='flex justify-between bg-[#f9fafb] px-2 py-3 text-[#337ab7]'>
         <Link to={path} className='text-xs font-medium'>
           View Details
         </Link>
-        <svg className='w-4 h-4' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24'>
+        <svg className='h-4 w-4' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24'>
           <path
             stroke='currentColor'
             strokeLinecap='round'

@@ -25,12 +25,12 @@ function Cards() {
   const orders = useMemo(() => ordersData?.data.data, [ordersData])
 
   return (
-    <div className='flex justify-center gap-5 my-20'>
+    <div className='my-20 flex justify-center gap-5'>
       <Card
         color='#337ab7'
         icon={
           <svg
-            className='w-16 h-16'
+            className='h-16 w-16'
             aria-hidden='true'
             xmlns='http://www.w3.org/2000/svg'
             fill='none'
@@ -48,7 +48,7 @@ function Cards() {
         color='#00bae8'
         icon={
           <svg
-            className='w-16 h-16'
+            className='h-16 w-16'
             aria-hidden='true'
             xmlns='http://www.w3.org/2000/svg'
             fill='none'
@@ -66,7 +66,7 @@ function Cards() {
         color='#5cb85c'
         icon={
           <svg
-            className='w-16 h-16'
+            className='h-16 w-16'
             aria-hidden='true'
             xmlns='http://www.w3.org/2000/svg'
             fill='currentColor'
@@ -88,7 +88,7 @@ function Cards() {
         color='#f0ad4e'
         icon={
           <svg
-            className='w-16 h-16'
+            className='h-16 w-16'
             aria-hidden='true'
             xmlns='http://www.w3.org/2000/svg'
             fill='currentColor'
@@ -109,7 +109,7 @@ function Cards() {
         color='#d9534f'
         icon={
           <svg
-            className='w-16 h-16'
+            className='h-16 w-16'
             aria-hidden='true'
             xmlns='http://www.w3.org/2000/svg'
             fill='currentColor'

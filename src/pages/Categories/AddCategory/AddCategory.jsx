@@ -60,9 +60,9 @@ function AddCategory({ setProgress }) {
         <title>Thêm danh mục sản phẩm | Trang quản trị thêm danh mục sản phẩm</title>
         <meta name='description' content='Trang quản trị | Thêm danh mục sản phẩm' />
       </Helmet>
-      <div className='text-center mt-20 mb-10'>
+      <div className='mb-10 mt-20 text-center'>
         <h1 className='mb-4 text-5xl font-extrabold text-gray-900'>
-          <span className='text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400'>
+          <span className='bg-gradient-to-r from-sky-400 to-emerald-600 bg-clip-text text-transparent'>
             Thêm danh mục sản phẩm
           </span>
         </h1>
@@ -82,7 +82,7 @@ function AddCategory({ setProgress }) {
           {...register('name')}
           onChange={() => clearErrors('name')}
         />
-        {errors.name && <span className='text-red-500 text-sm mt-1'>{errors.name.message}</span>}
+        {errors.name && <span className='mt-1 text-sm text-red-500'>{errors.name.message}</span>}
         <div className='flex justify-center'>
           <Button
             className='mt-10'

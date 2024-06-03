@@ -30,9 +30,9 @@ function Order({ setProgress }) {
         <title>Danh sách đơn hàng | Trang quản trị lưu trữ danh sách đơn hàng</title>
         <meta name='description' content='Trang quản trị | Danh sách đơn hàng' />
       </Helmet>
-      <div className='text-center mt-20 mb-10'>
+      <div className='mb-10 mt-20 text-center'>
         <h1 className='mb-4 text-5xl font-extrabold text-gray-900'>
-          <span className='text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400'>
+          <span className='bg-gradient-to-r from-sky-400 to-emerald-600 bg-clip-text text-transparent'>
             Danh sách đơn hàng
           </span>
         </h1>
@@ -40,7 +40,7 @@ function Order({ setProgress }) {
           Danh sách các đơn hàng đã được đặt hàng trên hệ thống
         </p>
       </div>
-      <div className='overflow-x-auto mx-10'>
+      <div className='mx-10 overflow-x-auto'>
         <Table theme={tableTheme}>
           <Table.Head>
             <Table.HeadCell>Mã đơn hàng</Table.HeadCell>

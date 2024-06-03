@@ -80,9 +80,9 @@ function UpdateStaff({ setProgress }) {
         <title>Cập nhật nhân viên | Trang quản trị cập nhật nhân viên</title>
         <meta name='description' content='Trang quản trị | Cập nhật nhân viên' />
       </Helmet>
-      <div className='text-center mt-20 mb-10'>
+      <div className='mb-10 mt-20 text-center'>
         <h1 className='mb-4 text-5xl font-extrabold text-gray-900'>
-          <span className='text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400'>
+          <span className='bg-gradient-to-r from-sky-400 to-emerald-600 bg-clip-text text-transparent'>
             Cập nhật nhân viên
           </span>
         </h1>
@@ -103,7 +103,7 @@ function UpdateStaff({ setProgress }) {
             {...register('name')}
             onChange={() => clearErrors('name')}
           />
-          {errors.name && <span className='text-red-500 text-sm'>{errors.name.message}</span>}
+          {errors.name && <span className='text-sm text-red-500'>{errors.name.message}</span>}
         </div>
         <div className='mb-5'>
           <div className='mb-2 block'>
@@ -117,7 +117,7 @@ function UpdateStaff({ setProgress }) {
             {...register('email')}
             onChange={() => clearErrors('email')}
           />
-          {errors.email && <span className='text-red-500 text-sm'>{errors.email.message}</span>}
+          {errors.email && <span className='text-sm text-red-500'>{errors.email.message}</span>}
         </div>
         <div className='mb-5'>
           <div className='mb-2 block'>
@@ -131,7 +131,7 @@ function UpdateStaff({ setProgress }) {
             {...register('phone')}
             onChange={() => clearErrors('phone')}
           />
-          {errors.phone && <span className='text-red-500 text-sm'>{errors.phone.message}</span>}
+          {errors.phone && <span className='text-sm text-red-500'>{errors.phone.message}</span>}
         </div>
         <div className='mb-5'>
           <div className='mb-2 block'>
@@ -145,7 +145,7 @@ function UpdateStaff({ setProgress }) {
             {...register('password')}
             onChange={() => clearErrors('password')}
           />
-          {errors.password && <span className='text-red-500 text-sm'>{errors.password.message}</span>}
+          {errors.password && <span className='text-sm text-red-500'>{errors.password.message}</span>}
         </div>
         <div className='mb-5'>
           <div className='mb-2 block'>
@@ -159,7 +159,7 @@ function UpdateStaff({ setProgress }) {
             {...register('confirm_password')}
             onChange={() => clearErrors('confirm_password')}
           />
-          {errors.confirm_password && <span className='text-red-500 text-sm'>{errors.confirm_password.message}</span>}
+          {errors.confirm_password && <span className='text-sm text-red-500'>{errors.confirm_password.message}</span>}
         </div>
         <div className='flex justify-center'>
           <Button

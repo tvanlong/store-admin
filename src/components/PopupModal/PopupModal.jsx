@@ -20,7 +20,7 @@ function PopupModal({ version }) {
                   key={index}
                   src={image}
                   alt={version.product.name}
-                  className='w-20 h-20 object-cover rounded-lg border border-gray-300'
+                  className='h-20 w-20 rounded-lg border border-gray-300 object-cover'
                 />
               ))}
             </div>
@@ -47,7 +47,7 @@ function PopupModal({ version }) {
             <p className='text-base leading-relaxed'>
               <span className='font-medium'>Tình trạng:</span>{' '}
               <span
-                className={`px-2 py-1 text-xs font-semibold text-white rounded-full ${
+                className={`rounded-full px-2 py-1 text-xs font-semibold text-white ${
                   version.status === 'Còn hàng' ? 'bg-green-500' : 'bg-red-500'
                 }`}
               >

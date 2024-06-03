@@ -56,7 +56,7 @@ function AddProduct({ setProgress }) {
         <img
           src='https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png'
           alt='preview'
-          className='w-20 h-20 object-cover rounded-lg border border-gray-300'
+          className='h-20 w-20 rounded-lg border border-gray-300 object-cover'
         />
       )
     return file.map((image, index) => (
@@ -64,7 +64,7 @@ function AddProduct({ setProgress }) {
         key={index}
         src={URL.createObjectURL(image)}
         alt='preview'
-        className='w-20 h-20 object-cover rounded-lg border border-gray-300'
+        className='h-20 w-20 rounded-lg border border-gray-300 object-cover'
       />
     ))
   }, [file])
@@ -120,9 +120,9 @@ function AddProduct({ setProgress }) {
         <title>Thêm sản phẩm | Trang quản trị thêm sản phẩm mới</title>
         <meta name='description' content='Trang quản trị | Thêm sản phẩm mới' />
       </Helmet>
-      <div className='text-center mt-20 mb-10'>
+      <div className='mb-10 mt-20 text-center'>
         <h1 className='mb-4 text-5xl font-extrabold text-gray-900'>
-          <span className='text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400'>
+          <span className='bg-gradient-to-r from-sky-400 to-emerald-600 bg-clip-text text-transparent'>
             Thêm dòng sản phẩm
           </span>
         </h1>
@@ -143,7 +143,7 @@ function AddProduct({ setProgress }) {
             {...register('name')}
             onChange={() => clearErrors('name')}
           />
-          {errors.name && <span className='text-red-500 text-sm'>{errors.name.message}</span>}
+          {errors.name && <span className='text-sm text-red-500'>{errors.name.message}</span>}
         </div>
         <div id='fileUpload' className='mb-5'>
           <div className='mb-2 block'>
@@ -157,9 +157,9 @@ function AddProduct({ setProgress }) {
             {...register('images')}
             onChange={(e) => handleFileChange(e.target.files)}
           />
-          {errors.images && <span className='text-red-500 text-sm'>{errors.images.message}</span>}
+          {errors.images && <span className='text-sm text-red-500'>{errors.images.message}</span>}
         </div>
-        <div className='flex gap-3 mb-5'>{previewImage}</div>
+        <div className='mb-5 flex gap-3'>{previewImage}</div>
         <div className='mb-5'>
           <div className='mb-2 block'>
             <Label htmlFor='subcategory' value='Thuộc danh mục sản phẩm' />
@@ -178,7 +178,7 @@ function AddProduct({ setProgress }) {
               }}
             />
           </div>
-          {errors.subcategory && <span className='text-red-500 text-sm'>{errors.subcategory.message}</span>}
+          {errors.subcategory && <span className='text-sm text-red-500'>{errors.subcategory.message}</span>}
         </div>
         <div className='flex justify-center'>
           <Button

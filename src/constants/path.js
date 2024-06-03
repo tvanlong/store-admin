@@ -18,5 +18,6 @@ export const path = {
   addStaff: '/add-staff',
   updateStaff: '/update-staff/:id',
   customer: '/customer',
-  order: '/order'
+  order: '/order',
+  profile: '/profile'
 }

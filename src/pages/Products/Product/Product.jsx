@@ -113,9 +113,9 @@ function Product({ setProgress }) {
         <title>Dòng sản phẩm | Trang quản trị lưu trữ danh sách dòng sản phẩm</title>
         <meta name='description' content='Trang quản trị | Danh sách dòng sản phẩm' />
       </Helmet>
-      <div className='text-center mt-20 mb-10'>
+      <div className='mb-10 mt-20 text-center'>
         <h1 className='mb-4 text-5xl font-extrabold text-gray-900'>
-          <span className='text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400'>
+          <span className='bg-gradient-to-r from-sky-400 to-emerald-600 bg-clip-text text-transparent'>
             Danh sách dòng sản phẩm
           </span>
         </h1>
@@ -123,7 +123,7 @@ function Product({ setProgress }) {
           Danh sách các dòng sản phẩm hiện có trong cửa hàng được hiển thị dưới đây
         </p>
       </div>
-      <div className='flex items-center bg-gray-200/80 p-3 rounded-md gap-5 mx-10 my-10'>
+      <div className='mx-10 my-10 flex items-center gap-5 rounded-md bg-gray-200/80 p-3'>
         <SearchField
           loading={loading}
           setLoading={setLoading}
@@ -138,7 +138,7 @@ function Product({ setProgress }) {
           onSortChange={onSortChange}
         />
       </div>
-      <div className='overflow-x-auto mx-10'>
+      <div className='mx-10 overflow-x-auto'>
         <Table theme={tableTheme}>
           <Table.Head>
             <Table.HeadCell>Dòng sản phẩm</Table.HeadCell>
@@ -156,7 +156,7 @@ function Product({ setProgress }) {
                   className='bg-white'
                   onMouseEnter={() => handlePrefetchOnMouseEnter(product._id)}
                 >
-                  <Table.Cell width='30%' className='font-medium text-gray-900 max-w-sm'>
+                  <Table.Cell width='30%' className='max-w-sm font-medium text-gray-900'>
                     {product.name}
                   </Table.Cell>
                   <Table.Cell width='20%'>{product.subcategory.name}</Table.Cell>
@@ -167,18 +167,18 @@ function Product({ setProgress }) {
                           key={index}
                           src={image}
                           alt={product.name}
-                          className='w-16 h-16 object-cover rounded-lg border border-gray-300'
+                          className='h-16 w-16 rounded-lg border border-gray-300 object-cover'
                         />
                       ))}
                       {product.images.length > 2 && (
-                        <div className='w-16 h-16 flex items-center justify-center rounded-lg border border-gray-300'>
+                        <div className='flex h-16 w-16 items-center justify-center rounded-lg border border-gray-300'>
                           <span className='text-gray-400'>+{product.images.length - 2}</span>
                         </div>
                       )}
                     </div>
                   </Table.Cell>
                   <Table.Cell width='15%'>
-                    <div className='flex gap-4 items-center'>
+                    <div className='flex items-center gap-4'>
                       <Link to={`/update-product/${product._id}`} className='font-medium text-cyan-600 hover:underline'>
                         Cập nhật
                       </Link>
@@ -203,7 +203,7 @@ function Product({ setProgress }) {
         </Table>
       </div>
       {data?.data?.data.totalPages > 1 && (
-        <div className='flex overflow-x-auto sm:justify-center mt-10'>
+        <div className='mt-10 flex overflow-x-auto sm:justify-center'>
           <Pagination
             className='text-sm'
             currentPage={currentPage}

@@ -42,7 +42,7 @@ function DetailOrderModal({ order }) {
 
   return (
     <>
-      <a className='font-medium text-green-600 hover:underline cursor-pointer' onClick={() => setOpenModal(true)}>
+      <a className='cursor-pointer font-medium text-green-600 hover:underline' onClick={() => setOpenModal(true)}>
         Chi tiết đơn hàng
       </a>
       <Modal theme='3xl' show={openModal} onClose={() => setOpenModal(false)}>

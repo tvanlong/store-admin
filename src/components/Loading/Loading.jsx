@@ -3,7 +3,7 @@ import { Spinner } from 'flowbite-react'
 function Loading() {
   return (
     <div
-      className='mt-24 flex justify-center items-center'
+      className='mt-24 flex items-center justify-center'
       style={{
         height: 'calc(100vh - 68px)'
       }}

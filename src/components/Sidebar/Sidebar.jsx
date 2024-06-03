@@ -40,7 +40,7 @@ function Sidebar() {
   return (
     <SideBar
       theme={sidebarTheme}
-      className='fixed top-0 left-0 bottom-0 bg-blue-500'
+      className='fixed bottom-0 left-0 top-0 bg-blue-500'
       aria-label='SideBar with logo branding example'
     >
       <SideBar.Logo

@@ -4,13 +4,13 @@ function OrderItem({ item }) {
   const { quantity, version } = item
 
   return (
-    <div className='space-y-6 border border-gray-200 rounded-lg my-2 p-5'>
+    <div className='my-2 space-y-6 rounded-lg border border-gray-200 p-5'>
       <p className='text-sm leading-relaxed text-gray-500'>
         {version.product.name} {version.name}
       </p>
-      <div className='flex gap-3 justify-center'>
+      <div className='flex justify-center gap-3'>
         {version.product.images.map((image, index) => (
-          <img key={index} src={image} alt={version.product.name} className='w-28 h-28 object-contain' />
+          <img key={index} src={image} alt={version.product.name} className='h-28 w-28 object-contain' />
         ))}
       </div>
       <p className='text-sm leading-relaxed text-gray-500'>

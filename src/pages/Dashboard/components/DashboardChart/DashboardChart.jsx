@@ -34,9 +34,9 @@ function DashboardChart() {
   }, [ordersData])
 
   return (
-    <div className='border border-gray-200 overflow-hidden rounded-lg mx-10'>
-      <div className='flex items-center p-3 gap-3 bg-gray-200'>
-        <svg className='w-4 h-4' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24'>
+    <div className='mx-10 overflow-hidden rounded-lg border border-gray-200'>
+      <div className='flex items-center gap-3 bg-gray-200 p-3'>
+        <svg className='h-4 w-4' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24'>
           <path
             stroke='currentColor'
             strokeLinecap='round'
@@ -47,7 +47,7 @@ function DashboardChart() {
         </svg>
         <h2 className='text-sm font-bold'>Area Chart</h2>
       </div>
-      <div className='p-4 flex justify-center'>
+      <div className='flex justify-center p-4'>
         <AreaChart width={850} height={300} data={revenueData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
           <defs>
             <linearGradient id='colorRevenue' x1='0' y1='0' x2='0' y2='1'>

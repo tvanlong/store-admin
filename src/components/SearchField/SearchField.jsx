@@ -7,9 +7,9 @@ function SearchField({ loading, setLoading, searchValue, setSearchValue }) {
 
   return (
     <div className='relative flex-1'>
-      <button type='submit' className='absolute inset-y-0 start-0 flex items-center ps-3 cursor-pointer'>
+      <button type='submit' className='absolute inset-y-0 start-0 flex cursor-pointer items-center ps-3'>
         <svg
-          className='w-4 h-4 text-gray-500'
+          className='h-4 w-4 text-gray-500'
           aria-hidden='true'
           xmlns='http://www.w3.org/2000/svg'
           fill='none'
@@ -29,14 +29,14 @@ function SearchField({ loading, setLoading, searchValue, setSearchValue }) {
         id='simple-search'
         value={searchValue}
         onChange={(e) => handleSearch(e)}
-        className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-200 focus:border-blue-200 block w-full ps-10 p-2.5 '
+        className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 ps-10 text-sm text-gray-900 focus:border-blue-200 focus:ring-blue-200'
         placeholder='Tìm kiếm dòng sản phẩm ...'
       />
       {loading && (
-        <div className='absolute inset-y-0 end-4 flex items-center ps-3 pointer-events-none'>
+        <div className='pointer-events-none absolute inset-y-0 end-4 flex items-center ps-3'>
           <svg
             aria-hidden='true'
-            className='inline w-4 h-4 text-gray-200 animate-spin fill-blue-600'
+            className='inline h-4 w-4 animate-spin fill-blue-600 text-gray-200'
             viewBox='0 0 100 101'
             fill='none'
             xmlns='http://www.w3.org/2000/svg'
@@ -54,11 +54,11 @@ function SearchField({ loading, setLoading, searchValue, setSearchValue }) {
       )}
       {!!searchValue && !loading && (
         <div
-          className='absolute inset-y-0 end-4 flex items-center ps-3 cursor-pointer'
+          className='absolute inset-y-0 end-4 flex cursor-pointer items-center ps-3'
           onClick={() => setSearchValue('')}
         >
           <svg
-            className='w-4 h-4 text-gray-500'
+            className='h-4 w-4 text-gray-500'
             aria-hidden='true'
             xmlns='http://www.w3.org/2000/svg'
             width='24'
