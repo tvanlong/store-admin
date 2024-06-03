@@ -96,6 +96,12 @@ function Header() {
             <Breadcrumb.Item icon={HiShoppingCart}>Đơn hàng</Breadcrumb.Item>
           </Breadcrumb>
         )
+      case path.profile:
+        return (
+          <Breadcrumb aria-label='Default breadcrumb example'>
+            <Breadcrumb.Item icon={HiUser}>Thông tin tài khoản</Breadcrumb.Item>
+          </Breadcrumb>
+        )
       case path.addCategory:
         return (
           <Breadcrumb aria-label='Default breadcrumb example'>
@@ -206,7 +212,9 @@ function Header() {
         <Dropdown.Item href={path.dashboard} icon={HiViewGrid}>
           Bảng điều khiển
         </Dropdown.Item>
-        <Dropdown.Item icon={HiCog}>Thông tin tài khoản</Dropdown.Item>
+        <Dropdown.Item href={path.profile} icon={HiUser}>
+          Thông tin tài khoản
+        </Dropdown.Item>
         <Dropdown.Item href={path.order} icon={HiCurrencyDollar}>
           Đơn hàng chờ duyệt ({totalPendingOrders})
         </Dropdown.Item>

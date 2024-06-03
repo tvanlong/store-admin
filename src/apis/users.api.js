@@ -11,3 +11,7 @@ export const createStaff = (data) => http.post('/api/users/staffs', data)
 export const updateStaff = (id, data) => http.patch(`/api/users/staffs/${id}`, data)
 
 export const deleteStaff = (id) => http.delete(`/api/users/staffs/${id}`)
+
+export const updateProfile = (id, data) => http.patch(`/api/users/update-profile/${id}`, data)
+
+export const changePassword = (id, data) => http.patch(`/api/users/change-password/${id}`, data)
