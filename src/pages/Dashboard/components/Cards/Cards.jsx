@@ -1,12 +1,12 @@
-import { useMemo } from 'react'
 import { useQuery } from '@tanstack/react-query'
+import { useMemo } from 'react'
 import { getAllVersions } from '~/apis/version.api'
 import { path } from '~/constants/path'
-import Card from './Card'
 import { useCategories } from '~/hooks/useCategories'
-import { useSubcategories } from '~/hooks/useSubcategories'
 import { useCustomers } from '~/hooks/useCustomers'
 import { useOrders } from '~/hooks/useOrders'
+import { useSubcategories } from '~/hooks/useSubcategories'
+import Card from './Card'
 
 function Cards() {
   const { data: categoriesData } = useCategories()

@@ -1,16 +1,16 @@
+import { yupResolver } from '@hookform/resolvers/yup'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Button, Label, Select, TextInput, Textarea } from 'flowbite-react'
-import { default as SelectSearch } from 'react-select'
 import { useEffect } from 'react'
-import { textInputTheme } from '~/utils/theme'
+import { Helmet } from 'react-helmet-async'
 import { useForm } from 'react-hook-form'
-import { yupResolver } from '@hookform/resolvers/yup'
-import { getAllProducts } from '~/apis/products.api'
 import { useNavigate, useParams } from 'react-router-dom'
+import { default as SelectSearch } from 'react-select'
+import { toast } from 'sonner'
+import { getAllProducts } from '~/apis/products.api'
 import { getVersionById, updateVersion } from '~/apis/version.api'
 import { versionSchema } from '~/schemas/versionSchema'
-import { toast } from 'sonner'
-import { Helmet } from 'react-helmet-async'
+import { textInputTheme } from '~/utils/theme'
 
 function UpdateVersion({ setProgress }) {
   const queryClient = useQueryClient()

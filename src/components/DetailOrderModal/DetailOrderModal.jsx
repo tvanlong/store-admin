@@ -1,9 +1,9 @@
-import { useState } from 'react'
-import { Button, Modal } from 'flowbite-react'
-import OrderItem from '../OrderItem'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { updateStatusOrder } from '~/apis/orders.api'
+import { Button, Modal } from 'flowbite-react'
+import { useState } from 'react'
 import { toast } from 'sonner'
+import { updateStatusOrder } from '~/apis/orders.api'
+import OrderItem from '../OrderItem'
 
 function DetailOrderModal({ order }) {
   const queryClient = useQueryClient()

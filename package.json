@@ -10,6 +10,7 @@
     "lint:fix": "eslint --fix --ext .js,.jsx .",
     "prettier": "prettier --check \"src/**/(*.jsx|*.js|*.css|*.scss)\"",
     "prettier:fix": "prettier --write \"src/**/(*.jsx|*.js|*.css|*.scss)\"",
+    "format": "prettier --write \"src/**/*.{js,jsx}\"",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -44,6 +45,7 @@
     "eslint-plugin-react-refresh": "^0.4.6",
     "postcss": "^8.4.38",
     "prettier": "^3.2.5",
+    "prettier-plugin-organize-imports": "^3.2.4",
     "prettier-plugin-tailwindcss": "^0.6.1",
     "tailwindcss": "^3.4.1",
     "vite": "^5.2.0"

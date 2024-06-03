@@ -1,4 +1,4 @@
-import { useSpring, animated } from '@react-spring/web'
+import { animated, useSpring } from '@react-spring/web'
 import { Link } from 'react-router-dom'
 
 function Card({ color, icon, title, animatedValue, label, path }) {

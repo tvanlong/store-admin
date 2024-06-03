@@ -1,9 +1,9 @@
+import { Tabs } from 'flowbite-react'
 import { useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
-import { toast } from 'sonner'
-import { Tabs } from 'flowbite-react'
 import { HiAdjustments, HiClipboardList, HiUserCircle } from 'react-icons/hi'
 import { MdDashboard } from 'react-icons/md'
+import { toast } from 'sonner'
 import { AppContext } from '~/context/app.context'
 
 function Profile({ setProgress }) {

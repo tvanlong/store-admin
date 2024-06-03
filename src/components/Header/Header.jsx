@@ -4,15 +4,15 @@ import { Avatar, Breadcrumb, Dropdown, Navbar } from 'flowbite-react'
 import { useContext, useMemo } from 'react'
 import {
   HiChartPie,
-  HiShoppingCart,
-  HiDesktopComputer,
-  HiMenu,
-  HiUser,
-  HiMenuAlt4,
   HiChip,
   HiCog,
   HiCurrencyDollar,
+  HiDesktopComputer,
   HiLogout,
+  HiMenu,
+  HiMenuAlt4,
+  HiShoppingCart,
+  HiUser,
   HiViewGrid
 } from 'react-icons/hi'
 import { useLocation } from 'react-router-dom'

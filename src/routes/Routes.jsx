@@ -1,13 +1,13 @@
 import { Suspense, lazy, useContext, useState } from 'react'
+import { ErrorBoundary } from 'react-error-boundary'
 import { Navigate, Outlet, useRoutes } from 'react-router-dom'
 import LoadingBar from 'react-top-loading-bar'
+import Loading from '~/components/Loading'
 import { path } from '~/constants/path'
 import { AppContext } from '~/context/app.context'
 import MainLayout from '~/layouts/MainLayout'
-import Loading from '~/components/Loading'
-import NotFound from '~/pages/NotFound'
-import { ErrorBoundary } from 'react-error-boundary'
 import ErrorPage from '~/pages/ErrorPage'
+import NotFound from '~/pages/NotFound'
 
 const Dashboard = lazy(() => import('~/pages/Dashboard'))
 const AddCategory = lazy(() => import('~/pages/Categories/AddCategory'))

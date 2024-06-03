@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
+import { Helmet } from 'react-helmet-async'
 import Cards from './components/Cards'
 import DashboardChart from './components/DashboardChart'
-import { Helmet } from 'react-helmet-async'
 
 function Dashboard({ setProgress }) {
   useEffect(() => {

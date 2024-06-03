@@ -3,15 +3,15 @@ import { Sidebar as SideBar } from 'flowbite-react'
 import { useContext } from 'react'
 import {
   HiChartPie,
-  HiLogout,
-  HiShoppingCart,
+  HiChip,
   HiDesktopComputer,
+  HiLogout,
   HiMenu,
-  HiUser,
+  HiMenuAlt4,
   HiOutlineMinusSm,
   HiOutlinePlusSm,
-  HiMenuAlt4,
-  HiChip
+  HiShoppingCart,
+  HiUser
 } from 'react-icons/hi'
 import { toast } from 'sonner'
 import { twMerge } from 'tailwind-merge'
