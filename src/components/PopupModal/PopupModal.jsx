@@ -25,7 +25,7 @@ function PopupModal({ version }) {
               ))}
             </div>
             <p className='text-base leading-relaxed'>
-              <span className='font-medium'>Tên sản phẩm:</span> {version.product.name} {version.name}
+              <span className='font-medium'>Tên sản phẩm:</span> {version.product.name} ({version.name})
             </p>
             <p className='text-base leading-relaxed'>
               <span className='font-medium'>Loại sản phẩm:</span> {version.product.subcategory.name}

@@ -6,7 +6,7 @@ function OrderItem({ item }) {
   return (
     <div className='my-2 space-y-6 rounded-lg border border-gray-200 p-5'>
       <p className='text-sm leading-relaxed text-gray-500'>
-        {version.product.name} {version.name}
+        {version.product.name} ({version.name})
       </p>
       <div className='flex justify-center gap-3'>
         {version.product.images.map((image, index) => (

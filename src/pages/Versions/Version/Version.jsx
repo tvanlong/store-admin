@@ -147,7 +147,7 @@ function Version({ setProgress }) {
                   onMouseEnter={() => handlePrefetchOnMouseEnter(version._id)}
                 >
                   <Table.Cell className='max-w-sm font-medium text-gray-900'>
-                    {version.product.name} {version.name}
+                    {version.product.name} ({version.name})
                   </Table.Cell>
                   <Table.Cell>
                     <div className='flex items-center gap-3'>
