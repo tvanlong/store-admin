@@ -224,7 +224,7 @@ function Profile({ setProgress }) {
                       <img
                         src={previewImage || user?.avatar || DEFAULT_AVATAR}
                         alt=''
-                        className='h-full w-full rounded-full object-cover'
+                        className='h-full w-full rounded-full object-cover border border-gray-300'
                       />
                     </div>
                     <input
