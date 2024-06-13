@@ -5,6 +5,7 @@ import { Helmet } from 'react-helmet-async'
 import { Link } from 'react-router-dom'
 import { toast } from 'sonner'
 import { deleteStaff, getAllStaffs, getStaff } from '~/apis/users.api'
+import ModalDelete from '~/components/ModalDelete'
 import NoData from '~/components/NoData'
 import { getUserDataFromLocalStorage } from '~/utils/auth'
 import { formatDateTime } from '~/utils/format'
@@ -101,9 +102,10 @@ function Staff({ setProgress }) {
                   <Link to={`/update-staff/${staff._id}`} className='font-medium text-cyan-600 hover:underline'>
                     Cập nhật
                   </Link>
-                  <Link onClick={() => handleDelete(staff._id)} className='font-medium text-red-600 hover:underline'>
-                    Xóa
-                  </Link>
+                  <ModalDelete
+                    title='Bạn có chắc chắn muốn xóa nhân viên này?'
+                    handleDelete={() => handleDelete(staff._id)}
+                  />
                 </Table.Cell>
               </Table.Row>
             ))}

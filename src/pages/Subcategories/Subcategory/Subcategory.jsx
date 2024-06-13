@@ -5,6 +5,7 @@ import { Helmet } from 'react-helmet-async'
 import { Link } from 'react-router-dom'
 import { toast } from 'sonner'
 import { deleteSubcategory, getSubcategory } from '~/apis/subcategories.api'
+import ModalDelete from '~/components/ModalDelete'
 import NoData from '~/components/NoData'
 import { useSubcategories } from '~/hooks/useSubcategories'
 import { tableTheme } from '~/utils/theme'
@@ -102,13 +103,10 @@ function Subcategory({ setProgress }) {
                   >
                     Cập nhật
                   </Link>
-                  <Link
-                    to={''}
-                    className='font-medium text-red-600 hover:underline'
-                    onClick={() => handleDeleteSubcategory(subcategory)}
-                  >
-                    Xóa
-                  </Link>
+                  <ModalDelete
+                    title='Bạn có chắc chắn muốn xóa danh mục sản phẩm này không?'
+                    handleDelete={() => handleDeleteSubcategory(subcategory)}
+                  />
                 </Table.Cell>
               </Table.Row>
             ))}

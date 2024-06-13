@@ -7,6 +7,7 @@ import { toast } from 'sonner'
 import { deleteImage } from '~/apis/images.api'
 import { deleteProduct, getAllProducts, getProduct } from '~/apis/products.api'
 import FilterField from '~/components/FilterField'
+import ModalDelete from '~/components/ModalDelete'
 import NoData from '~/components/NoData'
 import SearchField from '~/components/SearchField'
 import useDebounce from '~/hooks/useDebounce'
@@ -182,12 +183,10 @@ function Product({ setProgress }) {
                       <Link to={`/update-product/${product._id}`} className='font-medium text-cyan-600 hover:underline'>
                         Cập nhật
                       </Link>
-                      <Link
-                        className='font-medium text-red-600 hover:underline'
-                        onClick={() => handleDeleteProduct(product)}
-                      >
-                        Xóa
-                      </Link>
+                      <ModalDelete
+                        title='Bạn có chắc chắn muốn xóa dòng sản phẩm này không?'
+                        handleDelete={() => handleDeleteProduct(product)}
+                      />
                     </div>
                   </Table.Cell>
                 </Table.Row>

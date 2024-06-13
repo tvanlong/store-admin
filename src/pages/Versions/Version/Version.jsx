@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import { toast } from 'sonner'
 import { deleteVersion, getAllVersions, getVersionById } from '~/apis/version.api'
 import FilterField from '~/components/FilterField'
+import ModalDelete from '~/components/ModalDelete'
 import NoData from '~/components/NoData'
 import PopupModal from '~/components/PopupModal'
 import SearchField from '~/components/SearchField'
@@ -182,12 +183,10 @@ function Version({ setProgress }) {
                       <Link to={`/update-version/${version._id}`} className='font-medium text-cyan-600 hover:underline'>
                         Cập nhật
                       </Link>
-                      <Link
-                        className='font-medium text-red-600 hover:underline'
-                        onClick={() => handleDeleteVersion(version)}
-                      >
-                        Xóa
-                      </Link>
+                      <ModalDelete
+                        title='Bạn có chắc chắn muốn xóa phiên bản sản phẩm này không?'
+                        handleDelete={() => handleDeleteVersion(version)}
+                      />
                     </div>
                   </Table.Cell>
                 </Table.Row>
