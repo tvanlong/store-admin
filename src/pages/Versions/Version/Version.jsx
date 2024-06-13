@@ -111,7 +111,7 @@ function Version({ setProgress }) {
           Danh sách các phiên bản sản phẩm hiện có trong cửa hàng được hiển thị dưới đây
         </p>
       </div>
-      <div className='mx-10 my-10 flex items-center gap-5 rounded-md bg-gray-200/80 p-3'>
+      <div className='mx-10 my-10 flex items-center gap-5 rounded-md p-3'>
         <SearchField
           loading={loading}
           setLoading={setLoading}

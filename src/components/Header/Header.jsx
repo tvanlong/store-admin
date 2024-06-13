@@ -200,7 +200,7 @@ function Header() {
   }
 
   return (
-    <Navbar className='fixed left-64 right-0 top-0 border-b border-b-gray-200' fluid>
+    <Navbar className='fixed left-64 right-0 top-0 z-10 border-b border-b-gray-200' fluid>
       {pathname.includes('update') ? renderBreadcrumbUpdate() : renderBreadcrumb()}
       <Dropdown color={'transparent'} label={<Avatar bordered img={profile?.avatar} rounded></Avatar>} arrowIcon={null}>
         <Dropdown.Header>
