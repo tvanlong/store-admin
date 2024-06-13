@@ -1,3 +1,8 @@
+export const productSortOptions = [
+  { param: 'createdAt', value: 'new', label: 'Mới nhất' },
+  { param: 'createdAt', value: 'old', label: 'Cũ nhất' }
+]
+
 export const sortOptions = [
   { param: 'createdAt', value: 'new', label: 'Mới nhất' },
   { param: 'createdAt', value: 'old', label: 'Cũ nhất' },

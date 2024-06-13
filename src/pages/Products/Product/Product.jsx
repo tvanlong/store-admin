@@ -10,6 +10,7 @@ import FilterField from '~/components/FilterField'
 import ModalDelete from '~/components/ModalDelete'
 import NoData from '~/components/NoData'
 import SearchField from '~/components/SearchField'
+import { productSortOptions } from '~/constants/options'
 import useDebounce from '~/hooks/useDebounce'
 import useQueryParamsConfig from '~/hooks/useQueryParamsConfig'
 import { tableTheme } from '~/utils/theme'
@@ -23,18 +24,26 @@ function Product({ setProgress }) {
   const [searchValue, setSearchValue] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
   const [loading, setLoading] = useState(false)
-  const debouncedValue = useDebounce(searchValue, 700)
-  let newQueryParamsConfig = {
-    page: currentPage,
-    limit: LIMIT,
+  const [queryParams, setQueryParams] = useState({
     ...queryParamsConfig,
-    keyword: debouncedValue === '' ? undefined : debouncedValue
-  }
+    page: currentPage,
+    limit: LIMIT
+  })
+  const debouncedValue = useDebounce(searchValue, 700)
+
+  useEffect(() => {
+    setQueryParams((prev) => ({
+      ...prev,
+      page: currentPage,
+      keyword: debouncedValue === '' ? undefined : debouncedValue
+    }))
+  }, [debouncedValue, currentPage])
+
   const { data, isLoading, refetch } = useQuery({
-    queryKey: ['products', newQueryParamsConfig],
+    queryKey: ['products', queryParams],
     queryFn: () => {
       setLoading(false)
-      return getAllProducts(newQueryParamsConfig)
+      return getAllProducts(queryParams)
     },
     placeholderData: keepPreviousData
   })
@@ -89,11 +98,11 @@ function Product({ setProgress }) {
   }
 
   const onSortChange = (sort_by, value) => {
-    newQueryParamsConfig = {
-      ...newQueryParamsConfig,
+    setQueryParams((prev) => ({
+      ...prev,
       sort: sort_by,
       order: value
-    }
+    }))
     refetch()
   }
 
@@ -131,13 +140,7 @@ function Product({ setProgress }) {
           searchValue={searchValue}
           setSearchValue={setSearchValue}
         />
-        <FilterField
-          options={[
-            { sort_by: 'createdAt', value: 'new', label: 'Mới nhất' },
-            { sort_by: 'createdAt', value: 'old', label: 'Cũ nhất' }
-          ]}
-          onSortChange={onSortChange}
-        />
+        <FilterField options={productSortOptions} onSortChange={onSortChange} />
       </div>
       <div className='mx-10 overflow-x-auto'>
         <Table theme={tableTheme}>
