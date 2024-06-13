@@ -1,8 +1,8 @@
-function FilterField({ options, onSortChange }) {
+function FilterField({ options, onSortChange, defaultLabel = 'Bộ lọc tìm kiếm' }) {
   const handleSort = (e) => {
-    const selectedOption = options.find((option) => option.value === e.target.value)
+    const selectedOption = options.find((option) => option.value.toString() === e.target.value)
     if (selectedOption) {
-      onSortChange(selectedOption.sort_by, selectedOption.value)
+      onSortChange(selectedOption.param, selectedOption.value)
     }
   }
 
@@ -15,10 +15,10 @@ function FilterField({ options, onSortChange }) {
         onChange={(e) => handleSort(e)}
       >
         <option value='' disabled>
-          Bộ lọc tìm kiếm
+          {defaultLabel}
         </option>
         {options.map((option) => (
-          <option key={option.sort_by + option.value} value={option.value}>
+          <option key={`${option.param}-${option.value}`} value={option.value}>
             {option.label}
           </option>
         ))}

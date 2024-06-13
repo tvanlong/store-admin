@@ -10,6 +10,7 @@ import ModalDelete from '~/components/ModalDelete'
 import NoData from '~/components/NoData'
 import PopupModal from '~/components/PopupModal'
 import SearchField from '~/components/SearchField'
+import { priceOptions, sortOptions } from '~/constants/options'
 import useDebounce from '~/hooks/useDebounce'
 import useQueryParamsConfig from '~/hooks/useQueryParamsConfig'
 import { formatCurrency } from '~/utils/format'
@@ -23,18 +24,26 @@ function Version({ setProgress }) {
   const [searchValue, setSearchValue] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
   const [loading, setLoading] = useState(false)
-  const debouncedValue = useDebounce(searchValue, 700)
-  let newQueryParamsConfig = {
-    page: currentPage,
-    limit: LIMIT,
+  const [queryParams, setQueryParams] = useState({
     ...queryParamsConfig,
-    keyword: debouncedValue === '' ? undefined : debouncedValue
-  }
+    page: currentPage,
+    limit: LIMIT
+  })
+  const debouncedValue = useDebounce(searchValue, 700)
+
+  useEffect(() => {
+    setQueryParams((prev) => ({
+      ...prev,
+      page: currentPage,
+      keyword: debouncedValue === '' ? undefined : debouncedValue
+    }))
+  }, [debouncedValue, currentPage])
+
   const { data, isLoading, refetch } = useQuery({
-    queryKey: ['versions', newQueryParamsConfig],
+    queryKey: ['versions', queryParams],
     queryFn: () => {
       setLoading(false)
-      return getAllVersions(newQueryParamsConfig)
+      return getAllVersions(queryParams)
     },
     placeholderData: keepPreviousData
   })
@@ -77,12 +86,22 @@ function Version({ setProgress }) {
 
   const onPageChange = (page) => setCurrentPage(page)
 
-  const onSortChange = (sort_by, value) => {
-    newQueryParamsConfig = {
-      ...newQueryParamsConfig,
-      sort: sort_by,
-      order: value
-    }
+  const onSortChange = (param, value) => {
+    setQueryParams((prev) => {
+      if (Array.isArray(param)) {
+        return {
+          ...prev,
+          [param[0]]: value[0],
+          [param[1]]: value[1]
+        }
+      } else {
+        return {
+          ...prev,
+          sort: param,
+          order: value
+        }
+      }
+    })
     refetch()
   }
 
@@ -118,15 +137,8 @@ function Version({ setProgress }) {
           searchValue={searchValue}
           setSearchValue={setSearchValue}
         />
-        <FilterField
-          options={[
-            { sort_by: 'createdAt', value: 'new', label: 'Mới nhất' },
-            { sort_by: 'createdAt', value: 'old', label: 'Cũ nhất' },
-            { sort_by: 'price', value: 'asc', label: 'Giá thấp - cao' },
-            { sort_by: 'price', value: 'desc', label: 'Giá cao - thấp' }
-          ]}
-          onSortChange={onSortChange}
-        />
+        <FilterField options={sortOptions} onSortChange={onSortChange} />
+        <FilterField defaultLabel='Lọc theo khoảng giá' options={priceOptions} onSortChange={onSortChange} />
       </div>
       <div className='mx-10 overflow-x-auto'>
         <Table theme={tableTheme}>
