@@ -192,6 +192,7 @@ function Profile({ setProgress }) {
                     {...registerProfile('name')}
                     onChange={(e) => handleChangeInputProfile(e)}
                   />
+                  {errorsProfile.name && <span className='text-sm text-red-500'>{errorsProfile.name.message}</span>}
                 </div>
                 <div className='mb-6'>
                   <label htmlFor='email' className='mb-2 block text-sm font-medium text-gray-900'>
@@ -204,6 +205,7 @@ function Profile({ setProgress }) {
                     className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 shadow-sm'
                     {...registerProfile('email')}
                   />
+                  {errorsProfile.email && <span className='text-sm text-red-500'>{errorsProfile.email.message}</span>}
                 </div>
                 <div className='mb-6'>
                   <label htmlFor='cus_phone' className='mb-2 block text-sm font-medium text-gray-900'>
@@ -215,6 +217,7 @@ function Profile({ setProgress }) {
                     className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 shadow-sm'
                     {...registerProfile('phone')}
                   />
+                  {errorsProfile.phone && <span className='text-sm text-red-500'>{errorsProfile.phone.message}</span>}
                 </div>
               </div>
               <div className='col-span-2'>
@@ -275,6 +278,9 @@ function Profile({ setProgress }) {
                 {...registerPassword('password')}
                 onChange={(e) => handleChangeInputPassword(e)}
               />
+              {errorsPassword.password && (
+                <span className='text-sm text-red-500'>{errorsPassword.password.message}</span>
+              )}
             </div>
             <div className='mb-6'>
               <label htmlFor='password_confirmation' className='mb-2 block text-sm font-medium text-gray-900'>
@@ -287,6 +293,9 @@ function Profile({ setProgress }) {
                 {...registerPassword('confirm_password')}
                 onChange={(e) => handleChangeInputPassword(e)}
               />
+              {errorsPassword.confirm_password && (
+                <span className='text-sm text-red-500'>{errorsPassword.confirm_password.message}</span>
+              )}
             </div>
             <label className='mb-5 flex cursor-pointer items-center'>
               <input
