@@ -15,6 +15,7 @@ const Category = lazy(() => import('~/pages/Categories/Category'))
 const UpdateCategory = lazy(() => import('~/pages/Categories/UpdateCategory'))
 const Customer = lazy(() => import('~/pages/Customers/Customer'))
 const Login = lazy(() => import('~/pages/Login'))
+const Register = lazy(() => import('~/pages/Register'))
 const Order = lazy(() => import('~/pages/Order'))
 const AddProduct = lazy(() => import('~/pages/Products/AddProduct'))
 const Product = lazy(() => import('~/pages/Products/Product'))
@@ -247,7 +248,19 @@ function Routes() {
       children: [
         {
           path: path.login,
-          element: <Login />
+          element: (
+            <Suspense fallback={<div>Loading...</div>}>
+              <Login />
+            </Suspense>
+          )
+        },
+        {
+          path: path.register,
+          element: (
+            <Suspense fallback={<div>Loading...</div>}>
+              <Register />
+            </Suspense>
+          )
         }
       ]
     },

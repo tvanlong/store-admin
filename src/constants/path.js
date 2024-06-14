@@ -1,6 +1,7 @@
 export const path = {
   dashboard: '/',
   login: '/login',
+  register: '/register',
   logout: '/logout',
   category: '/category',
   addCategory: '/add-category',

@@ -3,9 +3,10 @@ import { useMutation } from '@tanstack/react-query'
 import { useContext } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { useForm } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 import { signIn } from '~/apis/auth.api'
+import { path } from '~/constants/path'
 import { AppContext } from '~/context/app.context'
 import { signInSchema } from '~/schemas/authSchema'
 
@@ -119,9 +120,9 @@ function Login() {
               </button>
               <p className='text-sm font-light text-gray-500'>
                 Bạn chưa có tài khoản?{' '}
-                <a href='#' className='font-medium text-blue-700 hover:underline'>
+                <Link to={path.register} className='font-medium text-blue-700 hover:underline'>
                   Đăng ký ngay
-                </a>
+                </Link>
               </p>
             </form>
           </div>
