@@ -8,10 +8,10 @@ import { HiClipboardList, HiUserCircle } from 'react-icons/hi'
 import { MdDashboard } from 'react-icons/md'
 import { toast } from 'sonner'
 import { deleteImage, uploadAvatar } from '~/apis/images.api'
-import { changePassword, getStaff, updateProfile } from '~/apis/users.api'
+import { changeEmail, changePassword, getStaff, updateProfile, verifyEmail } from '~/apis/users.api'
 import { DEFAULT_AVATAR } from '~/constants/default'
 import { AppContext } from '~/context/app.context'
-import { changePasswordSchema, profileSchema } from '~/schemas/userSchema'
+import { changeEmailSchema, changePasswordSchema, profileSchema } from '~/schemas/userSchema'
 import { setUserDataIntoLocalStorage } from '~/utils/auth'
 import { tabsTheme } from '~/utils/theme'
 import { extractPublicIdFromUrl } from '~/utils/util'
@@ -31,6 +31,8 @@ function Profile({ setProgress }) {
     return file ? URL.createObjectURL(file) : ''
   }, [file])
   const fileInputRef = useRef(null)
+  const [otp, setOtp] = useState('')
+  const [isVerify, setIsVerify] = useState(false)
 
   useEffect(() => {
     setProgress(20)
@@ -72,6 +74,21 @@ function Profile({ setProgress }) {
     resolver: yupResolver(changePasswordSchema)
   })
 
+  const {
+    register: registerEmail,
+    setValue: setValueEmail,
+    handleSubmit: handleSubmitEmail,
+    formState: { errors: errorsEmail },
+    clearErrors: clearErrorsEmail,
+    getValues: getEmailValues
+  } = useForm({
+    defaultValues: {
+      email: '',
+      new_email: ''
+    },
+    resolver: yupResolver(changeEmailSchema)
+  })
+
   useEffect(() => {
     if (user) {
       setValueProfile('name', user.name)
@@ -79,6 +96,10 @@ function Profile({ setProgress }) {
       setValueProfile('phone', user.phone)
     }
   }, [user, setValueProfile])
+
+  useEffect(() => {
+    setValueEmail('email', user.email)
+  }, [user.email, setValueEmail])
 
   const { mutateAsync: updateProfileMutate, isPending } = useMutation({
     mutationFn: (data) => updateProfile(profile?._id, data),
@@ -97,6 +118,17 @@ function Profile({ setProgress }) {
 
   const { mutateAsync: changePasswordMutate, isPending: isPendingPassword } = useMutation({
     mutationFn: (data) => changePassword(profile?._id, data)
+  })
+
+  const { mutateAsync: changeEmailMutate } = useMutation({
+    mutationFn: (data) => changeEmail(profile?._id, data)
+  })
+
+  const { mutateAsync: verifyEmailMutate } = useMutation({
+    mutationFn: (data) => verifyEmail(profile?._id, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['profile', profile?._id] })
+    }
   })
 
   const handleChangeFile = (event) => {
@@ -122,6 +154,13 @@ function Profile({ setProgress }) {
     setValuePassword(e.target.name, e.target.value)
     if (errorsPassword[e.target.name]) {
       clearErrorsPassword(e.target.name)
+    }
+  }
+
+  const handleChangeInputEmail = (e) => {
+    setValueEmail(e.target.name, e.target.value)
+    if (errorsEmail[e.target.name]) {
+      clearErrorsEmail(e.target.name)
     }
   }
 
@@ -162,6 +201,37 @@ function Profile({ setProgress }) {
       }
     })
   })
+
+  const onSubmitEmail = handleSubmitEmail(async (data) => {
+    const toastId = toast.loading('Đang cập nhật thông tin...')
+    try {
+      const response = await changeEmailMutate(data)
+      if (response.data) {
+        setIsVerify(true)
+        toast.success(response.data.message || 'Vui lòng kiểm tra email của bạn để xác nhận thay đổi email!', {
+          id: toastId
+        })
+      }
+    } catch (error) {
+      toast.error('Cập nhật thông tin thất bại', { id: toastId })
+    }
+  })
+
+  const handleVerifyEmail = async () => {
+    const toastId = toast.loading('Đang xác nhận email...')
+    try {
+      const email = getEmailValues('new_email')
+      const response = await verifyEmailMutate({ email, otp })
+      if (response.data) {
+        toast.success(response.data.message || 'Xác nhận thay đổi email thành công', { id: toastId })
+        setIsVerify(false)
+        setProfile(response.data.data)
+        setUserDataIntoLocalStorage(response.data.data)
+      }
+    } catch (error) {
+      toast.error('Xác nhận email thất bại', { id: toastId })
+    }
+  }
 
   return (
     <div className='mt-24 h-full'>
@@ -259,6 +329,72 @@ function Profile({ setProgress }) {
             >
               Cập nhật lại thông tin
             </button>
+          </form>
+        </Tabs.Item>
+        <Tabs.Item title='Đổi email xác thực' icon={MdDashboard}>
+          <h2 className='mb-6 text-center text-2xl font-semibold'>Thay đổi địa chỉ email xác thực</h2>
+          <p className='mb-6 text-center text-sm text-gray-500'>
+            Thay đổi địa chỉ email xác thực để bảo mật tài khoản của bạn
+          </p>
+          <form className='mx-40' onSubmit={onSubmitEmail}>
+            <div className='mb-6'>
+              <label htmlFor='current_email' className='mb-2 block text-sm font-medium text-gray-900'>
+                Địa chỉ email hiện tại
+              </label>
+              <input
+                id='current_email'
+                disabled
+                className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 shadow-sm'
+                {...registerEmail('email')}
+                onChange={(e) => handleChangeInputEmail(e)}
+              />
+            </div>
+            {errorsEmail.email && <p className='text-red-500 text-sm'>{errorsEmail.email.message}</p>}
+            <div className='mb-6'>
+              <label htmlFor='new_email' className='mb-2 block text-sm font-medium text-gray-900'>
+                Địa chỉ email mới
+              </label>
+              <input
+                id='new_email'
+                className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 shadow-sm'
+                {...registerEmail('new_email')}
+                onChange={(e) => handleChangeInputEmail(e)}
+              />
+            </div>
+            {errorsEmail.new_email && <p className='text-red-500 text-sm'>{errorsEmail.new_email.message}</p>}
+            {isVerify && (
+              <div className='mb-6'>
+                <label htmlFor='otp' className='mb-2 block text-sm font-medium text-gray-900'>
+                  Mã OTP
+                </label>
+                <input
+                  id='otp'
+                  className='block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 shadow-sm'
+                  value={otp}
+                  onChange={(e) => setOtp(e.target.value)}
+                />
+              </div>
+            )}
+            {!isVerify && (
+              <div className='text-center'>
+                <button
+                  type='submit'
+                  disabled={isPendingPassword}
+                  className='rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800'
+                >
+                  Thay đổi email
+                </button>
+              </div>
+            )}
+            {isVerify && (
+              <button
+                type='button'
+                onClick={handleVerifyEmail}
+                className='rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800'
+              >
+                Xác nhận thay đổi email
+              </button>
+            )}
           </form>
         </Tabs.Item>
         <Tabs.Item title='Đổi mật khẩu' icon={MdDashboard}>
