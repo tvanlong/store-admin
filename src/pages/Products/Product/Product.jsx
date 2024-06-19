@@ -1,8 +1,8 @@
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { Pagination, Table } from 'flowbite-react'
+import { Button, Pagination, Table } from 'flowbite-react'
 import { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 import { deleteImage } from '~/apis/images.api'
 import { deleteProduct, getAllProducts, getProduct } from '~/apis/products.api'
@@ -11,6 +11,7 @@ import ModalDelete from '~/components/ModalDelete'
 import NoData from '~/components/NoData'
 import SearchField from '~/components/SearchField'
 import { productSortOptions } from '~/constants/options'
+import { path } from '~/constants/path'
 import useDebounce from '~/hooks/useDebounce'
 import useQueryParamsConfig from '~/hooks/useQueryParamsConfig'
 import { tableTheme } from '~/utils/theme'
@@ -19,6 +20,7 @@ import { extractPublicIdFromUrl } from '~/utils/util'
 const LIMIT = 5
 
 function Product({ setProgress }) {
+  const navigate = useNavigate()
   const queryParamsConfig = useQueryParamsConfig()
   const queryClient = useQueryClient()
   const [searchValue, setSearchValue] = useState('')
@@ -124,7 +126,7 @@ function Product({ setProgress }) {
         <meta name='description' content='Trang quản trị | Danh sách dòng sản phẩm' />
       </Helmet>
       <div className='mb-10 mt-20 text-center'>
-        <h1 className='mb-4 text-5xl font-extrabold text-gray-900'>
+        <h1 className='mb-4 text-3xl font-extrabold text-gray-900'>
           <span className='bg-gradient-to-r from-sky-400 to-emerald-600 bg-clip-text text-transparent'>
             Danh sách dòng sản phẩm
           </span>
@@ -141,6 +143,14 @@ function Product({ setProgress }) {
           setSearchValue={setSearchValue}
         />
         <FilterField options={productSortOptions} onSortChange={onSortChange} />
+        <Button
+          gradientMonochrome='success'
+          onClick={() => {
+            navigate(path.addProduct)
+          }}
+        >
+          Thêm mới
+        </Button>
       </div>
       <div className='mx-10 overflow-x-auto'>
         <Table theme={tableTheme}>

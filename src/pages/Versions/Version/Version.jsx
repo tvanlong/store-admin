@@ -1,8 +1,8 @@
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { Pagination, Table } from 'flowbite-react'
+import { Button, Pagination, Table } from 'flowbite-react'
 import { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 import { deleteVersion, getAllVersions, getVersionById } from '~/apis/version.api'
 import FilterField from '~/components/FilterField'
@@ -11,6 +11,7 @@ import NoData from '~/components/NoData'
 import PopupModal from '~/components/PopupModal'
 import SearchField from '~/components/SearchField'
 import { priceOptions, sortOptions } from '~/constants/options'
+import { path } from '~/constants/path'
 import useDebounce from '~/hooks/useDebounce'
 import useQueryParamsConfig from '~/hooks/useQueryParamsConfig'
 import { formatCurrency } from '~/utils/format'
@@ -19,6 +20,7 @@ import { tableTheme } from '~/utils/theme'
 const LIMIT = 5
 
 function Version({ setProgress }) {
+  const navigate = useNavigate()
   const queryParamsConfig = useQueryParamsConfig()
   const queryClient = useQueryClient()
   const [searchValue, setSearchValue] = useState('')
@@ -122,14 +124,11 @@ function Version({ setProgress }) {
         <meta name='description' content='Danh sách phiên bản sản phẩm' />
       </Helmet>
       <div className='mb-10 mt-20 text-center'>
-        <h1 className='mb-4 text-5xl font-extrabold text-gray-900'>
+        <h1 className='mb-4 text-3xl font-extrabold text-gray-900'>
           <span className='bg-gradient-to-r from-sky-400 to-emerald-600 bg-clip-text text-transparent'>
             Danh sách phiên bản sản phẩm
           </span>
         </h1>
-        <p className='text-lg font-normal text-gray-500 lg:text-xl'>
-          Danh sách các phiên bản sản phẩm hiện có trong cửa hàng được hiển thị dưới đây
-        </p>
       </div>
       <div className='mx-10 my-10 flex items-center gap-5 rounded-md p-3'>
         <SearchField
@@ -140,6 +139,14 @@ function Version({ setProgress }) {
         />
         <FilterField options={sortOptions} onSortChange={onSortChange} />
         <FilterField defaultLabel='Lọc theo khoảng giá' options={priceOptions} onSortChange={onSortChange} />
+        <Button
+          gradientMonochrome='success'
+          onClick={() => {
+            navigate(path.addVersion)
+          }}
+        >
+          Thêm mới
+        </Button>
       </div>
       <div className='mx-10 overflow-x-auto'>
         <Table theme={tableTheme}>

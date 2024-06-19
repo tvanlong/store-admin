@@ -87,7 +87,7 @@ function UpdateSubcategory({ setProgress }) {
         <meta name='description' content='Trang quản trị | Cập nhật danh mục sản phẩm nhỏ' />
       </Helmet>
       <div className='mb-10 mt-20 text-center'>
-        <h1 className='mb-4 text-5xl font-extrabold text-gray-900'>
+        <h1 className='mb-4 text-3xl font-extrabold text-gray-900'>
           <span className='bg-gradient-to-r from-sky-400 to-emerald-600 bg-clip-text text-transparent'>
             Cập nhật danh mục sản phẩm nhỏ
           </span>

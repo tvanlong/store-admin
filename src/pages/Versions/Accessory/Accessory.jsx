@@ -1,8 +1,8 @@
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { Pagination, Table } from 'flowbite-react'
-import { useEffect, useState } from 'react'
+import { Button, Pagination, Table } from 'flowbite-react'
+import { useEffect, useRef, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 import { deleteVersion, getAllAccessories, getVersionById } from '~/apis/version.api'
 import FilterField from '~/components/FilterField'
@@ -11,6 +11,7 @@ import NoData from '~/components/NoData'
 import PopupModal from '~/components/PopupModal'
 import SearchField from '~/components/SearchField'
 import { priceOptions, sortOptions } from '~/constants/options'
+import { path } from '~/constants/path'
 import useDebounce from '~/hooks/useDebounce'
 import useQueryParamsConfig from '~/hooks/useQueryParamsConfig'
 import { formatCurrency } from '~/utils/format'
@@ -19,6 +20,7 @@ import { tableTheme } from '~/utils/theme'
 const LIMIT = 5
 
 function Accessory({ setProgress }) {
+  const navigate = useNavigate()
   const queryParamsConfig = useQueryParamsConfig()
   const queryClient = useQueryClient()
   const [searchValue, setSearchValue] = useState('')
@@ -30,6 +32,9 @@ function Accessory({ setProgress }) {
     limit: LIMIT
   })
   const debouncedValue = useDebounce(searchValue, 700)
+
+  const filterRef = useRef(null)
+  const priceRef = useRef(null)
 
   useEffect(() => {
     setQueryParams((prev) => ({
@@ -122,7 +127,7 @@ function Accessory({ setProgress }) {
         <meta name='description' content='Danh sách Linh kiện sản phẩm' />
       </Helmet>
       <div className='mb-10 mt-20 text-center'>
-        <h1 className='mb-4 text-5xl font-extrabold text-gray-900'>
+        <h1 className='mb-4 text-3xl font-extrabold text-gray-900'>
           <span className='bg-gradient-to-r from-sky-400 to-emerald-600 bg-clip-text text-transparent'>
             Danh sách linh kiện sản phẩm
           </span>
@@ -138,8 +143,21 @@ function Accessory({ setProgress }) {
           searchValue={searchValue}
           setSearchValue={setSearchValue}
         />
-        <FilterField options={sortOptions} onSortChange={onSortChange} />
-        <FilterField defaultLabel='Lọc theo khoảng giá' options={priceOptions} onSortChange={onSortChange} />
+        <FilterField options={sortOptions} onSortChange={onSortChange} ref={filterRef} />
+        <FilterField
+          defaultLabel='Lọc theo khoảng giá'
+          options={priceOptions}
+          onSortChange={onSortChange}
+          ref={priceRef}
+        />
+        <Button
+          gradientMonochrome='success'
+          onClick={() => {
+            navigate(path.addVersion)
+          }}
+        >
+          Thêm mới
+        </Button>
       </div>
       <div className='mx-10 overflow-x-auto'>
         <Table theme={tableTheme}>
