@@ -8,6 +8,7 @@ export const versionSchema = yup.object({
     .number()
     .min(100, 'Giá mới sản phẩm phải lớn hơn 100')
     .required('Giá mới sản phẩm không được để trống'),
+  is_featured: yup.boolean().required('Trạng thái sản phẩm không được để trống'),
   status: yup.string().required('Tình trạng sản phẩm không được để trống'),
   description: yup
     .string()

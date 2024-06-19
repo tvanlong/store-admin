@@ -1,6 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { Button, Label, Select, TextInput, Textarea } from 'flowbite-react'
+import { Button, Checkbox, Label, Select, TextInput, Textarea } from 'flowbite-react'
 import { useEffect } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { useForm } from 'react-hook-form'
@@ -44,6 +44,7 @@ function UpdateVersion({ setProgress }) {
       product: '',
       old_price: 100,
       current_price: 100,
+      is_featured: false,
       status: '',
       description: ''
     },
@@ -68,6 +69,7 @@ function UpdateVersion({ setProgress }) {
       setValue('product', version.product._id)
       setValue('old_price', version.old_price)
       setValue('current_price', version.current_price)
+      setValue('is_featured', version.is_featured)
       setValue('status', version.status)
       setValue('description', version.description.join('\n'))
     }
@@ -171,6 +173,15 @@ function UpdateVersion({ setProgress }) {
             />
             {errors.current_price && <span className='text-sm text-red-500'>{errors.current_price.message}</span>}
           </div>
+        </div>
+        <div className='flex items-center gap-2 mb-5'>
+          <Checkbox
+            id='is_featured'
+            {...register('is_featured')}
+            onChange={() => clearErrors('is_featured')}
+            defaultChecked={watch('is_featured')}
+          />
+          <Label htmlFor='is_featured'>Sản phẩm nổi bật</Label>
         </div>
         <div className='mb-5'>
           <div className='mb-2 block'>

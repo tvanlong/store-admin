@@ -108,7 +108,8 @@ function Version({ setProgress }) {
   const handlePrefetchOnMouseEnter = (id) => {
     queryClient.prefetchQuery({
       queryKey: ['version', id],
-      queryFn: () => getVersionById(id)
+      queryFn: () => getVersionById(id),
+      staleTime: 1000 * 5 // 5 seconds
     })
   }
 
