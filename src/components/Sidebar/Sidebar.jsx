@@ -6,12 +6,13 @@ import {
   HiChip,
   HiDesktopComputer,
   HiLogout,
-  HiMenu,
-  HiMenuAlt4,
   HiOutlineMinusSm,
+  HiOutlinePlusCircle,
   HiOutlinePlusSm,
+  HiOutlineViewList,
   HiShoppingCart,
-  HiUser
+  HiUser,
+  HiUserGroup
 } from 'react-icons/hi'
 import { toast } from 'sonner'
 import { twMerge } from 'tailwind-merge'
@@ -55,7 +56,7 @@ function Sidebar() {
             Bảng tin
           </SideBar.Item>
           <SideBar.Collapse
-            icon={HiMenu}
+            icon={HiOutlineViewList}
             label='Danh mục lớn'
             renderChevronIcon={(theme, open) => {
               const IconComponent = open ? HiOutlineMinusSm : HiOutlinePlusSm
@@ -63,11 +64,15 @@ function Sidebar() {
               return <IconComponent aria-hidden className={twMerge(theme.label.icon.open[open ? 'on' : 'off'])} />
             }}
           >
-            <SideBar.Item href={path.category}>Tất cả danh mục</SideBar.Item>
-            <SideBar.Item href={path.addCategory}>Thêm danh mục mới</SideBar.Item>
+            <SideBar.Item href={path.category} icon={HiOutlineViewList}>
+              Tất cả danh mục
+            </SideBar.Item>
+            <SideBar.Item href={path.addCategory} icon={HiOutlinePlusCircle}>
+              Thêm mới
+            </SideBar.Item>
           </SideBar.Collapse>
           <SideBar.Collapse
-            icon={HiMenuAlt4}
+            icon={HiOutlineViewList}
             label='Danh mục nhỏ'
             renderChevronIcon={(theme, open) => {
               const IconComponent = open ? HiOutlineMinusSm : HiOutlinePlusSm
@@ -75,8 +80,12 @@ function Sidebar() {
               return <IconComponent aria-hidden className={twMerge(theme.label.icon.open[open ? 'on' : 'off'])} />
             }}
           >
-            <SideBar.Item href={path.subcategory}>Tất cả danh mục nhỏ</SideBar.Item>
-            <SideBar.Item href={path.addSubcategory}>Thêm danh mục nhỏ mới</SideBar.Item>
+            <SideBar.Item href={path.subcategory} icon={HiOutlineViewList}>
+              Tất cả danh mục
+            </SideBar.Item>
+            <SideBar.Item href={path.addSubcategory} icon={HiOutlinePlusCircle}>
+              Thêm mới
+            </SideBar.Item>
           </SideBar.Collapse>
           <SideBar.Collapse
             icon={HiDesktopComputer}
@@ -87,8 +96,12 @@ function Sidebar() {
               return <IconComponent aria-hidden className={twMerge(theme.label.icon.open[open ? 'on' : 'off'])} />
             }}
           >
-            <SideBar.Item href={path.product}>Tất cả sản phẩm</SideBar.Item>
-            <SideBar.Item href={path.addProduct}>Thêm sản phẩm mới</SideBar.Item>
+            <SideBar.Item href={path.product} icon={HiOutlineViewList}>
+              Tất cả dòng sản phẩm
+            </SideBar.Item>
+            <SideBar.Item href={path.addProduct} icon={HiOutlinePlusCircle}>
+              Thêm mới
+            </SideBar.Item>
           </SideBar.Collapse>
           <SideBar.Collapse
             icon={HiChip}
@@ -99,20 +112,30 @@ function Sidebar() {
               return <IconComponent aria-hidden className={twMerge(theme.label.icon.open[open ? 'on' : 'off'])} />
             }}
           >
-            <SideBar.Item href={path.version}>Tất cả phiên bản</SideBar.Item>
-            <SideBar.Item href={path.addVersion}>Thêm phiên bản mới</SideBar.Item>
+            <SideBar.Item href={path.version} icon={HiOutlineViewList}>
+              Tất cả phiên bản
+            </SideBar.Item>
+            <SideBar.Item href={path.addVersion} icon={HiOutlinePlusCircle}>
+              Thêm mới
+            </SideBar.Item>
           </SideBar.Collapse>
           <SideBar.Collapse
-            icon={HiUser}
+            icon={HiUserGroup}
             label='Người dùng'
             renderChevronIcon={(theme, open) => {
               const IconComponent = open ? HiOutlineMinusSm : HiOutlinePlusSm
               return <IconComponent aria-hidden className={twMerge(theme.label.icon.open[open ? 'on' : 'off'])} />
             }}
           >
-            <SideBar.Item href={path.customer}>Tất cả khách hàng</SideBar.Item>
-            <SideBar.Item href={path.staff}>Tất cả nhân viên</SideBar.Item>
-            <SideBar.Item href={path.addStaff}>Thêm nhân viên mới</SideBar.Item>
+            <SideBar.Item href={path.customer} icon={HiUser}>
+              Tất cả khách hàng
+            </SideBar.Item>
+            <SideBar.Item href={path.staff} icon={HiUser}>
+              Tất cả nhân viên
+            </SideBar.Item>
+            <SideBar.Item href={path.addStaff} icon={HiOutlinePlusCircle}>
+              Thêm nhân viên mới
+            </SideBar.Item>
           </SideBar.Collapse>
           <SideBar.Item href={path.order} icon={HiShoppingCart}>
             Đơn hàng
