@@ -22,7 +22,7 @@ function UpdateVersion({ setProgress }) {
   })
   const { data } = useQuery({
     queryKey: ['products'],
-    queryFn: getAllProducts
+    queryFn: () => getAllProducts({ limit: 100, page: 1 })
   })
   const productOptions = data?.data?.data?.docs.map((product) => {
     return {

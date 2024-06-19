@@ -1,4 +1,4 @@
-import { Button, Modal } from 'flowbite-react'
+import { Button, Checkbox, Label, Modal } from 'flowbite-react'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { formatCurrency, formatDateTime } from '~/utils/format'
@@ -44,6 +44,14 @@ function PopupModal({ version }) {
             <p className='text-base leading-relaxed'>
               <span className='font-medium'>Giá hiện tại:</span> {formatCurrency(version.current_price)} VNĐ
             </p>
+            {version.is_featured && (
+              <div className='flex items-center gap-2 mb-5'>
+                <Checkbox id='is_featured' checked={version.is_featured} />
+                <Label className='text-base font-medium' htmlFor='is_featured'>
+                  Sản phẩm nổi bật
+                </Label>
+              </div>
+            )}
             <p className='text-base leading-relaxed'>
               <span className='font-medium'>Tình trạng:</span>{' '}
               <span
