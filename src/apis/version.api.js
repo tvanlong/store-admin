@@ -2,6 +2,8 @@ import http from '~/utils/http'
 
 export const getAllVersions = (params) => http.get('/api/versions', { params })
 
+export const getAllAccessories = (params) => http.get('/api/versions/accessory', { params })
+
 export const getVersionById = (id) => http.get(`/api/versions/${id}`)
 
 export const createVersion = (data) => http.post('/api/versions', data)

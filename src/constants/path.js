@@ -13,7 +13,7 @@ export const path = {
   addProduct: '/add-product',
   updateProduct: '/update-product/:id',
   version: '/version',
-  component: '/component',
+  accessory: '/accessory',
   addVersion: '/add-version',
   updateVersion: '/update-version/:id',
   staff: '/staff',

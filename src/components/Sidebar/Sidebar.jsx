@@ -48,7 +48,7 @@ function Sidebar() {
         img='https://png.pngtree.com/png-clipart/20221227/original/pngtree-host-and-admin-marketing-job-vacancies-vector-png-image_8815346.png'
         imgAlt='Flowbite logo'
       >
-        SYSTEM ADMIN
+        Hệ Thống Quản Trị
       </SideBar.Logo>
       <SideBar.Items>
         <SideBar.ItemGroup>
@@ -65,7 +65,7 @@ function Sidebar() {
             }}
           >
             <SideBar.Item href={path.category} icon={HiOutlineViewList}>
-              Tất cả danh mục
+              Danh mục sản phẩm
             </SideBar.Item>
             <SideBar.Item href={path.addCategory} icon={HiOutlinePlusCircle}>
               Thêm mới
@@ -81,7 +81,7 @@ function Sidebar() {
             }}
           >
             <SideBar.Item href={path.subcategory} icon={HiOutlineViewList}>
-              Tất cả danh mục
+              Danh mục sản phẩm
             </SideBar.Item>
             <SideBar.Item href={path.addSubcategory} icon={HiOutlinePlusCircle}>
               Thêm mới
@@ -97,7 +97,7 @@ function Sidebar() {
             }}
           >
             <SideBar.Item href={path.product} icon={HiOutlineViewList}>
-              Tất cả dòng sản phẩm
+              Dòng sản phẩm
             </SideBar.Item>
             <SideBar.Item href={path.addProduct} icon={HiOutlinePlusCircle}>
               Thêm mới
@@ -105,7 +105,7 @@ function Sidebar() {
           </SideBar.Collapse>
           <SideBar.Collapse
             icon={HiChip}
-            label='Phiên bản sản phẩm'
+            label='Cấu hình sản phẩm'
             renderChevronIcon={(theme, open) => {
               const IconComponent = open ? HiOutlineMinusSm : HiOutlinePlusSm
 
@@ -113,7 +113,10 @@ function Sidebar() {
             }}
           >
             <SideBar.Item href={path.version} icon={HiOutlineViewList}>
-              Tất cả phiên bản
+              Phiên bản sản phẩm
+            </SideBar.Item>
+            <SideBar.Item href={path.accessory} icon={HiOutlineViewList}>
+              Linh kiện sản phẩm
             </SideBar.Item>
             <SideBar.Item href={path.addVersion} icon={HiOutlinePlusCircle}>
               Thêm mới
@@ -128,10 +131,10 @@ function Sidebar() {
             }}
           >
             <SideBar.Item href={path.customer} icon={HiUser}>
-              Tất cả khách hàng
+              Khách hàng
             </SideBar.Item>
             <SideBar.Item href={path.staff} icon={HiUser}>
-              Tất cả nhân viên
+              Nhân viên
             </SideBar.Item>
             <SideBar.Item href={path.addStaff} icon={HiOutlinePlusCircle}>
               Thêm nhân viên mới

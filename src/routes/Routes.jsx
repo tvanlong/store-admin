@@ -21,6 +21,7 @@ const AddProduct = lazy(() => import('~/pages/Products/AddProduct'))
 const Product = lazy(() => import('~/pages/Products/Product'))
 const UpdateProduct = lazy(() => import('~/pages/Products/UpdateProduct'))
 const Version = lazy(() => import('~/pages/Versions/Version'))
+const Accessory = lazy(() => import('~/pages/Versions/Accessory'))
 const AddVersion = lazy(() => import('~/pages/Versions/AddVersion'))
 const UpdateVersion = lazy(() => import('~/pages/Versions/UpdateVersion'))
 const AddStaff = lazy(() => import('~/pages/Staffs/AddStaff'))
@@ -156,6 +157,16 @@ function Routes() {
             <MainLayout>
               <Suspense fallback={<Loading />}>
                 <Version setProgress={setProgress} />
+              </Suspense>
+            </MainLayout>
+          )
+        },
+        {
+          path: path.accessory,
+          element: (
+            <MainLayout>
+              <Suspense fallback={<Loading />}>
+                <Accessory setProgress={setProgress} />
               </Suspense>
             </MainLayout>
           )

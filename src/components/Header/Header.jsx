@@ -78,6 +78,12 @@ function Header() {
             <Breadcrumb.Item icon={HiChip}>Phiên bản sản phẩm</Breadcrumb.Item>
           </Breadcrumb>
         )
+      case path.accessory:
+        return (
+          <Breadcrumb aria-label='Default breadcrumb example'>
+            <Breadcrumb.Item icon={HiChip}>Linh kiện sản phẩm</Breadcrumb.Item>
+          </Breadcrumb>
+        )
       case path.customer:
         return (
           <Breadcrumb aria-label='Default breadcrumb example'>
