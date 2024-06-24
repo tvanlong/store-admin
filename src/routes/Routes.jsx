@@ -7,6 +7,7 @@ import { path } from '~/constants/path'
 import { AppContext } from '~/context/app.context'
 import MainLayout from '~/layouts/MainLayout'
 import ErrorPage from '~/pages/ErrorPage'
+import NoPermission from '~/pages/NoPermission'
 import NotFound from '~/pages/NotFound'
 
 const Dashboard = lazy(() => import('~/pages/Dashboard'))
@@ -260,7 +261,7 @@ function Routes() {
         {
           path: path.login,
           element: (
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<Loading />}>
               <Login />
             </Suspense>
           )
@@ -268,12 +269,22 @@ function Routes() {
         {
           path: path.register,
           element: (
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<Loading />}>
               <Register />
             </Suspense>
           )
         }
       ]
+    },
+    {
+      path: path.noPermission,
+      element: (
+        <MainLayout>
+          <Suspense fallback={<Loading />}>
+            <NoPermission />
+          </Suspense>
+        </MainLayout>
+      )
     },
     {
       path: '*',

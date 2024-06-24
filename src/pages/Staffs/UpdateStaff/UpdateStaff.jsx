@@ -1,22 +1,26 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Button, Label, TextInput } from 'flowbite-react'
-import { useEffect } from 'react'
+import { useContext, useEffect } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { useForm } from 'react-hook-form'
 import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'sonner'
 import { getStaff, updateStaff } from '~/apis/users.api'
+import { AppContext } from '~/context/app.context'
+import NoPermission from '~/pages/NoPermission'
 import { staffSchema } from '~/schemas/staffSchema'
 import { textInputTheme } from '~/utils/theme'
 
 function UpdateStaff({ setProgress }) {
+  const { profile } = useContext(AppContext)
   const queryClient = useQueryClient()
   const navigate = useNavigate()
   const { id } = useParams()
   const { data: staffData } = useQuery({
     queryKey: ['staff', id],
-    queryFn: () => getStaff(id)
+    queryFn: () => getStaff(id),
+    enabled: profile.role === 'admin'
   })
 
   const {
@@ -73,6 +77,8 @@ function UpdateStaff({ setProgress }) {
       error: (err) => err?.response?.data?.message || 'Cập nhật nhân viên thất bại'
     })
   })
+
+  if (profile.role !== 'admin') return <NoPermission />
 
   return (
     <div className='mt-24 h-full'>

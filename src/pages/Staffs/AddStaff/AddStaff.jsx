@@ -1,16 +1,19 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Button, Label, TextInput } from 'flowbite-react'
-import { useEffect } from 'react'
+import { useContext, useEffect } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 import { createStaff } from '~/apis/users.api'
+import { AppContext } from '~/context/app.context'
+import NoPermission from '~/pages/NoPermission'
 import { staffSchema } from '~/schemas/staffSchema'
 import { textInputTheme } from '~/utils/theme'
 
 function AddStaff({ setProgress }) {
+  const { profile } = useContext(AppContext)
   const queryClient = useQueryClient()
   const navigate = useNavigate()
   const {
@@ -57,6 +60,8 @@ function AddStaff({ setProgress }) {
       }
     })
   })
+
+  if (profile.role !== 'admin') return <NoPermission />
 
   return (
     <div className='mt-24 h-full'>

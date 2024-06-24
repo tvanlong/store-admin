@@ -1,21 +1,25 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Table } from 'flowbite-react'
-import { useEffect } from 'react'
+import { useContext, useEffect } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { Link } from 'react-router-dom'
 import { toast } from 'sonner'
 import { deleteStaff, getAllStaffs, getStaff } from '~/apis/users.api'
 import ModalDelete from '~/components/ModalDelete'
 import NoData from '~/components/NoData'
+import { AppContext } from '~/context/app.context'
+import NoPermission from '~/pages/NoPermission'
 import { getUserDataFromLocalStorage } from '~/utils/auth'
 import { formatDateTime } from '~/utils/format'
 import { tableTheme } from '~/utils/theme'
 
 function Staff({ setProgress }) {
+  const { profile } = useContext(AppContext)
   const queryClient = useQueryClient()
   const { data, isLoading } = useQuery({
     queryKey: ['staffs'],
-    queryFn: getAllStaffs
+    queryFn: getAllStaffs,
+    enabled: profile.role === 'admin'
   })
   const staffs = data?.data?.data || []
 
@@ -57,6 +61,8 @@ function Staff({ setProgress }) {
       queryFn: () => getStaff(id)
     })
   }
+
+  if (profile.role !== 'admin') return <NoPermission />
 
   if (isLoading) return <NoData />
 

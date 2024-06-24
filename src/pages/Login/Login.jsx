@@ -29,7 +29,7 @@ function Login() {
     toast.promise(signInMutation.mutateAsync(data), {
       loading: 'Đang tiến hành đăng nhập...',
       success: (data) => {
-        if (data.data.data.role === 'admin') {
+        if (data.data.data.role === 'admin' || data.data.data.role === 'staff') {
           setIsAuthenticated(true)
           setProfile(data.data.data)
           navigate('/')

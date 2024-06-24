@@ -33,7 +33,7 @@ class Http {
     this.instance.interceptors.response.use(
       (response) => {
         const { url } = response.config
-        if (url.includes('signin') && response.data.data.role === 'admin') {
+        if (url.includes('signin') && (response.data.data.role === 'admin' || response.data.data.role === 'staff')) {
           setIsSignedIn(true)
           setUserDataIntoLocalStorage(response.data.data)
         } else if (url.includes('signout')) {
