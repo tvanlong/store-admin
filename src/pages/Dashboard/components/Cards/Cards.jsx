@@ -8,12 +8,14 @@ import { useOrders } from '~/hooks/useOrders'
 import { useSubcategories } from '~/hooks/useSubcategories'
 import Card from './Card'
 
+const MAXIMUM_LIMIT = 1000
+
 function Cards() {
   const { data: categoriesData } = useCategories()
   const { data: subcategoriesData } = useSubcategories()
   const { data: versionsData } = useQuery({
     queryKey: ['versions'],
-    queryFn: getAllVersions
+    queryFn: () => getAllVersions({ limit: MAXIMUM_LIMIT })
   })
   const { data: customersData } = useCustomers()
   const { data: ordersData } = useOrders()

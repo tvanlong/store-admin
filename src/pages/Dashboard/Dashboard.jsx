@@ -1,7 +1,9 @@
 import { useEffect } from 'react'
 import { Helmet } from 'react-helmet-async'
 import Cards from './components/Cards'
+import CustomerTable from './components/CustomerTable'
 import DashboardChart from './components/DashboardChart'
+import SellingTable from './components/SellingTable'
 
 function Dashboard({ setProgress }) {
   useEffect(() => {
@@ -23,6 +25,10 @@ function Dashboard({ setProgress }) {
       </Helmet>
       <Cards />
       <DashboardChart />
+      <div className='grid grid-cols-12 mx-10 my-20 gap-8'>
+        <SellingTable />
+        <CustomerTable />
+      </div>
     </div>
   )
 }

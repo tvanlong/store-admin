@@ -21,6 +21,7 @@ export const path = {
   updateStaff: '/update-staff/:id',
   customer: '/customer',
   order: '/order',
+  analytics: '/analytics',
   profile: '/profile',
   noPermission: '/no-permission'
 }
