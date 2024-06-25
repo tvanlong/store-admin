@@ -4,6 +4,7 @@ import { Avatar, Breadcrumb, Dropdown, Navbar } from 'flowbite-react'
 import { useContext, useMemo } from 'react'
 import {
   HiChartPie,
+  HiChartSquareBar,
   HiChip,
   HiCog,
   HiCurrencyDollar,
@@ -106,6 +107,12 @@ function Header() {
         return (
           <Breadcrumb aria-label='Default breadcrumb example'>
             <Breadcrumb.Item icon={HiUser}>Thông tin tài khoản</Breadcrumb.Item>
+          </Breadcrumb>
+        )
+      case path.analytics:
+        return (
+          <Breadcrumb aria-label='Default breadcrumb example'>
+            <Breadcrumb.Item icon={HiChartSquareBar}>Thống kê</Breadcrumb.Item>
           </Breadcrumb>
         )
       case path.addCategory:

@@ -3,6 +3,7 @@ import { Sidebar as SideBar } from 'flowbite-react'
 import { useContext } from 'react'
 import {
   HiChartPie,
+  HiChartSquareBar,
   HiChip,
   HiDesktopComputer,
   HiLogout,
@@ -142,6 +143,9 @@ function Sidebar() {
           </SideBar.Collapse>
           <SideBar.Item href={path.order} icon={HiShoppingCart}>
             Đơn hàng
+          </SideBar.Item>
+          <SideBar.Item href={path.analytics} icon={HiChartSquareBar}>
+            Thống kê
           </SideBar.Item>
           {isAuthenticated && (
             <SideBar.Item to={''} icon={HiLogout} onClick={handleSignOut}>

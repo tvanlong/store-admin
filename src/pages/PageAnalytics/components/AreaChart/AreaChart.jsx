@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
-import { Area, AreaChart, CartesianGrid, Tooltip, XAxis, YAxis } from 'recharts'
+import { Area, AreaChart as AreaRechart, CartesianGrid, Tooltip, XAxis, YAxis } from 'recharts'
 import { useOrders } from '~/hooks/useOrders'
 
-function DashboardChart() {
+function AreaChart() {
   const [revenueData, setRevenueData] = useState([])
   const { data: ordersData } = useOrders()
 
@@ -48,22 +48,22 @@ function DashboardChart() {
         <h2 className='text-sm font-bold'>Doanh số theo tháng</h2>
       </div>
       <div className='flex justify-center p-4'>
-        <AreaChart width={730} height={250} data={revenueData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
+        <AreaRechart width={850} height={300} data={revenueData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
           <defs>
             <linearGradient id='colorRevenue' x1='0' y1='0' x2='0' y2='1'>
               <stop offset='5%' stopColor='#8884d8' stopOpacity={0.8} />
               <stop offset='95%' stopColor='#8884d8' stopOpacity={0} />
             </linearGradient>
           </defs>
-          <XAxis fontSize={10} dataKey='month' />
-          <YAxis fontSize={10} />
+          <XAxis fontSize={12} dataKey='month' />
+          <YAxis fontSize={12} />
           <CartesianGrid strokeDasharray='3 3' />
           <Tooltip />
           <Area type='monotone' dataKey='revenue' stroke='#8884d8' fillOpacity={1} fill='url(#colorRevenue)' />
-        </AreaChart>
+        </AreaRechart>
       </div>
     </div>
   )
 }
 
-export default DashboardChart
+export default AreaChart

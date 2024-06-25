@@ -32,6 +32,7 @@ const AddSubcategory = lazy(() => import('~/pages/Subcategories/AddSubcategory')
 const Subcategory = lazy(() => import('~/pages/Subcategories/Subcategory'))
 const UpdateSubcategory = lazy(() => import('~/pages/Subcategories/UpdateSubcategory'))
 const Profile = lazy(() => import('~/pages/Profile'))
+const PageAnalytics = lazy(() => import('~/pages/PageAnalytics'))
 
 function ProtectedRoute() {
   const { isAuthenticated } = useContext(AppContext)
@@ -248,6 +249,16 @@ function Routes() {
             <MainLayout>
               <Suspense fallback={<Loading />}>
                 <Profile setProgress={setProgress} />
+              </Suspense>
+            </MainLayout>
+          )
+        },
+        {
+          path: path.analytics,
+          element: (
+            <MainLayout>
+              <Suspense fallback={<Loading />}>
+                <PageAnalytics setProgress={setProgress} />
               </Suspense>
             </MainLayout>
           )
