@@ -46,11 +46,8 @@ function Sidebar() {
       className='fixed bottom-0 left-0 top-0 bg-blue-500'
       aria-label='SideBar with logo branding example'
     >
-      <SideBar.Logo
-        img='https://png.pngtree.com/png-clipart/20221227/original/pngtree-host-and-admin-marketing-job-vacancies-vector-png-image_8815346.png'
-        imgAlt='Flowbite logo'
-      >
-        Hệ Thống Quản Trị
+      <SideBar.Logo img='https://flowbite-react.com/favicon.svg' imgAlt='Flowbite logo'>
+        LAPTOP STORE
       </SideBar.Logo>
       <SideBar.Items>
         <SideBar.ItemGroup>
