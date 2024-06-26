@@ -12,7 +12,7 @@ const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       staleTime: 1000 * 60 * 1, // 1 minute
-      retry: 1, // retry once before failing
+      retry: 0, // disable retry
       refetchOnReconnect: false, // refetch when the network reconnects
       refetchOnWindowFocus: false // refetch only when the tab is focused
     }

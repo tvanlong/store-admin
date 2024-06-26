@@ -23,11 +23,12 @@ import { AppContext } from '~/context/app.context'
 import { sidebarTheme } from '~/utils/theme'
 
 function Sidebar() {
-  const { isAuthenticated, profile } = useContext(AppContext)
+  const { isAuthenticated, setIsAuthenticated, profile, setProfile } = useContext(AppContext)
   const { mutateAsync } = useMutation({
     mutationFn: profile.role === 'admin' ? signOut : signOutStaff,
     onSuccess: () => {
-      window.location.href = path.login
+      setIsAuthenticated(false)
+      setProfile(null)
     }
   })
 

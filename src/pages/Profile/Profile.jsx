@@ -12,7 +12,7 @@ import { changeEmail, changePassword, getStaff, updateProfile, verifyEmail } fro
 import { DEFAULT_AVATAR } from '~/constants/default'
 import { AppContext } from '~/context/app.context'
 import { changeEmailSchema, changePasswordSchema, profileSchema } from '~/schemas/userSchema'
-import { setUserDataIntoLocalStorage } from '~/utils/auth'
+import { setProfileToLS } from '~/utils/auth'
 import { tabsTheme } from '~/utils/theme'
 import { extractPublicIdFromUrl } from '~/utils/util'
 
@@ -178,11 +178,11 @@ function Profile({ setProgress }) {
 
         const res = await updateProfileMutate(data)
         setProfile(res.data.data)
-        setUserDataIntoLocalStorage(res.data.data)
+        setProfileToLS(res.data.data)
       } else {
         const res = await updateProfileMutate(data)
         setProfile(res.data.data)
-        setUserDataIntoLocalStorage(res.data.data)
+        setProfileToLS(res.data.data)
       }
       toast.success('Cập nhật thông tin thành công', { id: toastId })
     } catch (error) {
@@ -226,7 +226,7 @@ function Profile({ setProgress }) {
         toast.success(response.data.message || 'Xác nhận thay đổi email thành công', { id: toastId })
         setIsVerify(false)
         setProfile(response.data.data)
-        setUserDataIntoLocalStorage(response.data.data)
+        setProfileToLS(response.data.data)
       }
     } catch (error) {
       toast.error('Xác nhận email thất bại', { id: toastId })

@@ -1,20 +1,30 @@
-export const setUserDataIntoLocalStorage = (data) => {
-  localStorage.setItem('admin', JSON.stringify(data))
+export const LocalStorageEventTarget = new EventTarget()
+
+export const setAccessTokenToLS = (access_token) => {
+  localStorage.setItem('access_token', access_token)
 }
 
-export const getUserDataFromLocalStorage = () => {
-  return JSON.parse(localStorage.getItem('admin'))
+export const setRefreshTokenToLS = (refresh_token) => {
+  localStorage.setItem('refresh_token', refresh_token)
 }
 
-export const removeLocalStorage = () => {
-  localStorage.removeItem('isSignedInAdmin')
-  localStorage.removeItem('admin')
+export const clearLS = () => {
+  localStorage.removeItem('access_token')
+  localStorage.removeItem('refresh_token')
+  localStorage.removeItem('profile')
+
+  const clearLSEvent = new Event('clearLS')
+  LocalStorageEventTarget.dispatchEvent(clearLSEvent)
 }
 
-export const setIsSignedIn = (value) => {
-  localStorage.setItem('isSignedInAdmin', value)
+export const getAccessTokenFromLS = () => localStorage.getItem('access_token') || ''
+export const getRefreshTokenFromLS = () => localStorage.getItem('refresh_token') || ''
+
+export const getProfileFromLS = () => {
+  const result = localStorage.getItem('profile')
+  return result ? JSON.parse(result) : null
 }
 
-export const getIsSignedIn = () => {
-  return localStorage.getItem('isSignedInAdmin') || ''
+export const setProfileToLS = (profile) => {
+  localStorage.setItem('profile', JSON.stringify(profile))
 }

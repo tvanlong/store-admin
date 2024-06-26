@@ -24,7 +24,7 @@ import { AppContext } from '~/context/app.context'
 import { useOrders } from '~/hooks/useOrders'
 
 function Header() {
-  const { profile } = useContext(AppContext)
+  const { setIsAuthenticated, profile, setProfile } = useContext(AppContext)
   const { pathname } = useLocation()
   const { data: ordersData } = useOrders()
   const totalPendingOrders = useMemo(
@@ -35,7 +35,8 @@ function Header() {
   const { mutateAsync } = useMutation({
     mutationFn: profile.role === 'admin' ? signOut : signOutStaff,
     onSuccess: () => {
-      window.location.href = path.login
+      setIsAuthenticated(false)
+      setProfile(null)
     }
   })
 

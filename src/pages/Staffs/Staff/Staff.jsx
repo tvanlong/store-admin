@@ -9,7 +9,7 @@ import ModalDelete from '~/components/ModalDelete'
 import NoData from '~/components/NoData'
 import { AppContext } from '~/context/app.context'
 import NoPermission from '~/pages/NoPermission'
-import { getUserDataFromLocalStorage } from '~/utils/auth'
+import { getProfileFromLS } from '~/utils/auth'
 import { formatDateTime } from '~/utils/format'
 import { tableTheme } from '~/utils/theme'
 
@@ -42,7 +42,7 @@ function Staff({ setProgress }) {
   })
 
   const handleDelete = (id) => {
-    const user = getUserDataFromLocalStorage()
+    const user = getProfileFromLS()
     if (user._id === id) {
       toast.warning('Tài khoản đang đăng nhập không thể xóa')
       return
