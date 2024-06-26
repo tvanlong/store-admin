@@ -55,8 +55,8 @@ function AreaChart() {
               <stop offset='95%' stopColor='#8884d8' stopOpacity={0} />
             </linearGradient>
           </defs>
-          <XAxis fontSize={12} dataKey='month' />
-          <YAxis fontSize={12} />
+          <XAxis fontSize={10} dataKey='month' />
+          <YAxis fontSize={10} />
           <CartesianGrid strokeDasharray='3 3' />
           <Tooltip />
           <Area type='monotone' dataKey='revenue' stroke='#8884d8' fillOpacity={1} fill='url(#colorRevenue)' />
