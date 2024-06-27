@@ -51,11 +51,14 @@ class Http {
         const { url } = response.config
         if (url.includes('signin')) {
           const data = response.data
-          this.#accessToken = data.access_token
-          this.#refreshToken = data.refresh_token
-          setAccessTokenToLS(this.#accessToken)
-          setRefreshTokenToLS(this.#refreshToken)
-          setProfileToLS(data.data)
+          const user = data.data
+          if (user.role === 'admin' || user.role === 'staff') {
+            this.#accessToken = data.access_token
+            this.#refreshToken = data.refresh_token
+            setAccessTokenToLS(this.#accessToken)
+            setRefreshTokenToLS(this.#refreshToken)
+            setProfileToLS(data.data)
+          }
         } else if (url.includes('signout')) {
           this.#accessToken = ''
           this.#refreshToken = ''

@@ -18,7 +18,7 @@ import {
 } from 'react-icons/hi'
 import { useLocation } from 'react-router-dom'
 import { toast } from 'sonner'
-import { signOut, signOutStaff } from '~/apis/auth.api'
+import { signOut } from '~/apis/auth.api'
 import { path } from '~/constants/path'
 import { AppContext } from '~/context/app.context'
 import { useOrders } from '~/hooks/useOrders'
@@ -33,7 +33,7 @@ function Header() {
   )
 
   const { mutateAsync } = useMutation({
-    mutationFn: profile.role === 'admin' ? signOut : signOutStaff,
+    mutationFn: signOut,
     onSuccess: () => {
       setIsAuthenticated(false)
       setProfile(null)

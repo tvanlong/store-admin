@@ -26,22 +26,20 @@ function Login() {
   })
 
   const onSubmit = handleSubmit(async (data) => {
-    toast.promise(signInMutation.mutateAsync(data), {
-      loading: 'Đang tiến hành đăng nhập...',
-      success: (data) => {
-        if (data.data.data.role === 'admin' || data.data.data.role === 'staff') {
-          setIsAuthenticated(true)
-          setProfile(data.data.data)
-          navigate('/')
-          return 'Đăng nhập thành công'
-        } else {
-          return 'Bạn không có quyền truy cập vào trang quản trị'
-        }
-      },
-      error: (err) => {
-        return err?.response?.data?.message || 'Đăng nhập thất bại'
+    const toastId = toast.loading('Đang tiến hành đăng nhập...')
+    try {
+      const res = await signInMutation.mutateAsync(data)
+      if (res.data.data.role === 'admin' || res.data.data.role === 'staff') {
+        setIsAuthenticated(true)
+        setProfile(res.data.data)
+        navigate(path.dashboard)
+        toast.success('Đăng nhập thành công', { id: toastId })
+      } else {
+        toast.error('Bạn không có quyền truy cập vào trang quản trị', { id: toastId })
       }
-    })
+    } catch (err) {
+      toast.error(err?.response?.data?.message || 'Đăng nhập thất bại', { id: toastId })
+    }
   })
 
   const onChange = (e) => {

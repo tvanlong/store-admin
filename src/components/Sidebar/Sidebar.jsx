@@ -17,15 +17,15 @@ import {
 } from 'react-icons/hi'
 import { toast } from 'sonner'
 import { twMerge } from 'tailwind-merge'
-import { signOut, signOutStaff } from '~/apis/auth.api'
+import { signOut } from '~/apis/auth.api'
 import { path } from '~/constants/path'
 import { AppContext } from '~/context/app.context'
 import { sidebarTheme } from '~/utils/theme'
 
 function Sidebar() {
-  const { isAuthenticated, setIsAuthenticated, profile, setProfile } = useContext(AppContext)
+  const { isAuthenticated, setIsAuthenticated, setProfile } = useContext(AppContext)
   const { mutateAsync } = useMutation({
-    mutationFn: profile.role === 'admin' ? signOut : signOutStaff,
+    mutationFn: signOut,
     onSuccess: () => {
       setIsAuthenticated(false)
       setProfile(null)
