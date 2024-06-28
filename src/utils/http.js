@@ -80,12 +80,17 @@ class Http {
           // Cập nhật access token trong request gốc và thực hiện lại request
           originalRequest.headers.Authorization = new_access_token
           return this.instance(originalRequest)
+        } else if (error.response.status === 401) {
+          clearLS()
+          this.#accessToken = ''
+          this.#refreshToken = ''
+          toast.error(error.response.data.message || 'Có lỗi xảy ra!')
+        } else if (error.response.status === 500 && error.response.data.message === 'invalid token') {
+          clearLS()
+          this.#accessToken = ''
+          this.#refreshToken = ''
+          toast.error(error.response.data.message || 'Có lỗi xảy ra!')
         }
-
-        clearLS()
-        this.#accessToken = ''
-        this.#refreshToken = ''
-        toast.error(error.response.data.message || 'Có lỗi xảy ra!')
 
         return Promise.reject(error)
       }
