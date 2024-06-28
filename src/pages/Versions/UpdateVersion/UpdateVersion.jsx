@@ -9,6 +9,7 @@ import { default as SelectSearch } from 'react-select'
 import { toast } from 'sonner'
 import { getAllProducts } from '~/apis/products.api'
 import { getVersionById, updateVersion } from '~/apis/version.api'
+import { path } from '~/constants/path'
 import { versionSchema } from '~/schemas/versionSchema'
 import { textInputTheme } from '~/utils/theme'
 
@@ -79,7 +80,8 @@ function UpdateVersion({ setProgress }) {
     mutationFn: (data) => updateVersion(id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['versions'] })
-      navigate('/version')
+      queryClient.invalidateQueries({ queryKey: ['version', id] })
+      navigate(path.version)
     }
   })
 
