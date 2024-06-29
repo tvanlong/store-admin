@@ -28,3 +28,14 @@ export const getProfileFromLS = () => {
 export const setProfileToLS = (profile) => {
   localStorage.setItem('profile', JSON.stringify(profile))
 }
+
+export const remember = (email, password) => {
+  localStorage.setItem('myapp-email', email)
+  localStorage.setItem('myapp-password', password)
+}
+
+export const getRemembered = () => {
+  const email = localStorage.getItem('myapp-email') || ''
+  const password = localStorage.getItem('myapp-password') || ''
+  return { email, password }
+}

@@ -1,6 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useMutation } from '@tanstack/react-query'
-import { useContext } from 'react'
+import { useContext, useRef } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
@@ -9,14 +9,16 @@ import authApi from '~/apis/auth.api'
 import { path } from '~/constants/path'
 import { AppContext } from '~/context/app.context'
 import { signInSchema } from '~/schemas/authSchema'
+import { getRemembered, remember } from '~/utils/auth'
 
 function Login() {
   const { setIsAuthenticated, setProfile } = useContext(AppContext)
   const navigate = useNavigate()
+  const rememberCheck = useRef(null)
   const { register, handleSubmit, setValue } = useForm({
     defaultValues: {
-      email: '',
-      password: ''
+      email: getRemembered().email,
+      password: getRemembered().password
     },
     resolver: yupResolver(signInSchema)
   })
@@ -27,6 +29,12 @@ function Login() {
 
   const onSubmit = handleSubmit(async (data) => {
     const toastId = toast.loading('Đang tiến hành đăng nhập...')
+    if (rememberCheck.current.checked) {
+      remember(data.email, data.password)
+    } else {
+      remember('', '')
+    }
+
     try {
       const res = await signInMutation.mutateAsync(data)
       if (res.data.data.role === 'admin' || res.data.data.role === 'staff') {
@@ -95,6 +103,7 @@ function Login() {
                   <div className='flex items-center h-5'>
                     <input
                       id='remember'
+                      ref={rememberCheck}
                       aria-describedby='remember'
                       type='checkbox'
                       className='w-4 h-4 border border-gray-300 rounded bg-gray-50'
