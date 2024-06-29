@@ -101,6 +101,7 @@ function UpdateProduct({ setProgress }) {
     mutationFn: (data) => productsApi.updateProduct(id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['products'] })
+      queryClient.invalidateQueries({ queryKey: ['product', id] })
       navigate(path.product)
     }
   })

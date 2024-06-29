@@ -68,6 +68,7 @@ function UpdateSubcategory({ setProgress }) {
     mutationFn: (data) => subcategoriesApi.updateSubcategory(id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['subcategories'] })
+      queryClient.invalidateQueries({ queryKey: ['subcategory', id] })
       navigate(path.subcategory)
     }
   })

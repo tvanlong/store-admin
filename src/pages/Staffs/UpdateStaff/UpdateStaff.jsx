@@ -67,6 +67,7 @@ function UpdateStaff({ setProgress }) {
     mutationFn: (data) => usersApi.updateStaff(id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['staffs'] })
+      queryClient.invalidateQueries({ queryKey: ['staff', id] })
       navigate(path.staff)
     }
   })
