@@ -7,7 +7,8 @@ import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import Select from 'react-select'
 import { toast } from 'sonner'
-import { createSubcategory } from '~/apis/subcategories.api'
+import subcategoriesApi from '~/apis/subcategories.api'
+import { path } from '~/constants/path'
 import { useCategories } from '~/hooks/useCategories'
 import { subcategorySchema } from '~/schemas/subcategorySchema'
 import { textInputTheme } from '~/utils/theme'
@@ -50,10 +51,10 @@ function AddSubcategory({ setProgress }) {
   })
 
   const { mutateAsync, isPending } = useMutation({
-    mutationFn: (data) => createSubcategory(data),
+    mutationFn: (data) => subcategoriesApi.createSubcategory(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['subcategories'] })
-      navigate('/subcategory')
+      navigate(path.subcategory)
     }
   })
 

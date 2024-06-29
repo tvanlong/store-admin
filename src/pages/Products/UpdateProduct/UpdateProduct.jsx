@@ -7,8 +7,9 @@ import { useForm } from 'react-hook-form'
 import { useNavigate, useParams } from 'react-router-dom'
 import Select from 'react-select'
 import { toast } from 'sonner'
-import { deleteImage, uploadImages } from '~/apis/images.api'
-import { getProduct, updateProduct } from '~/apis/products.api'
+import imagesApi from '~/apis/images.api'
+import productsApi from '~/apis/products.api'
+import { path } from '~/constants/path'
 import { useSubcategories } from '~/hooks/useSubcategories'
 import { productUpdateSchema } from '~/schemas/productSchema'
 import { fileInputTheme, textInputTheme } from '~/utils/theme'
@@ -21,7 +22,7 @@ function UpdateProduct({ setProgress }) {
   const [file, setFile] = useState([])
   const { data: productData } = useQuery({
     queryKey: ['product', id],
-    queryFn: () => getProduct(id)
+    queryFn: () => productsApi.getProduct(id)
   })
   const { data } = useSubcategories()
   const subcategoryOptions = data?.data?.data.map((subcategory) => {
@@ -89,18 +90,18 @@ function UpdateProduct({ setProgress }) {
   }, [file, productData?.data?.data])
 
   const { mutateAsync: uploadImagesMutateAsync } = useMutation({
-    mutationFn: (data) => uploadImages(data)
+    mutationFn: (data) => imagesApi.uploadImages(data)
   })
 
   const { mutateAsync: deleteImageMutateAsync } = useMutation({
-    mutationFn: (public_id) => deleteImage(public_id)
+    mutationFn: (public_id) => imagesApi.deleteImage(public_id)
   })
 
   const { mutateAsync: updateProductMutateAsync, isPending } = useMutation({
-    mutationFn: (data) => updateProduct(id, data),
+    mutationFn: (data) => productsApi.updateProduct(id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['products'] })
-      navigate('/product')
+      navigate(path.product)
     }
   })
 

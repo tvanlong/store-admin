@@ -7,17 +7,20 @@ import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { default as SelectSearch } from 'react-select'
 import { toast } from 'sonner'
-import { getAllProducts } from '~/apis/products.api'
-import { createVersion } from '~/apis/version.api'
+import productsApi from '~/apis/products.api'
+import versionApi from '~/apis/version.api'
+import { path } from '~/constants/path'
 import { versionSchema } from '~/schemas/versionSchema'
 import { textInputTheme } from '~/utils/theme'
+
+const LIMIT = 100
 
 function AddVersion({ setProgress }) {
   const queryClient = useQueryClient()
   const navigate = useNavigate()
   const { data } = useQuery({
     queryKey: ['products'],
-    queryFn: () => getAllProducts({ limit: 100, page: 1 })
+    queryFn: () => productsApi.getAllProducts({ limit: LIMIT, page: 1 })
   })
   const productOptions = data?.data?.data?.docs.map((product) => {
     return {
@@ -57,10 +60,10 @@ function AddVersion({ setProgress }) {
   }, [setProgress])
 
   const { mutateAsync: addVersionMutateAsync, isPending } = useMutation({
-    mutationFn: (data) => createVersion(data),
+    mutationFn: (data) => versionApi.createVersion(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['versions'] })
-      navigate('/version')
+      navigate(path.version)
     }
   })
 

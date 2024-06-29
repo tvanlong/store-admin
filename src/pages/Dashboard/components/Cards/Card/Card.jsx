@@ -1,4 +1,5 @@
 import { animated, useSpring } from '@react-spring/web'
+import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
 function Card({ color, icon, title, animatedValue, label, path }) {
@@ -41,6 +42,15 @@ function Card({ color, icon, title, animatedValue, label, path }) {
       </div>
     </div>
   )
+}
+
+Card.propTypes = {
+  color: PropTypes.string,
+  icon: PropTypes.node,
+  title: PropTypes.string,
+  animatedValue: PropTypes.number,
+  label: PropTypes.string,
+  path: PropTypes.string
 }
 
 export default Card

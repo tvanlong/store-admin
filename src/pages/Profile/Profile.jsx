@@ -7,9 +7,9 @@ import { useForm } from 'react-hook-form'
 import { HiClipboardList, HiUserCircle } from 'react-icons/hi'
 import { MdDashboard } from 'react-icons/md'
 import { toast } from 'sonner'
-import { deleteImage, uploadAvatar } from '~/apis/images.api'
-import { changeEmail, verifyEmail } from '~/apis/otp.api'
-import { changePassword, getStaff, updateProfile } from '~/apis/users.api'
+import imagesApi from '~/apis/images.api'
+import otpApi from '~/apis/otp.api'
+import usersApi from '~/apis/users.api'
 import { DEFAULT_AVATAR } from '~/constants/default'
 import { AppContext } from '~/context/app.context'
 import { changeEmailSchema, changePasswordSchema, profileSchema } from '~/schemas/userSchema'
@@ -23,7 +23,7 @@ function Profile({ setProgress }) {
   const [file, setFile] = useState(null)
   const { data: userData } = useQuery({
     queryKey: ['profile', profile?._id],
-    queryFn: () => getStaff(profile?._id),
+    queryFn: () => usersApi.getStaff(profile?._id),
     enabled: isAuthenticated && !!profile?._id
   })
   const user = useMemo(() => userData?.data?.data || {}, [userData])
@@ -103,30 +103,30 @@ function Profile({ setProgress }) {
   }, [user.email, setValueEmail])
 
   const { mutateAsync: updateProfileMutate, isPending } = useMutation({
-    mutationFn: (data) => updateProfile(profile?._id, data),
+    mutationFn: (data) => usersApi.updateProfile(profile?._id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['profile', profile?._id] })
     }
   })
 
   const { mutateAsync: uploadAvatarMutate } = useMutation({
-    mutationFn: (data) => uploadAvatar(profile?._id, data)
+    mutationFn: (data) => imagesApi.uploadAvatar(profile?._id, data)
   })
 
   const { mutateAsync: deleteImageMutate } = useMutation({
-    mutationFn: (public_id) => deleteImage(public_id)
+    mutationFn: (public_id) => imagesApi.deleteImage(public_id)
   })
 
   const { mutateAsync: changePasswordMutate, isPending: isPendingPassword } = useMutation({
-    mutationFn: (data) => changePassword(profile?._id, data)
+    mutationFn: (data) => usersApi.changePassword(profile?._id, data)
   })
 
   const { mutateAsync: changeEmailMutate } = useMutation({
-    mutationFn: (data) => changeEmail(profile?._id, data)
+    mutationFn: (data) => otpApi.changeEmail(profile?._id, data)
   })
 
   const { mutateAsync: verifyEmailMutate } = useMutation({
-    mutationFn: (data) => verifyEmail(profile?._id, data),
+    mutationFn: (data) => otpApi.verifyEmail(profile?._id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['profile', profile?._id] })
     }

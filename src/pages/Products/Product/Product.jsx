@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
-import { deleteImage } from '~/apis/images.api'
-import { deleteProduct, getAllProducts, getProduct } from '~/apis/products.api'
+import imagesApi from '~/apis/images.api'
+import productsApi from '~/apis/products.api'
 import FilterField from '~/components/FilterField'
 import ModalDelete from '~/components/ModalDelete'
 import NoData from '~/components/NoData'
@@ -45,7 +45,7 @@ function Product({ setProgress }) {
     queryKey: ['products', queryParams],
     queryFn: () => {
       setLoading(false)
-      return getAllProducts(queryParams)
+      return productsApi.getAllProducts(queryParams)
     },
     placeholderData: keepPreviousData
   })
@@ -70,11 +70,11 @@ function Product({ setProgress }) {
   }, [debouncedValue])
 
   const { mutateAsync: deleteImageMutateAsync } = useMutation({
-    mutationFn: (public_id) => deleteImage(public_id)
+    mutationFn: (public_id) => imagesApi.deleteImage(public_id)
   })
 
   const { mutateAsync: deleteProductMutateAsync } = useMutation({
-    mutationFn: (id) => deleteProduct(id),
+    mutationFn: (id) => productsApi.deleteProduct(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['products'] })
     }
@@ -113,7 +113,7 @@ function Product({ setProgress }) {
   const handlePrefetchOnMouseEnter = (id) => {
     queryClient.prefetchQuery({
       queryKey: ['product', id],
-      queryFn: () => getProduct(id)
+      queryFn: () => productsApi.getProduct(id)
     })
   }
 

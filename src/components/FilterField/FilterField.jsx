@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types'
+
 function FilterField({ options, onSortChange, defaultLabel = 'Bộ lọc tìm kiếm' }) {
   const handleSort = (e) => {
     const selectedOption = options.find((option) => option.value.toString() === e.target.value)
@@ -25,6 +27,12 @@ function FilterField({ options, onSortChange, defaultLabel = 'Bộ lọc tìm ki
       </select>
     </div>
   )
+}
+
+FilterField.propTypes = {
+  options: PropTypes.array,
+  onSortChange: PropTypes.func,
+  defaultLabel: PropTypes.string
 }
 
 export default FilterField

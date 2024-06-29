@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types'
+
 function SearchField({ loading, setLoading, searchValue, setSearchValue }) {
   const handleSearch = (e) => {
     const value = e.target.value.trimStart()
@@ -76,6 +78,13 @@ function SearchField({ loading, setLoading, searchValue, setSearchValue }) {
       )}
     </div>
   )
+}
+
+SearchField.propTypes = {
+  loading: PropTypes.bool,
+  setLoading: PropTypes.func,
+  searchValue: PropTypes.string,
+  setSearchValue: PropTypes.func
 }
 
 export default SearchField

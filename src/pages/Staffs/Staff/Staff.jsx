@@ -4,7 +4,7 @@ import { useContext, useEffect } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { Link } from 'react-router-dom'
 import { toast } from 'sonner'
-import { deleteStaff, getAllStaffs, getStaff } from '~/apis/users.api'
+import usersApi from '~/apis/users.api'
 import ModalDelete from '~/components/ModalDelete'
 import NoData from '~/components/NoData'
 import { AppContext } from '~/context/app.context'
@@ -18,7 +18,7 @@ function Staff({ setProgress }) {
   const queryClient = useQueryClient()
   const { data, isLoading } = useQuery({
     queryKey: ['staffs'],
-    queryFn: getAllStaffs,
+    queryFn: usersApi.getAllStaffs,
     enabled: profile.role === 'admin'
   })
   const staffs = data?.data?.data || []
@@ -35,7 +35,7 @@ function Staff({ setProgress }) {
   }, [setProgress])
 
   const { mutateAsync } = useMutation({
-    mutationFn: deleteStaff,
+    mutationFn: usersApi.deleteStaff,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['staffs'] })
     }
@@ -58,7 +58,7 @@ function Staff({ setProgress }) {
   const handlePrefetchOnMouseEnter = (id) => {
     queryClient.prefetchQuery({
       queryKey: ['staff', id],
-      queryFn: () => getStaff(id)
+      queryFn: () => usersApi.getStaff(id)
     })
   }
 

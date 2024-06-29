@@ -17,7 +17,7 @@ import {
 } from 'react-icons/hi'
 import { toast } from 'sonner'
 import { twMerge } from 'tailwind-merge'
-import { signOut } from '~/apis/auth.api'
+import authApi from '~/apis/auth.api'
 import { path } from '~/constants/path'
 import { AppContext } from '~/context/app.context'
 import { sidebarTheme } from '~/utils/theme'
@@ -25,7 +25,7 @@ import { sidebarTheme } from '~/utils/theme'
 function Sidebar() {
   const { isAuthenticated, setIsAuthenticated, setProfile } = useContext(AppContext)
   const { mutateAsync } = useMutation({
-    mutationFn: signOut,
+    mutationFn: authApi.signOut,
     onSuccess: () => {
       setIsAuthenticated(false)
       setProfile(null)

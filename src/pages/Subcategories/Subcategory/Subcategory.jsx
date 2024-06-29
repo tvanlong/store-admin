@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { Link } from 'react-router-dom'
 import { toast } from 'sonner'
-import { deleteSubcategory, getSubcategory } from '~/apis/subcategories.api'
+import subcategoriesApi from '~/apis/subcategories.api'
 import ModalDelete from '~/components/ModalDelete'
 import NoData from '~/components/NoData'
 import { useSubcategories } from '~/hooks/useSubcategories'
@@ -27,7 +27,7 @@ function Subcategory({ setProgress }) {
   }, [setProgress])
 
   const { mutateAsync } = useMutation({
-    mutationFn: deleteSubcategory,
+    mutationFn: subcategoriesApi.deleteSubcategory,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['subcategories'] })
     }
@@ -50,7 +50,7 @@ function Subcategory({ setProgress }) {
   const handlePrefetchOnMouseEnter = (id) => {
     queryClient.prefetchQuery({
       queryKey: ['subcategory', id],
-      queryFn: () => getSubcategory(id)
+      queryFn: () => subcategoriesApi.getSubcategory(id)
     })
   }
 

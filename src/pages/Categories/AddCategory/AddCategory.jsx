@@ -6,7 +6,8 @@ import { Helmet } from 'react-helmet-async'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
-import { createCategory } from '~/apis/categories.api'
+import categoriesApi from '~/apis/categories.api'
+import { path } from '~/constants/path'
 import { categorySchema } from '~/schemas/categorySchema'
 import { textInputTheme } from '~/utils/theme'
 
@@ -37,10 +38,10 @@ function AddCategory({ setProgress }) {
   }, [setProgress])
 
   const { mutateAsync, isPending } = useMutation({
-    mutationFn: (data) => createCategory(data),
+    mutationFn: (data) => categoriesApi.createCategory(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['categories'] })
-      navigate('/category')
+      navigate(path.category)
     }
   })
 

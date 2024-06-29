@@ -1,4 +1,5 @@
 import { Button, Checkbox, Label, Modal } from 'flowbite-react'
+import PropTypes from 'prop-types'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { formatCurrency, formatDateTime } from '~/utils/format'
@@ -76,6 +77,10 @@ function PopupModal({ version }) {
       </Modal>
     </>
   )
+}
+
+PopupModal.propTypes = {
+  version: PropTypes.object
 }
 
 export default PopupModal

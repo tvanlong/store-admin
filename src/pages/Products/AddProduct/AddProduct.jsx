@@ -7,8 +7,8 @@ import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import Select from 'react-select'
 import { toast } from 'sonner'
-import { deleteImage, uploadImages } from '~/apis/images.api'
-import { addProduct } from '~/apis/products.api'
+import imagesApi from '~/apis/images.api'
+import productsApi from '~/apis/products.api'
 import { useSubcategories } from '~/hooks/useSubcategories'
 import { productSchema } from '~/schemas/productSchema'
 import { fileInputTheme, textInputTheme } from '~/utils/theme'
@@ -70,15 +70,15 @@ function AddProduct({ setProgress }) {
   }, [file])
 
   const { mutateAsync: uploadImagesMutateAsync } = useMutation({
-    mutationFn: (data) => uploadImages(data)
+    mutationFn: (data) => imagesApi.uploadImages(data)
   })
 
   const { mutateAsync: deleteImageMutateAsync } = useMutation({
-    mutationFn: (name) => deleteImage(name)
+    mutationFn: (name) => imagesApi.deleteImage(name)
   })
 
   const { mutateAsync: addProductMutateAsync, isPending } = useMutation({
-    mutationFn: (data) => addProduct(data),
+    mutationFn: (data) => productsApi.addProduct(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['products'] })
       navigate('/product')

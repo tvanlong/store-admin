@@ -1,4 +1,5 @@
 import { Button, Modal } from 'flowbite-react'
+import PropTypes from 'prop-types'
 import { useState } from 'react'
 import { HiOutlineExclamationCircle } from 'react-icons/hi'
 
@@ -35,6 +36,11 @@ function ModalDelete({ title, handleDelete }) {
       </Modal>
     </>
   )
+}
+
+ModalDelete.propTypes = {
+  title: PropTypes.string,
+  handleDelete: PropTypes.func
 }
 
 export default ModalDelete

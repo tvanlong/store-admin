@@ -7,11 +7,13 @@ import { useForm } from 'react-hook-form'
 import { useNavigate, useParams } from 'react-router-dom'
 import { default as SelectSearch } from 'react-select'
 import { toast } from 'sonner'
-import { getAllProducts } from '~/apis/products.api'
-import { getVersionById, updateVersion } from '~/apis/version.api'
+import productsApi from '~/apis/products.api'
+import versionApi from '~/apis/version.api'
 import { path } from '~/constants/path'
 import { versionSchema } from '~/schemas/versionSchema'
 import { textInputTheme } from '~/utils/theme'
+
+const LIMIT = 100
 
 function UpdateVersion({ setProgress }) {
   const queryClient = useQueryClient()
@@ -19,11 +21,11 @@ function UpdateVersion({ setProgress }) {
   const { id } = useParams()
   const { data: versionData } = useQuery({
     queryKey: ['version', id],
-    queryFn: () => getVersionById(id)
+    queryFn: () => versionApi.getVersionById(id)
   })
   const { data } = useQuery({
     queryKey: ['products'],
-    queryFn: () => getAllProducts({ limit: 100, page: 1 })
+    queryFn: () => productsApi.getAllProducts({ limit: LIMIT, page: 1 })
   })
   const productOptions = data?.data?.data?.docs.map((product) => {
     return {
@@ -77,7 +79,7 @@ function UpdateVersion({ setProgress }) {
   }, [versionData, setValue])
 
   const { mutateAsync: updateVersionMutateAsync, isPending } = useMutation({
-    mutationFn: (data) => updateVersion(id, data),
+    mutationFn: (data) => versionApi.updateVersion(id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['versions'] })
       queryClient.invalidateQueries({ queryKey: ['version', id] })

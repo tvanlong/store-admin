@@ -6,7 +6,7 @@ import { Helmet } from 'react-helmet-async'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
-import { createStaff } from '~/apis/users.api'
+import usersApi from '~/apis/users.api'
 import { AppContext } from '~/context/app.context'
 import NoPermission from '~/pages/NoPermission'
 import { staffSchema } from '~/schemas/staffSchema'
@@ -44,7 +44,7 @@ function AddStaff({ setProgress }) {
   }, [setProgress])
 
   const { mutateAsync, isPending } = useMutation({
-    mutationFn: (data) => createStaff(data),
+    mutationFn: (data) => usersApi.createStaff(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['staffs'] })
       navigate('/staff')

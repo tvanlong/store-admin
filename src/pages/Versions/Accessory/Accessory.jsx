@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
-import { deleteVersion, getAllAccessories, getVersionById } from '~/apis/version.api'
+import versionApi from '~/apis/version.api'
 import FilterField from '~/components/FilterField'
 import ModalDelete from '~/components/ModalDelete'
 import NoData from '~/components/NoData'
@@ -48,7 +48,7 @@ function Accessory({ setProgress }) {
     queryKey: ['accessories', queryParams],
     queryFn: () => {
       setLoading(false)
-      return getAllAccessories(queryParams)
+      return versionApi.getAllAccessories(queryParams)
     },
     placeholderData: keepPreviousData
   })
@@ -73,7 +73,7 @@ function Accessory({ setProgress }) {
   }, [debouncedValue])
 
   const { mutateAsync: deleteVersionMutateAsync } = useMutation({
-    mutationFn: (id) => deleteVersion(id),
+    mutationFn: (id) => versionApi.deleteVersion(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['versions'] })
     }
@@ -113,7 +113,7 @@ function Accessory({ setProgress }) {
   const handlePrefetchOnMouseEnter = (id) => {
     queryClient.prefetchQuery({
       queryKey: ['version', id],
-      queryFn: () => getVersionById(id),
+      queryFn: () => versionApi.getVersionById(id),
       staleTime: 1000 * 5 // 5 seconds
     })
   }

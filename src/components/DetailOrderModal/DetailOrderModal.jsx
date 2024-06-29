@@ -1,15 +1,16 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Button, Modal } from 'flowbite-react'
+import PropTypes from 'prop-types'
 import { useState } from 'react'
 import { toast } from 'sonner'
-import { updateStatusOrder } from '~/apis/orders.api'
-import OrderItem from '../OrderItem'
+import ordersApi from '~/apis/orders.api'
+import OrderItem from '~/components/OrderItem'
 
 function DetailOrderModal({ order }) {
   const queryClient = useQueryClient()
   const [openModal, setOpenModal] = useState(false)
   const { mutateAsync, isPending } = useMutation({
-    mutationFn: (data) => updateStatusOrder(order.user._id, order._id, data),
+    mutationFn: (data) => ordersApi.updateStatusOrder(order.user._id, order._id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['orders'] })
       setOpenModal(false)
@@ -75,6 +76,10 @@ function DetailOrderModal({ order }) {
       </Modal>
     </>
   )
+}
+
+DetailOrderModal.propTypes = {
+  order: PropTypes.object
 }
 
 export default DetailOrderModal

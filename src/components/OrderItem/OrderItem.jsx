@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import { formatCurrency } from '~/utils/format'
 
 function OrderItem({ item }) {
@@ -26,6 +27,10 @@ function OrderItem({ item }) {
       })}
     </div>
   )
+}
+
+OrderItem.propTypes = {
+  item: PropTypes.object
 }
 
 export default OrderItem

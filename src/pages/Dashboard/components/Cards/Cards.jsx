@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
-import { getAllVersions } from '~/apis/version.api'
+import versionApi from '~/apis/version.api'
 import { path } from '~/constants/path'
 import { useCategories } from '~/hooks/useCategories'
 import { useCustomers } from '~/hooks/useCustomers'
@@ -15,7 +15,7 @@ function Cards() {
   const { data: subcategoriesData } = useSubcategories()
   const { data: versionsData } = useQuery({
     queryKey: ['versions'],
-    queryFn: () => getAllVersions({ limit: MAXIMUM_LIMIT })
+    queryFn: () => versionApi.getAllVersions({ limit: MAXIMUM_LIMIT })
   })
   const { data: customersData } = useCustomers()
   const { data: ordersData } = useOrders()

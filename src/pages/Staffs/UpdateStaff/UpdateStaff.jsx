@@ -6,7 +6,8 @@ import { Helmet } from 'react-helmet-async'
 import { useForm } from 'react-hook-form'
 import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'sonner'
-import { getStaff, updateStaff } from '~/apis/users.api'
+import usersApi from '~/apis/users.api'
+import { path } from '~/constants/path'
 import { AppContext } from '~/context/app.context'
 import NoPermission from '~/pages/NoPermission'
 import { staffSchema } from '~/schemas/staffSchema'
@@ -19,7 +20,7 @@ function UpdateStaff({ setProgress }) {
   const { id } = useParams()
   const { data: staffData } = useQuery({
     queryKey: ['staff', id],
-    queryFn: () => getStaff(id),
+    queryFn: () => usersApi.getStaff(id),
     enabled: profile.role === 'admin'
   })
 
@@ -63,10 +64,10 @@ function UpdateStaff({ setProgress }) {
   }, [setProgress])
 
   const { mutateAsync, isPending } = useMutation({
-    mutationFn: (data) => updateStaff(id, data),
+    mutationFn: (data) => usersApi.updateStaff(id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['staffs'] })
-      navigate('/staff')
+      navigate(path.staff)
     }
   })
 

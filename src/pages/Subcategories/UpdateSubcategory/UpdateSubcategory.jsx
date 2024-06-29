@@ -7,7 +7,8 @@ import { useForm } from 'react-hook-form'
 import { useNavigate, useParams } from 'react-router-dom'
 import Select from 'react-select'
 import { toast } from 'sonner'
-import { getSubcategory, updateSubcategory } from '~/apis/subcategories.api'
+import subcategoriesApi from '~/apis/subcategories.api'
+import { path } from '~/constants/path'
 import { useCategories } from '~/hooks/useCategories'
 import { subcategorySchema } from '~/schemas/subcategorySchema'
 import { textInputTheme } from '~/utils/theme'
@@ -18,7 +19,7 @@ function UpdateSubcategory({ setProgress }) {
   const { id } = useParams()
   const { data: subcategoryData } = useQuery({
     queryKey: ['subcategory', id],
-    queryFn: () => getSubcategory(id)
+    queryFn: () => subcategoriesApi.getSubcategory(id)
   })
   const { data } = useCategories()
 
@@ -64,10 +65,10 @@ function UpdateSubcategory({ setProgress }) {
   }, [subcategoryData, setValue])
 
   const { mutateAsync, isPending } = useMutation({
-    mutationFn: (data) => updateSubcategory(id, data),
+    mutationFn: (data) => subcategoriesApi.updateSubcategory(id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['subcategories'] })
-      navigate('/subcategory')
+      navigate(path.subcategory)
     }
   })
 
