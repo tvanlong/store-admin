@@ -2,7 +2,7 @@
 import { useMutation } from '@tanstack/react-query'
 import { Avatar, Dropdown, Navbar } from 'flowbite-react'
 import { useContext, useMemo } from 'react'
-import { HiCog, HiCurrencyDollar, HiLogout, HiUser, HiViewGrid } from 'react-icons/hi'
+import { HiChartPie, HiCog, HiCurrencyDollar, HiLogout, HiUser } from 'react-icons/hi'
 import { toast } from 'sonner'
 import authApi from '~/apis/auth.api'
 import { path } from '~/constants/path'
@@ -55,7 +55,8 @@ function Header() {
           name='email'
           id='topbar-search'
           className='bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2.5'
-          placeholder='Search'
+          placeholder='Tìm kiếm...'
+          disabled
         />
       </div>
       <Dropdown color={'transparent'} label={<Avatar bordered img={profile?.avatar} rounded></Avatar>} arrowIcon={null}>
@@ -65,7 +66,7 @@ function Header() {
           </span>
           <span className='block truncate text-sm font-medium'>{profile?.email}</span>
         </Dropdown.Header>
-        <Dropdown.Item href={path.dashboard} icon={HiViewGrid}>
+        <Dropdown.Item href={path.dashboard} icon={HiChartPie}>
           Bảng điều khiển
         </Dropdown.Item>
         <Dropdown.Item href={path.profile} icon={HiUser}>

@@ -173,15 +173,24 @@ function Version({ setProgress }) {
               </div>
             </div>
           </div>
-
-          <button
-            id='createProductButton'
-            className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none'
-            type='button'
-            onClick={() => navigate(path.addVersion)}
-          >
-            Thêm phiên bản sản phẩm
-          </button>
+          <div className='space-x-5'>
+            <button
+              id='createProductButton'
+              className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none'
+              type='button'
+              onClick={() => navigate(path.accessory)}
+            >
+              ⚙️ Linh kiện
+            </button>
+            <button
+              id='createProductButton'
+              className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none'
+              type='button'
+              onClick={() => navigate(path.addVersion)}
+            >
+              📁 Thêm mới
+            </button>
+          </div>
         </div>
         <div className='flex mt-5 gap-5'>
           <FilterField options={sortOptions} onSortChange={onSortChange} />

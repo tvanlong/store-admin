@@ -96,7 +96,7 @@ function Customer({ setProgress }) {
             type='button'
             onClick={() => toast.warning('Chức năng chưa được hỗ trợ!')}
           >
-            Thêm khách hàng mới
+            📁 Thêm mới
           </button>
         </div>
       </div>

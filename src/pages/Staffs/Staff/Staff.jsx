@@ -138,7 +138,7 @@ function Staff({ setProgress }) {
             type='button'
             onClick={() => navigate(path.addStaff)}
           >
-            Thêm nhân viên mới
+            📁 Thêm mới
           </button>
         </div>
       </div>

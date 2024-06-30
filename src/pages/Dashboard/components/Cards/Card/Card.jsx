@@ -27,8 +27,8 @@ function Card({ color, icon, title, animatedValue, label, path }) {
         </div>
       </div>
       <div className='flex justify-between bg-[#f9fafb] px-2 py-3 text-[#337ab7]'>
-        <Link to={path} className='text-xs font-medium'>
-          View Details
+        <Link to={path} className='text-xs font-medium hover:underline'>
+          Thông tin chi tiết
         </Link>
         <svg className='h-4 w-4' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24'>
           <path

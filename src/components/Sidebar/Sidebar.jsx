@@ -6,17 +6,15 @@ import {
   HiChartSquareBar,
   HiChip,
   HiDesktopComputer,
-  HiLogout,
-  HiOutlineMinusSm,
-  HiOutlinePlusCircle,
-  HiOutlinePlusSm,
+  HiOutlineLogout,
+  HiOutlineViewGrid,
   HiOutlineViewList,
   HiShoppingCart,
   HiUser,
   HiUserGroup
 } from 'react-icons/hi'
+import { useLocation } from 'react-router-dom'
 import { toast } from 'sonner'
-import { twMerge } from 'tailwind-merge'
 import authApi from '~/apis/auth.api'
 import { path } from '~/constants/path'
 import { AppContext } from '~/context/app.context'
@@ -24,6 +22,7 @@ import { sidebarTheme } from '~/utils/theme'
 
 function Sidebar() {
   const { isAuthenticated, setIsAuthenticated, setProfile } = useContext(AppContext)
+  const { pathname } = useLocation()
   const { mutateAsync } = useMutation({
     mutationFn: authApi.signOut,
     onSuccess: () => {
@@ -51,102 +50,71 @@ function Sidebar() {
       </SideBar.Logo>
       <SideBar.Items>
         <SideBar.ItemGroup>
-          <SideBar.Item href={path.dashboard} icon={HiChartPie}>
+          <SideBar.Item
+            className={pathname === path.dashboard ? 'bg-[#2d5171]' : ''}
+            href={path.dashboard}
+            icon={HiChartPie}
+          >
             Bảng tin
           </SideBar.Item>
-          <SideBar.Collapse
-            icon={HiOutlineViewList}
-            label='Danh mục lớn'
-            renderChevronIcon={(theme, open) => {
-              const IconComponent = open ? HiOutlineMinusSm : HiOutlinePlusSm
-
-              return <IconComponent aria-hidden className={twMerge(theme.label.icon.open[open ? 'on' : 'off'])} />
-            }}
+          <SideBar.Item
+            className={pathname.includes(path.category) ? 'bg-[#2d5171]' : ''}
+            href={path.category}
+            icon={HiOutlineViewGrid}
           >
-            <SideBar.Item href={path.category} icon={HiOutlineViewList}>
-              Danh mục sản phẩm
-            </SideBar.Item>
-            <SideBar.Item href={path.addCategory} icon={HiOutlinePlusCircle}>
-              Thêm mới
-            </SideBar.Item>
-          </SideBar.Collapse>
-          <SideBar.Collapse
+            Danh mục chính
+          </SideBar.Item>
+          <SideBar.Item
+            className={pathname.includes(path.subcategory) ? 'bg-[#2d5171]' : ''}
+            href={path.subcategory}
             icon={HiOutlineViewList}
-            label='Danh mục nhỏ'
-            renderChevronIcon={(theme, open) => {
-              const IconComponent = open ? HiOutlineMinusSm : HiOutlinePlusSm
-
-              return <IconComponent aria-hidden className={twMerge(theme.label.icon.open[open ? 'on' : 'off'])} />
-            }}
           >
-            <SideBar.Item href={path.subcategory} icon={HiOutlineViewList}>
-              Danh mục sản phẩm
-            </SideBar.Item>
-            <SideBar.Item href={path.addSubcategory} icon={HiOutlinePlusCircle}>
-              Thêm mới
-            </SideBar.Item>
-          </SideBar.Collapse>
-          <SideBar.Collapse
+            Danh mục phụ
+          </SideBar.Item>
+          <SideBar.Item
+            className={pathname.includes(path.product) ? 'bg-[#2d5171]' : ''}
+            href={path.product}
             icon={HiDesktopComputer}
-            label='Dòng sản phẩm'
-            renderChevronIcon={(theme, open) => {
-              const IconComponent = open ? HiOutlineMinusSm : HiOutlinePlusSm
-
-              return <IconComponent aria-hidden className={twMerge(theme.label.icon.open[open ? 'on' : 'off'])} />
-            }}
           >
-            <SideBar.Item href={path.product} icon={HiOutlineViewList}>
-              Dòng sản phẩm
-            </SideBar.Item>
-            <SideBar.Item href={path.addProduct} icon={HiOutlinePlusCircle}>
-              Thêm mới
-            </SideBar.Item>
-          </SideBar.Collapse>
-          <SideBar.Collapse
+            Dòng sản phẩm
+          </SideBar.Item>
+          <SideBar.Item
+            className={pathname.includes(path.version) || pathname.includes(path.accessory) ? 'bg-[#2d5171]' : ''}
+            href={path.version}
             icon={HiChip}
-            label='Cấu hình sản phẩm'
-            renderChevronIcon={(theme, open) => {
-              const IconComponent = open ? HiOutlineMinusSm : HiOutlinePlusSm
-
-              return <IconComponent aria-hidden className={twMerge(theme.label.icon.open[open ? 'on' : 'off'])} />
-            }}
           >
-            <SideBar.Item href={path.version} icon={HiOutlineViewList}>
-              Phiên bản sản phẩm
-            </SideBar.Item>
-            <SideBar.Item href={path.accessory} icon={HiOutlineViewList}>
-              Linh kiện sản phẩm
-            </SideBar.Item>
-            <SideBar.Item href={path.addVersion} icon={HiOutlinePlusCircle}>
-              Thêm mới
-            </SideBar.Item>
-          </SideBar.Collapse>
-          <SideBar.Collapse
+            Phiên bản sản phẩm
+          </SideBar.Item>
+          <SideBar.Item
+            className={pathname.includes(path.customer) ? 'bg-[#2d5171]' : ''}
+            href={path.customer}
+            icon={HiUser}
+          >
+            Khách hàng
+          </SideBar.Item>
+          <SideBar.Item
+            className={pathname.includes(path.staff) ? 'bg-[#2d5171]' : ''}
+            href={path.staff}
             icon={HiUserGroup}
-            label='Người dùng'
-            renderChevronIcon={(theme, open) => {
-              const IconComponent = open ? HiOutlineMinusSm : HiOutlinePlusSm
-              return <IconComponent aria-hidden className={twMerge(theme.label.icon.open[open ? 'on' : 'off'])} />
-            }}
           >
-            <SideBar.Item href={path.customer} icon={HiUser}>
-              Khách hàng
-            </SideBar.Item>
-            <SideBar.Item href={path.staff} icon={HiUser}>
-              Nhân viên
-            </SideBar.Item>
-            <SideBar.Item href={path.addStaff} icon={HiOutlinePlusCircle}>
-              Thêm nhân viên mới
-            </SideBar.Item>
-          </SideBar.Collapse>
-          <SideBar.Item href={path.order} icon={HiShoppingCart}>
+            Nhân viên
+          </SideBar.Item>
+          <SideBar.Item
+            className={pathname.includes(path.order) ? 'bg-[#2d5171]' : ''}
+            href={path.order}
+            icon={HiShoppingCart}
+          >
             Đơn hàng
           </SideBar.Item>
-          <SideBar.Item href={path.analytics} icon={HiChartSquareBar}>
+          <SideBar.Item
+            className={pathname.includes(path.analytics) ? 'bg-[#2d5171]' : ''}
+            href={path.analytics}
+            icon={HiChartSquareBar}
+          >
             Thống kê
           </SideBar.Item>
           {isAuthenticated && (
-            <SideBar.Item to={''} icon={HiLogout} onClick={handleSignOut}>
+            <SideBar.Item to={''} icon={HiOutlineLogout} onClick={handleSignOut}>
               Đăng xuất
             </SideBar.Item>
           )}

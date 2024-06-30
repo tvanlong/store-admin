@@ -175,14 +175,13 @@ function Product({ setProgress }) {
               </div>
             </div>
           </div>
-
           <button
             id='createProductButton'
             className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none'
             type='button'
             onClick={() => navigate(path.addProduct)}
           >
-            Thêm dòng sản phẩm mới
+            📁 Thêm mới
           </button>
         </div>
         <div className='mt-5'>

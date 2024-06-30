@@ -128,7 +128,7 @@ function Subcategory({ setProgress }) {
             type='button'
             onClick={() => navigate(path.addSubcategory)}
           >
-            Thêm danh mục sản phẩm mới
+            📁 Thêm mới
           </button>
         </div>
       </div>
