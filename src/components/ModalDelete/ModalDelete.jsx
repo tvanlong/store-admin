@@ -1,16 +1,17 @@
 import { Button, Modal } from 'flowbite-react'
 import PropTypes from 'prop-types'
 import { useState } from 'react'
-import { HiOutlineExclamationCircle } from 'react-icons/hi'
+import { HiOutlineExclamationCircle, HiOutlineTrash } from 'react-icons/hi'
 
 function ModalDelete({ title, handleDelete }) {
   const [openModal, setOpenModal] = useState(false)
 
   return (
     <>
-      <button className='font-medium text-red-600 hover:underline' onClick={() => setOpenModal(true)}>
+      <Button size='xs' onClick={() => setOpenModal(true)} className='bg-red-600 hover:bg-red-600 text-white'>
+        <HiOutlineTrash className='mr-2 h-5 w-5' />
         Xóa
-      </button>
+      </Button>
       <Modal className='bg-gray-100/50' show={openModal} size='md' onClose={() => setOpenModal(false)} popup>
         <Modal.Header />
         <Modal.Body>

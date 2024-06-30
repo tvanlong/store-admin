@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { Bar, BarChart, CartesianGrid, Legend, Line, LineChart, Pie, PieChart, Tooltip, XAxis, YAxis } from 'recharts'
+import Breadcrumb from '~/components/Breadcrumb'
 import AreaChart from './components/AreaChart'
 
 const dataLineChart = [
@@ -180,15 +181,9 @@ function PageAnalytics({ setProgress }) {
         <title>Trang thống kê | Thông tin tổng quan</title>
         <meta name='description' content='Trang thống kê | Thông tin tổng quan' />
       </Helmet>
-      <div className='mb-10 mt-20 text-center'>
-        <h1 className='mb-4 text-3xl font-extrabold text-gray-900'>
-          <span className='bg-gradient-to-r from-sky-400 to-emerald-600 bg-clip-text text-transparent'>
-            Thống kê tổng quan
-          </span>
-        </h1>
-        <p className='text-lg font-normal text-gray-500 lg:text-xl'>
-          Thống kê tổng quan về doanh số, lượt truy cập, đơn hàng, ...
-        </p>
+      <div className='mx-10 mb-10 mt-20'>
+        <Breadcrumb location='Thống kê cửa hàng' />
+        <h2 className='mb-4 text-3xl font-extrabold text-gray-900'>Thống kê cửa hàng</h2>
       </div>
       <AreaChart />
       <div className='grid grid-cols-12 gap-8 m-10'>

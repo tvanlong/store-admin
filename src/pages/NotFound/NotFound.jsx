@@ -2,7 +2,7 @@ import { Helmet } from 'react-helmet-async'
 
 function NotFound() {
   return (
-    <section className='bg-white dark:bg-gray-900'>
+    <section className='bg-white'>
       <Helmet>
         <title>404 | Not Found</title>
         <meta name='description' content='404 | Not Found' />

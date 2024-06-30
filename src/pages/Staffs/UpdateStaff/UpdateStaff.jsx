@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form'
 import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'sonner'
 import usersApi from '~/apis/users.api'
+import Breadcrumb from '~/components/Breadcrumb'
 import { path } from '~/constants/path'
 import { AppContext } from '~/context/app.context'
 import NoPermission from '~/pages/NoPermission'
@@ -88,17 +89,20 @@ function UpdateStaff({ setProgress }) {
         <title>Cập nhật nhân viên | Trang quản trị cập nhật nhân viên</title>
         <meta name='description' content='Trang quản trị | Cập nhật nhân viên' />
       </Helmet>
-      <div className='mb-10 mt-20 text-center'>
-        <h1 className='mb-4 text-3xl font-extrabold text-gray-900'>
-          <span className='bg-gradient-to-r from-sky-400 to-emerald-600 bg-clip-text text-transparent'>
-            Cập nhật nhân viên
-          </span>
-        </h1>
-        <p className='text-lg font-normal text-gray-500 lg:text-xl'>
-          Điền thông tin vào form dưới đây để cập nhật nhân viên
-        </p>
+      <div className='mx-10 mb-10 mt-20'>
+        <Breadcrumb location='Cập nhật nhân viên' />
+        <div className='flex justify-between'>
+          <h2 className='mb-4 text-3xl font-extrabold text-gray-900'>Cập nhật nhân viên</h2>
+          <button
+            className='text-white h-10 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-1 focus:outline-none'
+            type='button'
+            onClick={() => navigate(path.staff)}
+          >
+            Quay lại
+          </button>
+        </div>
       </div>
-      <form className='mx-40' onSubmit={onSubmit}>
+      <form className='mx-10' onSubmit={onSubmit}>
         <div className='mb-5'>
           <div className='mb-2 block'>
             <Label htmlFor='name' value='Tên nhân viên' />

@@ -1,22 +1,8 @@
 /* eslint-disable indent */
 import { useMutation } from '@tanstack/react-query'
-import { Avatar, Breadcrumb, Dropdown, Navbar } from 'flowbite-react'
+import { Avatar, Dropdown, Navbar } from 'flowbite-react'
 import { useContext, useMemo } from 'react'
-import {
-  HiChartPie,
-  HiChartSquareBar,
-  HiChip,
-  HiCog,
-  HiCurrencyDollar,
-  HiDesktopComputer,
-  HiLogout,
-  HiMenu,
-  HiMenuAlt4,
-  HiShoppingCart,
-  HiUser,
-  HiViewGrid
-} from 'react-icons/hi'
-import { useLocation } from 'react-router-dom'
+import { HiCog, HiCurrencyDollar, HiLogout, HiUser, HiViewGrid } from 'react-icons/hi'
 import { toast } from 'sonner'
 import authApi from '~/apis/auth.api'
 import { path } from '~/constants/path'
@@ -25,7 +11,6 @@ import { useOrders } from '~/hooks/useOrders'
 
 function Header() {
   const { setIsAuthenticated, profile, setProfile } = useContext(AppContext)
-  const { pathname } = useLocation()
   const { data: ordersData } = useOrders()
   const totalPendingOrders = useMemo(
     () => ordersData?.data?.data.filter((order) => order.status === 'Chờ xác nhận').length || 0,
@@ -48,174 +33,31 @@ function Header() {
     })
   }
 
-  const renderBreadcrumb = () => {
-    switch (pathname) {
-      case path.dashboard:
-        return (
-          <Breadcrumb aria-label='Default breadcrumb example'>
-            <Breadcrumb.Item icon={HiChartPie}>Bảng điều khiển</Breadcrumb.Item>
-          </Breadcrumb>
-        )
-      case path.category:
-        return (
-          <Breadcrumb aria-label='Default breadcrumb example'>
-            <Breadcrumb.Item icon={HiMenu}>Danh mục sản phẩm</Breadcrumb.Item>
-          </Breadcrumb>
-        )
-      case path.subcategory:
-        return (
-          <Breadcrumb aria-label='Default breadcrumb example'>
-            <Breadcrumb.Item icon={HiMenuAlt4}>Danh mục sản phẩm nhỏ</Breadcrumb.Item>
-          </Breadcrumb>
-        )
-      case path.product:
-        return (
-          <Breadcrumb aria-label='Default breadcrumb example'>
-            <Breadcrumb.Item icon={HiDesktopComputer}>Dòng sản phẩm</Breadcrumb.Item>
-          </Breadcrumb>
-        )
-      case path.version:
-        return (
-          <Breadcrumb aria-label='Default breadcrumb example'>
-            <Breadcrumb.Item icon={HiChip}>Phiên bản sản phẩm</Breadcrumb.Item>
-          </Breadcrumb>
-        )
-      case path.accessory:
-        return (
-          <Breadcrumb aria-label='Default breadcrumb example'>
-            <Breadcrumb.Item icon={HiChip}>Linh kiện sản phẩm</Breadcrumb.Item>
-          </Breadcrumb>
-        )
-      case path.customer:
-        return (
-          <Breadcrumb aria-label='Default breadcrumb example'>
-            <Breadcrumb.Item icon={HiUser}>Khách hàng</Breadcrumb.Item>
-          </Breadcrumb>
-        )
-      case path.staff:
-        return (
-          <Breadcrumb aria-label='Default breadcrumb example'>
-            <Breadcrumb.Item icon={HiUser}>Nhân viên</Breadcrumb.Item>
-          </Breadcrumb>
-        )
-      case path.order:
-        return (
-          <Breadcrumb aria-label='Default breadcrumb example'>
-            <Breadcrumb.Item icon={HiShoppingCart}>Đơn hàng</Breadcrumb.Item>
-          </Breadcrumb>
-        )
-      case path.profile:
-        return (
-          <Breadcrumb aria-label='Default breadcrumb example'>
-            <Breadcrumb.Item icon={HiUser}>Thông tin tài khoản</Breadcrumb.Item>
-          </Breadcrumb>
-        )
-      case path.analytics:
-        return (
-          <Breadcrumb aria-label='Default breadcrumb example'>
-            <Breadcrumb.Item icon={HiChartSquareBar}>Thống kê</Breadcrumb.Item>
-          </Breadcrumb>
-        )
-      case path.addCategory:
-        return (
-          <Breadcrumb aria-label='Default breadcrumb example'>
-            <Breadcrumb.Item href={path.category} icon={HiMenu}>
-              Danh mục sản phẩm
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>Thêm mới</Breadcrumb.Item>
-          </Breadcrumb>
-        )
-      case path.addSubcategory:
-        return (
-          <Breadcrumb aria-label='Default breadcrumb example'>
-            <Breadcrumb.Item href={path.subcategory} icon={HiMenu}>
-              Danh mục sản phẩm nhỏ
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>Thêm mới</Breadcrumb.Item>
-          </Breadcrumb>
-        )
-      case path.addProduct:
-        return (
-          <Breadcrumb aria-label='Default breadcrumb example'>
-            <Breadcrumb.Item href={path.product} icon={HiDesktopComputer}>
-              Dòng sản phẩm
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>Thêm mới</Breadcrumb.Item>
-          </Breadcrumb>
-        )
-      case path.addVersion:
-        return (
-          <Breadcrumb aria-label='Default breadcrumb example'>
-            <Breadcrumb.Item href={path.product} icon={HiDesktopComputer}>
-              Phiên bản sản phẩm
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>Thêm mới</Breadcrumb.Item>
-          </Breadcrumb>
-        )
-      case path.addStaff:
-        return (
-          <Breadcrumb aria-label='Default breadcrumb example'>
-            <Breadcrumb.Item href={path.staff} icon={HiUser}>
-              Nhân viên
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>Thêm mới</Breadcrumb.Item>
-          </Breadcrumb>
-        )
-    }
-  }
-
-  const renderBreadcrumbUpdate = () => {
-    if (pathname.includes('update-category')) {
-      return (
-        <Breadcrumb aria-label='Default breadcrumb example'>
-          <Breadcrumb.Item href={path.category} icon={HiMenu}>
-            Danh mục sản phẩm
-          </Breadcrumb.Item>
-          <Breadcrumb.Item>Cập nhật</Breadcrumb.Item>
-        </Breadcrumb>
-      )
-    } else if (pathname.includes('update-subcategory')) {
-      return (
-        <Breadcrumb aria-label='Default breadcrumb example'>
-          <Breadcrumb.Item href={path.subcategory} icon={HiMenu}>
-            Danh mục sản phẩm nhỏ
-          </Breadcrumb.Item>
-          <Breadcrumb.Item>Cập nhật</Breadcrumb.Item>
-        </Breadcrumb>
-      )
-    } else if (pathname.includes('update-product')) {
-      return (
-        <Breadcrumb aria-label='Default breadcrumb example'>
-          <Breadcrumb.Item href={path.product} icon={HiDesktopComputer}>
-            Dòng sản phẩm
-          </Breadcrumb.Item>
-          <Breadcrumb.Item>Cập nhật</Breadcrumb.Item>
-        </Breadcrumb>
-      )
-    } else if (pathname.includes('update-version')) {
-      return (
-        <Breadcrumb aria-label='Default breadcrumb example'>
-          <Breadcrumb.Item href={path.product} icon={HiDesktopComputer}>
-            Phiên bản sản phẩm
-          </Breadcrumb.Item>
-          <Breadcrumb.Item>Cập nhật</Breadcrumb.Item>
-        </Breadcrumb>
-      )
-    } else if (pathname.includes('update-staff')) {
-      return (
-        <Breadcrumb aria-label='Default breadcrumb example'>
-          <Breadcrumb.Item href={path.staff} icon={HiUser}>
-            Nhân viên
-          </Breadcrumb.Item>
-          <Breadcrumb.Item>Cập nhật</Breadcrumb.Item>
-        </Breadcrumb>
-      )
-    }
-  }
-
   return (
     <Navbar className='fixed left-64 right-0 top-0 z-10 border-b border-b-gray-200' fluid>
-      {pathname.includes('update') ? renderBreadcrumbUpdate() : renderBreadcrumb()}
+      <div className='relative mt-1 lg:w-96 ml-5'>
+        <div className='absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none'>
+          <svg
+            className='w-5 h-5 text-gray-500'
+            fill='currentColor'
+            viewBox='0 0 20 20'
+            xmlns='http://www.w3.org/2000/svg'
+          >
+            <path
+              fillRule='evenodd'
+              d='M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z'
+              clipRule='evenodd'
+            />
+          </svg>
+        </div>
+        <input
+          type='text'
+          name='email'
+          id='topbar-search'
+          className='bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2.5'
+          placeholder='Search'
+        />
+      </div>
       <Dropdown color={'transparent'} label={<Avatar bordered img={profile?.avatar} rounded></Avatar>} arrowIcon={null}>
         <Dropdown.Header>
           <span className='block text-sm'>

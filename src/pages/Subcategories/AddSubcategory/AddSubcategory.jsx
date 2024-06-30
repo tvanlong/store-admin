@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom'
 import Select from 'react-select'
 import { toast } from 'sonner'
 import subcategoriesApi from '~/apis/subcategories.api'
+import Breadcrumb from '~/components/Breadcrumb'
 import { path } from '~/constants/path'
 import { useCategories } from '~/hooks/useCategories'
 import { subcategorySchema } from '~/schemas/subcategorySchema'
@@ -74,17 +75,20 @@ function AddSubcategory({ setProgress }) {
         <title>Thêm danh mục sản phẩm nhỏ | Trang quản trị thêm danh mục sản phẩm nhỏ</title>
         <meta name='description' content='Trang quản trị | Thêm danh mục sản phẩm nhỏ' />
       </Helmet>
-      <div className='mb-10 mt-20 text-center'>
-        <h1 className='mb-4 text-3xl font-extrabold text-gray-900'>
-          <span className='bg-gradient-to-r from-sky-400 to-emerald-600 bg-clip-text text-transparent'>
-            Thêm danh mục sản phẩm nhỏ
-          </span>
-        </h1>
-        <p className='text-lg font-normal text-gray-500 lg:text-xl'>
-          Điền thông tin vào form dưới đây để thêm danh mục sản phẩm nhỏ mới
-        </p>
+      <div className='mx-10 mb-10 mt-20'>
+        <Breadcrumb location='Thêm danh mục sản phẩm' />
+        <div className='flex justify-between'>
+          <h2 className='mb-4 text-3xl font-extrabold text-gray-900'>Thêm danh mục sản phẩm</h2>
+          <button
+            className='text-white h-10 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-1 focus:outline-none'
+            type='button'
+            onClick={() => navigate(path.subcategory)}
+          >
+            Quay lại
+          </button>
+        </div>
       </div>
-      <form className='mx-40' onSubmit={onSubmit}>
+      <form className='mx-10' onSubmit={onSubmit}>
         <div className='mb-5'>
           <div className='mb-2 block'>
             <Label htmlFor='category-name' value='Thuộc danh mục sản phẩm' />

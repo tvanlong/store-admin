@@ -1,16 +1,17 @@
 import { Button, Checkbox, Label, Modal } from 'flowbite-react'
 import PropTypes from 'prop-types'
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { HiOutlineSearchCircle } from 'react-icons/hi'
 import { formatCurrency, formatDateTime } from '~/utils/format'
 
 function PopupModal({ version }) {
   const [openModal, setOpenModal] = useState(false)
   return (
     <>
-      <Link className='font-medium text-green-600 hover:underline' onClick={() => setOpenModal(true)}>
+      <Button size='xs' className='bg-green-600 hover:bg-green-600 text-white' onClick={() => setOpenModal(true)}>
+        <HiOutlineSearchCircle className='mr-2 h-5 w-5' />
         Chi tiết
-      </Link>
+      </Button>
       <Modal show={openModal} size='3xl' onClose={() => setOpenModal(false)}>
         <Modal.Header>Thông tin chi tiết phiên bản sản phẩm</Modal.Header>
         <Modal.Body>

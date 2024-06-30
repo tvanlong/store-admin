@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Button, Modal } from 'flowbite-react'
 import PropTypes from 'prop-types'
 import { useState } from 'react'
+import { HiOutlineSearchCircle } from 'react-icons/hi'
 import { toast } from 'sonner'
 import ordersApi from '~/apis/orders.api'
 import OrderItem from '~/components/OrderItem'
@@ -43,9 +44,10 @@ function DetailOrderModal({ order }) {
 
   return (
     <>
-      <a className='cursor-pointer font-medium text-green-600 hover:underline' onClick={() => setOpenModal(true)}>
-        Chi tiết đơn hàng
-      </a>
+      <Button size='xs' className='bg-green-600 hover:bg-green-600 text-white' onClick={() => setOpenModal(true)}>
+        <HiOutlineSearchCircle className='mr-2 h-5 w-5' />
+        Chi tiết
+      </Button>
       <Modal theme='3xl' show={openModal} onClose={() => setOpenModal(false)}>
         <Modal.Header>Thông tin chi tiết đơn hàng</Modal.Header>
         <Modal.Body>

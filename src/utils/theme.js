@@ -184,7 +184,7 @@ export const tabsTheme = {
         default: {
           base: 'rounded-t-lg',
           active: {
-            on: 'bg-gray-100 text-cyan-600 dark:bg-gray-800',
+            on: 'bg-gray-100 text-cyan-600',
             off: 'text-gray-500 hover:bg-gray-50 hover:text-gray-600'
           }
         },
