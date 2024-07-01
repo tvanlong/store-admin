@@ -42,6 +42,7 @@ function Staff({ setProgress }) {
     mutationFn: usersApi.softDeleteStaff,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['staffs'] })
+      queryClient.invalidateQueries({ queryKey: ['trash-staffs'] })
     }
   })
 

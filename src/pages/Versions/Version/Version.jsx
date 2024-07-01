@@ -75,6 +75,7 @@ function Version({ setProgress }) {
     mutationFn: (id) => versionApi.softDeleteVersion(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['versions'] })
+      queryClient.invalidateQueries({ queryKey: ['trash-versions'] })
     }
   })
 

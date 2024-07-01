@@ -1,7 +1,8 @@
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { Checkbox, Table } from 'flowbite-react'
+import { Button, Checkbox, Table } from 'flowbite-react'
 import { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
+import { HiOutlineCursorClick } from 'react-icons/hi'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 import versionApi from '~/apis/version.api'
@@ -11,7 +12,6 @@ import ModalDelete from '~/components/ModalDelete'
 import NoData from '~/components/NoData'
 import PopupModal from '~/components/PopupModal'
 import SearchField from '~/components/SearchField'
-import UpdateButton from '~/components/UpdateButton'
 import { priceOptions, sortOptions } from '~/constants/options'
 import { path } from '~/constants/path'
 import useDebounce from '~/hooks/useDebounce'
@@ -79,6 +79,22 @@ function TrashVersion({ setProgress }) {
       error: (err) => {
         return err?.response?.data?.message || 'Xóa dòng sản phẩm thất bại'
       }
+    })
+  }
+
+  const { mutateAsync: restoreDeletedVersion } = useMutation({
+    mutationFn: versionApi.restoreDeletedVersion,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['trash-versions'] })
+      queryClient.invalidateQueries({ queryKey: ['versions'] })
+    }
+  })
+
+  const handleRestore = (id) => {
+    toast.promise(restoreDeletedVersion(id), {
+      loading: 'Đang tiến hành khôi phục nhân viên...',
+      success: 'Khôi phục nhân viên thành công',
+      error: (err) => err?.response?.data?.message || 'Khôi phục nhân viên thất bại'
     })
   }
 
@@ -161,23 +177,9 @@ function TrashVersion({ setProgress }) {
             <button
               className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none'
               type='button'
-              onClick={() => navigate(path.accessory)}
+              onClick={() => navigate(path.version)}
             >
-              ⚙️ Linh kiện
-            </button>
-            <button
-              className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none'
-              type='button'
-              onClick={() => navigate(path.addVersion)}
-            >
-              📁 Thêm mới
-            </button>
-            <button
-              className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none'
-              type='button'
-              onClick={() => navigate(path.trashVersion)}
-            >
-              🗑️ Thùng rác
+              💻 Quay lại
             </button>
           </div>
         </div>
@@ -231,7 +233,14 @@ function TrashVersion({ setProgress }) {
                   <Table.Cell>
                     <div className='flex items-center gap-4'>
                       <PopupModal version={version} />
-                      <UpdateButton path={`/update-version/${version._id}`} />
+                      <Button
+                        size='xs'
+                        className='bg-yellow-400 hover:bg-yellow-400 text-white'
+                        onClick={() => handleRestore(version._id)}
+                      >
+                        <HiOutlineCursorClick className='mr-2 h-5 w-5' />
+                        Khôi phục
+                      </Button>
                       <ModalDelete
                         title='Bạn có chắc chắn muốn xóa phiên bản sản phẩm này không?'
                         handleDelete={() => handleDeleteVersion(version)}

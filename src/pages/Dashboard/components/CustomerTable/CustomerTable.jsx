@@ -7,7 +7,7 @@ function CustomerTable() {
   const orders = useMemo(() => ordersData?.data.data, [ordersData])
 
   return (
-    <div className='rounded-lg border border-gray-100 bg-white col-span-4'>
+    <div className='overflow-hidden rounded-lg border border-gray-100 bg-white col-span-4'>
       <div className='flex items-center gap-3 bg-gray-200 p-3'>
         <svg className='h-4 w-4' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24'>
           <path
