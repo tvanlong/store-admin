@@ -81,7 +81,7 @@ function Version({ setProgress }) {
 
   const handleDeleteVersion = (version) => {
     toast.promise(softDeleteVersion(version._id), {
-      loading: 'Đang tiến hành xóa dòng sản phẩm...',
+      loading: 'Đang tiến hành xóa sản phẩm...',
       success: () => 'Xóa dòng sản phẩm thành công',
       error: (err) => {
         return err?.response?.data?.message || 'Xóa dòng sản phẩm thất bại'

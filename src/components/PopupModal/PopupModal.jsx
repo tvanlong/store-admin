@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { HiOutlineSearchCircle } from 'react-icons/hi'
 import { formatCurrency, formatDateTime } from '~/utils/format'
 
-function PopupModal({ version }) {
+function PopupModal({ version, isDeleted = false, restoreFunc = () => {} }) {
   const [openModal, setOpenModal] = useState(false)
   return (
     <>
@@ -70,7 +70,13 @@ function PopupModal({ version }) {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={() => setOpenModal(false)}>Cập nhật</Button>
+          {isDeleted ? (
+            <Button color='yellow' onClick={() => restoreFunc(version.id)}>
+              Khôi phục
+            </Button>
+          ) : (
+            <Button onClick={() => setOpenModal(false)}>Cập nhật</Button>
+          )}
           <Button color='gray' onClick={() => setOpenModal(false)}>
             Đóng
           </Button>

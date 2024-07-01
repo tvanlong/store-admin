@@ -87,6 +87,7 @@ function TrashVersion({ setProgress }) {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['trash-versions'] })
       queryClient.invalidateQueries({ queryKey: ['versions'] })
+      queryClient.invalidateQueries({ queryKey: ['accessories'] })
     }
   })
 
@@ -232,7 +233,7 @@ function TrashVersion({ setProgress }) {
 
                   <Table.Cell>
                     <div className='flex items-center gap-4'>
-                      <PopupModal version={version} />
+                      <PopupModal version={version} isDeleted restoreFunc={() => handleRestore(version._id)} />
                       <Button
                         size='xs'
                         className='bg-yellow-400 hover:bg-yellow-400 text-white'

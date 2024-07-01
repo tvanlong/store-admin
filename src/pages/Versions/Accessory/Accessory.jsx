@@ -71,16 +71,17 @@ function Accessory({ setProgress }) {
     }
   }, [debouncedValue])
 
-  const { mutateAsync: deleteVersionMutateAsync } = useMutation({
-    mutationFn: (id) => versionApi.deleteVersion(id),
+  const { mutateAsync: softDeleteVersion } = useMutation({
+    mutationFn: (id) => versionApi.softDeleteVersion(id),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['versions'] })
+      queryClient.invalidateQueries({ queryKey: ['accessories'] })
+      queryClient.invalidateQueries({ queryKey: ['trash-versions'] })
     }
   })
 
   const handleDeleteVersion = (version) => {
-    toast.promise(deleteVersionMutateAsync(version._id), {
-      loading: 'Đang tiến hành xóa dòng sản phẩm...',
+    toast.promise(softDeleteVersion(version._id), {
+      loading: 'Đang tiến hành xóa sản phẩm...',
       success: () => 'Xóa dòng sản phẩm thành công',
       error: (err) => {
         return err?.response?.data?.message || 'Xóa dòng sản phẩm thất bại'
@@ -187,6 +188,13 @@ function Accessory({ setProgress }) {
               onClick={() => navigate(path.addVersion)}
             >
               📁 Thêm mới
+            </button>
+            <button
+              className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none'
+              type='button'
+              onClick={() => navigate(path.trashVersion)}
+            >
+              🗑️ Thùng rác
             </button>
           </div>
         </div>
