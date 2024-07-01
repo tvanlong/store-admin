@@ -22,11 +22,13 @@ const AddProduct = lazy(() => import('~/pages/Products/AddProduct'))
 const Product = lazy(() => import('~/pages/Products/Product'))
 const UpdateProduct = lazy(() => import('~/pages/Products/UpdateProduct'))
 const Version = lazy(() => import('~/pages/Versions/Version'))
+const TrashVersion = lazy(() => import('~/pages/Versions/TrashVersion'))
 const Accessory = lazy(() => import('~/pages/Versions/Accessory'))
 const AddVersion = lazy(() => import('~/pages/Versions/AddVersion'))
 const UpdateVersion = lazy(() => import('~/pages/Versions/UpdateVersion'))
 const AddStaff = lazy(() => import('~/pages/Staffs/AddStaff'))
 const Staff = lazy(() => import('~/pages/Staffs/Staff'))
+const TrashStaff = lazy(() => import('~/pages/Staffs/TrashStaff'))
 const UpdateStaff = lazy(() => import('~/pages/Staffs/UpdateStaff'))
 const AddSubcategory = lazy(() => import('~/pages/Subcategories/AddSubcategory'))
 const Subcategory = lazy(() => import('~/pages/Subcategories/Subcategory'))
@@ -164,6 +166,16 @@ function Routes() {
           )
         },
         {
+          path: path.trashVersion,
+          element: (
+            <MainLayout>
+              <Suspense fallback={<Loading />}>
+                <TrashVersion setProgress={setProgress} />
+              </Suspense>
+            </MainLayout>
+          )
+        },
+        {
           path: path.accessory,
           element: (
             <MainLayout>
@@ -199,6 +211,16 @@ function Routes() {
             <MainLayout>
               <Suspense fallback={<Loading />}>
                 <Staff setProgress={setProgress} />
+              </Suspense>
+            </MainLayout>
+          )
+        },
+        {
+          path: path.trashStaff,
+          element: (
+            <MainLayout>
+              <Suspense fallback={<Loading />}>
+                <TrashStaff setProgress={setProgress} />
               </Suspense>
             </MainLayout>
           )

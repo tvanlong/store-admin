@@ -71,15 +71,15 @@ function Version({ setProgress }) {
     }
   }, [debouncedValue])
 
-  const { mutateAsync: deleteVersionMutateAsync } = useMutation({
-    mutationFn: (id) => versionApi.deleteVersion(id),
+  const { mutateAsync: softDeleteVersion } = useMutation({
+    mutationFn: (id) => versionApi.softDeleteVersion(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['versions'] })
     }
   })
 
   const handleDeleteVersion = (version) => {
-    toast.promise(deleteVersionMutateAsync(version._id), {
+    toast.promise(softDeleteVersion(version._id), {
       loading: 'Đang tiến hành xóa dòng sản phẩm...',
       success: () => 'Xóa dòng sản phẩm thành công',
       error: (err) => {
@@ -175,7 +175,6 @@ function Version({ setProgress }) {
           </div>
           <div className='space-x-5'>
             <button
-              id='createProductButton'
               className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none'
               type='button'
               onClick={() => navigate(path.accessory)}
@@ -183,12 +182,18 @@ function Version({ setProgress }) {
               ⚙️ Linh kiện
             </button>
             <button
-              id='createProductButton'
               className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none'
               type='button'
               onClick={() => navigate(path.addVersion)}
             >
               📁 Thêm mới
+            </button>
+            <button
+              className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none'
+              type='button'
+              onClick={() => navigate(path.trashVersion)}
+            >
+              🗑️ Thùng rác
             </button>
           </div>
         </div>

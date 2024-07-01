@@ -1,28 +1,27 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { Checkbox, Table } from 'flowbite-react'
+import { Button, Checkbox, Table } from 'flowbite-react'
 import { useContext, useEffect } from 'react'
 import { Helmet } from 'react-helmet-async'
+import { HiOutlineCursorClick } from 'react-icons/hi'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 import usersApi from '~/apis/users.api'
 import Breadcrumb from '~/components/Breadcrumb'
 import ModalDelete from '~/components/ModalDelete'
 import NoData from '~/components/NoData'
-import UpdateButton from '~/components/UpdateButton'
 import { path } from '~/constants/path'
 import { AppContext } from '~/context/app.context'
 import NoPermission from '~/pages/NoPermission'
-import { getProfileFromLS } from '~/utils/auth'
 import { formatDateTime } from '~/utils/format'
 import { tableTheme } from '~/utils/theme'
 
-function Staff({ setProgress }) {
+function TrashStaff({ setProgress }) {
   const { profile } = useContext(AppContext)
   const queryClient = useQueryClient()
   const navigate = useNavigate()
   const { data, isLoading } = useQuery({
-    queryKey: ['staffs'],
-    queryFn: usersApi.getAllStaffs,
+    queryKey: ['trash-staffs'],
+    queryFn: usersApi.getListDeletedStaffs,
     enabled: profile.role === 'admin'
   })
   const staffs = data?.data?.data || []
@@ -38,31 +37,34 @@ function Staff({ setProgress }) {
     }
   }, [setProgress])
 
-  const { mutateAsync: softDeleteStaff } = useMutation({
-    mutationFn: usersApi.softDeleteStaff,
+  const { mutateAsync: forceDeleteStaff } = useMutation({
+    mutationFn: usersApi.deleteStaff,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['staffs'] })
+      queryClient.invalidateQueries({ queryKey: ['trash-staffs'] })
     }
   })
 
   const handleDelete = (id) => {
-    const user = getProfileFromLS()
-    if (user._id === id) {
-      toast.warning('Tài khoản đang đăng nhập không thể xóa')
-      return
-    }
-
-    toast.promise(softDeleteStaff(id), {
+    toast.promise(forceDeleteStaff(id), {
       loading: 'Đang tiến hành xóa nhân viên...',
       success: 'Xóa nhân viên thành công',
       error: (err) => err?.response?.data?.message || 'Xóa nhân viên thất bại'
     })
   }
 
-  const handlePrefetchOnMouseEnter = (id) => {
-    queryClient.prefetchQuery({
-      queryKey: ['staff', id],
-      queryFn: () => usersApi.getStaff(id)
+  const { mutateAsync: restoreDeletedStaff } = useMutation({
+    mutationFn: usersApi.restoreDeletedStaff,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['trash-staffs'] })
+      queryClient.invalidateQueries({ queryKey: ['staffs'] })
+    }
+  })
+
+  const handleRestore = (id) => {
+    toast.promise(restoreDeletedStaff(id), {
+      loading: 'Đang tiến hành khôi phục nhân viên...',
+      success: 'Khôi phục nhân viên thành công',
+      error: (err) => err?.response?.data?.message || 'Khôi phục nhân viên thất bại'
     })
   }
 
@@ -78,7 +80,7 @@ function Staff({ setProgress }) {
       </Helmet>
       <div className='mx-10 mb-10 mt-20'>
         <Breadcrumb location='Danh sách nhân viên' />
-        <h2 className='mb-4 text-3xl font-extrabold text-gray-900'>Danh sách nhân viên</h2>
+        <h2 className='mb-4 text-3xl font-extrabold text-gray-900'>Danh sách nhân viên đã xóa</h2>
         <div className='items-center justify-between block sm:flex md:divide-x md:divide-gray-100'>
           <div className='flex items-center mb-4 sm:mb-0'>
             <form className='sm:pr-3'>
@@ -136,16 +138,9 @@ function Staff({ setProgress }) {
             <button
               className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none'
               type='button'
-              onClick={() => navigate(path.addStaff)}
+              onClick={() => navigate(path.staff)}
             >
-              📁 Thêm mới
-            </button>
-            <button
-              className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none'
-              type='button'
-              onClick={() => navigate(path.trashStaff)}
-            >
-              🗑️ Thùng rác
+              Quay lại danh sách nhân viên 📁
             </button>
           </div>
         </div>
@@ -165,28 +160,40 @@ function Staff({ setProgress }) {
             </Table.HeadCell>
           </Table.Head>
           <Table.Body className='divide-y'>
-            {staffs.map((staff) => (
-              <Table.Row
-                key={staff._id}
-                className='bg-white'
-                onMouseEnter={() => handlePrefetchOnMouseEnter(staff._id)}
-              >
-                <Table.Cell className='p-4'>
-                  <Checkbox />
-                </Table.Cell>
-                <Table.Cell className='whitespace-nowrap font-medium text-gray-900'>{staff.name}</Table.Cell>
-                <Table.Cell>{staff.phone}</Table.Cell>
-                <Table.Cell>{staff.email}</Table.Cell>
-                <Table.Cell>{formatDateTime(staff.createdAt)}</Table.Cell>
-                <Table.Cell className='flex gap-5'>
-                  <UpdateButton path={`/update-staff/${staff._id}`} />
-                  <ModalDelete
-                    title='Bạn có chắc chắn muốn xóa nhân viên này?'
-                    handleDelete={() => handleDelete(staff._id)}
-                  />
+            {staffs.length > 0 ? (
+              staffs.map((staff) => (
+                <Table.Row key={staff._id} className='bg-white'>
+                  <Table.Cell className='p-4'>
+                    <Checkbox />
+                  </Table.Cell>
+                  <Table.Cell className='whitespace-nowrap font-medium text-gray-900'>{staff.name}</Table.Cell>
+                  <Table.Cell>{staff.phone}</Table.Cell>
+                  <Table.Cell>{staff.email}</Table.Cell>
+                  <Table.Cell>{formatDateTime(staff.createdAt)}</Table.Cell>
+                  <Table.Cell className='flex gap-5'>
+                    <Button
+                      size='xs'
+                      className='bg-yellow-400 hover:bg-yellow-400 text-white'
+                      onClick={() => handleRestore(staff._id)}
+                    >
+                      <HiOutlineCursorClick className='mr-2 h-5 w-5' />
+                      Khôi phục
+                    </Button>
+                    <ModalDelete
+                      title='Bạn có chắc chắn muốn xóa nhân viên này?'
+                      handleDelete={() => handleDelete(staff._id)}
+                      isForceDelete
+                    />
+                  </Table.Cell>
+                </Table.Row>
+              ))
+            ) : (
+              <Table.Row>
+                <Table.Cell colSpan={6}>
+                  <div className='text-center'>Không có nhân viên nào trong danh sách đã xóa.</div>
                 </Table.Cell>
               </Table.Row>
-            ))}
+            )}
           </Table.Body>
         </Table>
       </div>
@@ -194,4 +201,4 @@ function Staff({ setProgress }) {
   )
 }
 
-export default Staff
+export default TrashStaff

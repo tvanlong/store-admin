@@ -1,58 +1,52 @@
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { Checkbox, Pagination, Table } from 'flowbite-react'
+import { Checkbox, Table } from 'flowbite-react'
 import { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
-import imagesApi from '~/apis/images.api'
-import productsApi from '~/apis/products.api'
+import versionApi from '~/apis/version.api'
 import Breadcrumb from '~/components/Breadcrumb'
 import FilterField from '~/components/FilterField'
 import ModalDelete from '~/components/ModalDelete'
 import NoData from '~/components/NoData'
+import PopupModal from '~/components/PopupModal'
 import SearchField from '~/components/SearchField'
 import UpdateButton from '~/components/UpdateButton'
-import { productSortOptions } from '~/constants/options'
+import { priceOptions, sortOptions } from '~/constants/options'
 import { path } from '~/constants/path'
 import useDebounce from '~/hooks/useDebounce'
 import useQueryParamsConfig from '~/hooks/useQueryParamsConfig'
+import { formatCurrency } from '~/utils/format'
 import { tableTheme } from '~/utils/theme'
-import { extractPublicIdFromUrl } from '~/utils/util'
 
-const LIMIT = 5
-
-function Product({ setProgress }) {
+function TrashVersion({ setProgress }) {
   const navigate = useNavigate()
   const queryParamsConfig = useQueryParamsConfig()
   const queryClient = useQueryClient()
   const [searchValue, setSearchValue] = useState('')
-  const [currentPage, setCurrentPage] = useState(1)
   const [loading, setLoading] = useState(false)
   const [queryParams, setQueryParams] = useState({
-    ...queryParamsConfig,
-    page: currentPage,
-    limit: LIMIT
+    ...queryParamsConfig
   })
   const debouncedValue = useDebounce(searchValue, 700)
 
   useEffect(() => {
     setQueryParams((prev) => ({
       ...prev,
-      page: currentPage,
       keyword: debouncedValue === '' ? undefined : debouncedValue
     }))
-  }, [debouncedValue, currentPage])
+  }, [debouncedValue])
 
   const { data, isLoading, refetch } = useQuery({
-    queryKey: ['products', queryParams],
+    queryKey: ['trash-versions', queryParams],
     queryFn: () => {
       setLoading(false)
-      return productsApi.getAllProducts(queryParams)
+      return versionApi.getListDeletedVersions(queryParams)
     },
     placeholderData: keepPreviousData
   })
 
-  const products = data?.data?.data.docs || []
+  const versions = data?.data?.data.docs || []
 
   useEffect(() => {
     setProgress(20)
@@ -71,52 +65,40 @@ function Product({ setProgress }) {
     }
   }, [debouncedValue])
 
-  const { mutateAsync: deleteImageMutateAsync } = useMutation({
-    mutationFn: (public_id) => imagesApi.deleteImage(public_id)
-  })
-
-  const { mutateAsync: deleteProductMutateAsync } = useMutation({
-    mutationFn: (id) => productsApi.deleteProduct(id),
+  const { mutateAsync: forceDeleteVersion } = useMutation({
+    mutationFn: (id) => versionApi.deleteVersion(id),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['products'] })
+      queryClient.invalidateQueries({ queryKey: ['trash-versions'] })
     }
   })
 
-  const handleDeleteProduct = (product) => {
-    if (product.versions.length > 0) {
-      return toast.error('Không thể xóa dòng sản phẩm này!')
-    }
-
-    toast.promise(deleteProductMutateAsync(product._id), {
+  const handleDeleteVersion = (version) => {
+    toast.promise(forceDeleteVersion(version._id), {
       loading: 'Đang tiến hành xóa dòng sản phẩm...',
       success: () => 'Xóa dòng sản phẩm thành công',
       error: (err) => {
         return err?.response?.data?.message || 'Xóa dòng sản phẩm thất bại'
       }
     })
-
-    product.images.forEach(async (image) => {
-      const public_id = extractPublicIdFromUrl(image)
-      await deleteImageMutateAsync(public_id)
-    })
   }
 
-  const onSortChange = (sort_by, value) => {
-    setQueryParams((prev) => ({
-      ...prev,
-      sort: sort_by,
-      order: value
-    }))
+  const onSortChange = (param, value) => {
+    setQueryParams((prev) => {
+      if (Array.isArray(param)) {
+        return {
+          ...prev,
+          [param[0]]: value[0],
+          [param[1]]: value[1]
+        }
+      } else {
+        return {
+          ...prev,
+          sort: param,
+          order: value
+        }
+      }
+    })
     refetch()
-  }
-
-  const onPageChange = (page) => setCurrentPage(page)
-
-  const handlePrefetchOnMouseEnter = (id) => {
-    queryClient.prefetchQuery({
-      queryKey: ['product', id],
-      queryFn: () => productsApi.getProduct(id)
-    })
   }
 
   if (isLoading) return <NoData />
@@ -124,12 +106,12 @@ function Product({ setProgress }) {
   return (
     <div className='mt-24 h-full'>
       <Helmet>
-        <title>Dòng sản phẩm | Trang quản trị lưu trữ danh sách dòng sản phẩm</title>
-        <meta name='description' content='Trang quản trị | Danh sách dòng sản phẩm' />
+        <title>Danh sách phiên bản sản phẩm đã xóa | Trang quản trị lưu trữ danh sách phiên bản sản phẩm</title>
+        <meta name='description' content='Danh sách phiên bản sản phẩm' />
       </Helmet>
       <div className='mx-10 mb-10 mt-20'>
-        <Breadcrumb location='Danh sách dòng sản phẩm' />
-        <h2 className='mb-4 text-3xl font-extrabold text-gray-900'>Danh sách dòng sản phẩm</h2>
+        <Breadcrumb location='Danh sách phiên bản sản phẩm' />
+        <h2 className='mb-4 text-3xl font-extrabold text-gray-900'>Danh sách phiên bản sản phẩm đã xóa</h2>
         <div className='items-center justify-between block sm:flex md:divide-x md:divide-gray-100'>
           <div className='flex items-center mb-4 sm:mb-0'>
             <SearchField
@@ -175,16 +157,33 @@ function Product({ setProgress }) {
               </div>
             </div>
           </div>
-          <button
-            className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none'
-            type='button'
-            onClick={() => navigate(path.addProduct)}
-          >
-            📁 Thêm mới
-          </button>
+          <div className='space-x-5'>
+            <button
+              className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none'
+              type='button'
+              onClick={() => navigate(path.accessory)}
+            >
+              ⚙️ Linh kiện
+            </button>
+            <button
+              className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none'
+              type='button'
+              onClick={() => navigate(path.addVersion)}
+            >
+              📁 Thêm mới
+            </button>
+            <button
+              className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none'
+              type='button'
+              onClick={() => navigate(path.trashVersion)}
+            >
+              🗑️ Thùng rác
+            </button>
+          </div>
         </div>
-        <div className='mt-5'>
-          <FilterField options={productSortOptions} onSortChange={onSortChange} />
+        <div className='flex mt-5 gap-5'>
+          <FilterField options={sortOptions} onSortChange={onSortChange} />
+          <FilterField defaultLabel='Lọc theo khoảng giá' options={priceOptions} onSortChange={onSortChange} />
         </div>
       </div>
       <div className='mx-10 overflow-x-auto'>
@@ -193,49 +192,49 @@ function Product({ setProgress }) {
             <Table.HeadCell className='p-4'>
               <Checkbox />
             </Table.HeadCell>
-            <Table.HeadCell>Dòng sản phẩm</Table.HeadCell>
-            <Table.HeadCell>Loại danh mục</Table.HeadCell>
+            <Table.HeadCell>Sản phẩm</Table.HeadCell>
             <Table.HeadCell>Ảnh sản phẩm</Table.HeadCell>
+            <Table.HeadCell>Giá sản phẩm</Table.HeadCell>
             <Table.HeadCell>
               <span className='sr-only'>Edit</span>
             </Table.HeadCell>
           </Table.Head>
           <Table.Body className='divide-y'>
-            {products.length > 0 ? (
-              products.map((product) => (
-                <Table.Row
-                  key={product._id}
-                  className='bg-white'
-                  onMouseEnter={() => handlePrefetchOnMouseEnter(product._id)}
-                >
+            {versions.length > 0 ? (
+              versions.map((version) => (
+                <Table.Row key={version._id} className='bg-white'>
                   <Table.Cell className='p-4'>
                     <Checkbox />
                   </Table.Cell>
-                  <Table.Cell className='max-w-sm font-medium text-gray-900'>{product.name}</Table.Cell>
-                  <Table.Cell>{product.subcategory.name}</Table.Cell>
+                  <Table.Cell className='max-w-sm font-medium text-gray-900'>
+                    {version.product.name} ({version.name})
+                  </Table.Cell>
                   <Table.Cell>
                     <div className='flex items-center gap-3'>
-                      {product.images.slice(0, 2).map((image, index) => (
+                      {version.product.images.slice(0, 2).map((image, index) => (
                         <img
                           key={index}
                           src={image}
-                          alt={product.name}
+                          alt={version.product.name}
                           className='h-16 w-16 rounded-lg border border-gray-300 object-cover'
                         />
                       ))}
-                      {product.images.length > 2 && (
+                      {version.product.images.length > 2 && (
                         <div className='flex h-16 w-16 items-center justify-center rounded-lg border border-gray-300'>
-                          <span className='text-gray-400'>+{product.images.length - 2}</span>
+                          <span className='text-gray-400'>+{version.product.images.length - 2}</span>
                         </div>
                       )}
                     </div>
                   </Table.Cell>
+                  <Table.Cell>{formatCurrency(version.current_price)} VNĐ</Table.Cell>
+
                   <Table.Cell>
                     <div className='flex items-center gap-4'>
-                      <UpdateButton path={`/update-product/${product._id}`} />
+                      <PopupModal version={version} />
+                      <UpdateButton path={`/update-version/${version._id}`} />
                       <ModalDelete
-                        title='Bạn có chắc chắn muốn xóa dòng sản phẩm này không?'
-                        handleDelete={() => handleDeleteProduct(product)}
+                        title='Bạn có chắc chắn muốn xóa phiên bản sản phẩm này không?'
+                        handleDelete={() => handleDeleteVersion(version)}
                       />
                     </div>
                   </Table.Cell>
@@ -243,7 +242,7 @@ function Product({ setProgress }) {
               ))
             ) : (
               <Table.Row>
-                <Table.Cell colSpan={4} className='text-center'>
+                <Table.Cell colSpan={5} className='text-center'>
                   Không có dữ liệu
                 </Table.Cell>
               </Table.Row>
@@ -251,20 +250,8 @@ function Product({ setProgress }) {
           </Table.Body>
         </Table>
       </div>
-      {data?.data?.data.totalPages > 1 && (
-        <div className='mt-10 flex overflow-x-auto sm:justify-center'>
-          <Pagination
-            className='text-sm'
-            currentPage={currentPage}
-            totalPages={data?.data?.data.totalPages}
-            onPageChange={onPageChange}
-            previousLabel='Trang trước'
-            nextLabel='Trang sau'
-          />
-        </div>
-      )}
     </div>
   )
 }
 
-export default Product
+export default TrashVersion
