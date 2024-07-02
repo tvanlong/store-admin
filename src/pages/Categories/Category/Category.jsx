@@ -1,22 +1,46 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Checkbox, Table } from 'flowbite-react'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 import categoriesApi from '~/apis/categories.api'
 import Breadcrumb from '~/components/Breadcrumb'
+import FilterField from '~/components/FilterField'
 import ModalDelete from '~/components/ModalDelete'
 import NoData from '~/components/NoData'
+import SearchField from '~/components/SearchField'
 import UpdateButton from '~/components/UpdateButton'
+import { sortOptions } from '~/constants/options'
 import { path } from '~/constants/path'
-import { useCategories } from '~/hooks/useCategories'
+import useDebounce from '~/hooks/useDebounce'
+import useQueryParamsConfig from '~/hooks/useQueryParamsConfig'
 import { tableTheme } from '~/utils/theme'
 
 function Category({ setProgress }) {
   const queryClient = useQueryClient()
+  const queryParamsConfig = useQueryParamsConfig()
+  const [searchValue, setSearchValue] = useState('')
   const navigate = useNavigate()
-  const { data, isLoading } = useCategories()
+  const [loading, setLoading] = useState(false)
+  const [queryParams, setQueryParams] = useState(queryParamsConfig)
+  const debouncedValue = useDebounce(searchValue, 700)
+
+  useEffect(() => {
+    setQueryParams((prev) => ({
+      ...prev,
+      keyword: debouncedValue === '' ? undefined : debouncedValue
+    }))
+  }, [debouncedValue])
+  const { data, isLoading, refetch } = useQuery({
+    queryKey: ['categories', queryParams],
+    queryFn: () => {
+      setLoading(false)
+      return categoriesApi.getAllCategories(queryParams)
+    },
+    placeholderData: keepPreviousData
+  })
+
   const categories = data?.data.data || []
 
   useEffect(() => {
@@ -29,6 +53,12 @@ function Category({ setProgress }) {
       clearTimeout(timeoutId)
     }
   }, [setProgress])
+
+  useEffect(() => {
+    if (!debouncedValue.trim()) {
+      setLoading(false)
+    }
+  }, [debouncedValue])
 
   const { mutateAsync } = useMutation({
     mutationFn: categoriesApi.deleteCategory,
@@ -58,6 +88,17 @@ function Category({ setProgress }) {
     })
   }
 
+  const onSortChange = (param, value) => {
+    setQueryParams((prev) => {
+      return {
+        ...prev,
+        sort: param,
+        order: value
+      }
+    })
+    refetch()
+  }
+
   if (isLoading) return <NoData />
 
   return (
@@ -71,20 +112,13 @@ function Category({ setProgress }) {
         <h2 className='mb-4 text-3xl font-extrabold text-gray-900'>Danh mục sản phẩm</h2>
         <div className='items-center justify-between block sm:flex md:divide-x md:divide-gray-100'>
           <div className='flex items-center mb-4 sm:mb-0'>
-            <form className='sm:pr-3'>
-              <label htmlFor='products-search' className='sr-only'>
-                Search
-              </label>
-              <div className='relative w-48 mt-1 sm:w-64 xl:w-96'>
-                <input
-                  type='text'
-                  name='email'
-                  id='products-search'
-                  className='bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5'
-                  placeholder='Tìm kiếm danh mục sản phẩm...'
-                />
-              </div>
-            </form>
+            <SearchField
+              loading={loading}
+              setLoading={setLoading}
+              searchValue={searchValue}
+              setSearchValue={setSearchValue}
+              placeholder='Tìm kiếm theo tên danh mục...'
+            />
             <div className='flex items-center w-full sm:justify-end'>
               <div className='flex pl-2 space-x-1'>
                 <div className='inline-flex justify-center p-1 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100'>
@@ -129,6 +163,9 @@ function Category({ setProgress }) {
           >
             📁 Thêm mới
           </button>
+        </div>
+        <div className='flex mt-5 gap-5'>
+          <FilterField options={sortOptions.slice(0, 2)} onSortChange={onSortChange} />
         </div>
       </div>
       <div className='mx-10 overflow-x-auto'>

@@ -1,8 +1,8 @@
 import http from '~/utils/http'
 
 const usersApi = {
-  getAllCustomers: () => http.get('/api/users/customers'),
-  getAllStaffs: () => http.get('/api/users/staffs'),
+  getAllCustomers: (params) => http.get('/api/users/customers', { params }),
+  getAllStaffs: (params) => http.get('/api/users/staffs', { params }),
   getStaff: (id) => http.get(`/api/users/staffs/${id}`),
   createStaff: (data) => http.post('/api/users/staffs', data),
   updateStaff: (id, data) => http.patch(`/api/users/staffs/${id}`, data),

@@ -137,6 +137,7 @@ function Product({ setProgress }) {
               setLoading={setLoading}
               searchValue={searchValue}
               setSearchValue={setSearchValue}
+              placeholder='Tìm kiếm theo tên dòng sản phẩm...'
             />
             <div className='flex items-center w-full sm:justify-end'>
               <div className='flex pl-2 space-x-1'>

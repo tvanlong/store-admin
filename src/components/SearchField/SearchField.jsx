@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 
-function SearchField({ loading, setLoading, searchValue, setSearchValue }) {
+function SearchField({ loading, setLoading, searchValue, setSearchValue, placeholder = 'Tìm kiếm...' }) {
   const handleSearch = (e) => {
     const value = e.target.value.trimStart()
     setLoading(true)
@@ -38,7 +38,7 @@ function SearchField({ loading, setLoading, searchValue, setSearchValue }) {
             value={searchValue}
             onChange={(e) => handleSearch(e)}
             className='bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 pl-10'
-            placeholder='Tìm kiếm theo tên...'
+            placeholder={placeholder}
           />
           {loading && (
             <div className='pointer-events-none absolute inset-y-0 end-4 flex items-center ps-3'>
@@ -92,7 +92,8 @@ SearchField.propTypes = {
   loading: PropTypes.bool,
   setLoading: PropTypes.func,
   searchValue: PropTypes.string,
-  setSearchValue: PropTypes.func
+  setSearchValue: PropTypes.func,
+  placeholder: PropTypes.string
 }
 
 export default SearchField
