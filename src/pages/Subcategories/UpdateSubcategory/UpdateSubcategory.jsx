@@ -76,10 +76,10 @@ function UpdateSubcategory({ setProgress }) {
 
   const onSubmit = handleSubmit((data) => {
     toast.promise(mutateAsync(data), {
-      loading: 'Đang tiến hành thêm danh mục sản phẩm nhỏ...',
-      success: () => 'Thêm danh mục sản phẩm nhỏ thành công',
+      loading: 'Đang tiến hành cập nhật danh mục sản phẩm...',
+      success: () => 'Cập nhật danh mục sản phẩm thành công',
       error: (err) => {
-        return err?.response?.data?.message || 'Thêm danh mục sản phẩm nhỏ thất bại'
+        return err?.response?.data?.message || 'Cập nhật danh mục sản phẩm thất bại'
       }
     })
   })
