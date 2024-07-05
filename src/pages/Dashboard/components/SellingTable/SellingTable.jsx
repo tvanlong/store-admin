@@ -39,15 +39,23 @@ function SellingTable() {
   }, [orders])
 
   return (
-    <div className='col-span-8 overflow-hidden rounded-lg border border-gray-100'>
+    <div className='col-span-8 overflow-hidden rounded-lg border border-gray-200'>
       <div className='flex items-center gap-3 bg-gray-200 p-3'>
-        <svg className='h-4 w-4' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24'>
+        <svg
+          className='h-6 w-6'
+          aria-hidden='true'
+          xmlns='http://www.w3.org/2000/svg'
+          width='24'
+          height='24'
+          fill='none'
+          viewBox='0 0 24 24'
+        >
           <path
             stroke='currentColor'
             strokeLinecap='round'
             strokeLinejoin='round'
             strokeWidth='2'
-            d='M4 4.5V19c0 .6.4 1 1 1h15M7 14l4-4 4 4 5-5m0 0h-3.2M20 9v3.2'
+            d='M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7h-1M8 7h-.688M13 5v4m-2-2h4'
           />
         </svg>
         <h2 className='text-sm font-bold'>Top 5 sản phẩm bán chạy nhất</h2>

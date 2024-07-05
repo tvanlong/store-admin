@@ -226,9 +226,11 @@ function PageAnalytics({ setProgress }) {
         <div className='col-span-5 rounded-lg border border-gray-200'>
           <div className='flex items-center gap-3 bg-gray-200 p-3'>
             <svg
-              className='h-4 w-4'
+              className='w-6 h-6'
               aria-hidden='true'
               xmlns='http://www.w3.org/2000/svg'
+              width='24'
+              height='24'
               fill='none'
               viewBox='0 0 24 24'
             >
@@ -237,9 +239,10 @@ function PageAnalytics({ setProgress }) {
                 strokeLinecap='round'
                 strokeLinejoin='round'
                 strokeWidth='2'
-                d='M4 4.5V19c0 .6.4 1 1 1h15M7 14l4-4 4 4 5-5m0 0h-3.2M20 9v3.2'
+                d='M10 3v4a1 1 0 0 1-1 1H5m4 10v-2m3 2v-6m3 6v-3m4-11v16a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7.914a1 1 0 0 1 .293-.707l3.914-3.914A1 1 0 0 1 9.914 3H18a1 1 0 0 1 1 1Z'
               />
             </svg>
+
             <h2 className='text-sm font-bold'>Lợi nhuận so với số lượng đơn hàng</h2>
           </div>
           <div className='flex justify-center p-4'>
@@ -269,9 +272,11 @@ function PageAnalytics({ setProgress }) {
         <div className='col-span-5 rounded-lg border border-gray-200'>
           <div className='flex items-center gap-3 bg-gray-200 p-3'>
             <svg
-              className='h-4 w-4'
+              className='w-6 h-6'
               aria-hidden='true'
               xmlns='http://www.w3.org/2000/svg'
+              width='24'
+              height='24'
               fill='none'
               viewBox='0 0 24 24'
             >
@@ -280,9 +285,17 @@ function PageAnalytics({ setProgress }) {
                 strokeLinecap='round'
                 strokeLinejoin='round'
                 strokeWidth='2'
-                d='M4 4.5V19c0 .6.4 1 1 1h15M7 14l4-4 4 4 5-5m0 0h-3.2M20 9v3.2'
+                d='M10 6.025A7.5 7.5 0 1 0 17.975 14H10V6.025Z'
+              />
+              <path
+                stroke='currentColor'
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                strokeWidth='2'
+                d='M13.5 3c-.169 0-.334.014-.5.025V11h7.975c.011-.166.025-.331.025-.5A7.5 7.5 0 0 0 13.5 3Z'
               />
             </svg>
+
             <h2 className='text-sm font-bold'>Số lượng sản phẩm bán chạy nhất</h2>
           </div>
           <div className='flex justify-center p-4'>
