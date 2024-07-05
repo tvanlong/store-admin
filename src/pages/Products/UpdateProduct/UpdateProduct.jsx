@@ -89,7 +89,7 @@ function UpdateProduct({ setProgress }) {
     return null
   }, [file, productData?.data?.data])
 
-  const { mutateAsync: uploadImagesMutateAsync } = useMutation({
+  const { mutateAsync: uploadImagesMutateAsync, isPending: isUploadImagesPending } = useMutation({
     mutationFn: (data) => imagesApi.uploadImages(data)
   })
 
@@ -97,7 +97,7 @@ function UpdateProduct({ setProgress }) {
     mutationFn: (public_id) => imagesApi.deleteImage(public_id)
   })
 
-  const { mutateAsync: updateProductMutateAsync, isPending } = useMutation({
+  const { mutateAsync: updateProductMutateAsync, isPending: isUpdateProductPending } = useMutation({
     mutationFn: (data) => productsApi.updateProduct(id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['products'] })
@@ -219,8 +219,8 @@ function UpdateProduct({ setProgress }) {
             className='mt-10'
             type='submit'
             gradientMonochrome='cyan'
-            isProcessing={isPending}
-            disabled={isPending}
+            isProcessing={isUploadImagesPending || isUpdateProductPending}
+            disabled={isUploadImagesPending || isUpdateProductPending}
           >
             Cập nhật sản phẩm
           </Button>

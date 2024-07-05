@@ -71,7 +71,7 @@ function AddProduct({ setProgress }) {
     ))
   }, [file])
 
-  const { mutateAsync: uploadImagesMutateAsync } = useMutation({
+  const { mutateAsync: uploadImagesMutateAsync, isPending: isUploadImagesPending } = useMutation({
     mutationFn: (data) => imagesApi.uploadImages(data)
   })
 
@@ -79,7 +79,7 @@ function AddProduct({ setProgress }) {
     mutationFn: (name) => imagesApi.deleteImage(name)
   })
 
-  const { mutateAsync: addProductMutateAsync, isPending } = useMutation({
+  const { mutateAsync: addProductMutateAsync, isPending: isAddProductPending } = useMutation({
     mutationFn: (data) => productsApi.addProduct(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['products'] })
@@ -190,8 +190,8 @@ function AddProduct({ setProgress }) {
             className='mt-10'
             type='submit'
             gradientMonochrome='cyan'
-            isProcessing={isPending}
-            disabled={isPending}
+            isProcessing={isUploadImagesPending || isAddProductPending}
+            disabled={isUploadImagesPending || isAddProductPending}
           >
             Thêm sản phẩm
           </Button>
