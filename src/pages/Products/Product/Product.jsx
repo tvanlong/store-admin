@@ -79,6 +79,7 @@ function Product({ setProgress }) {
     mutationFn: (id) => productsApi.deleteProduct(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['products'] })
+      queryClient.invalidateQueries({ queryKey: ['subcategories'] })
     }
   })
 
