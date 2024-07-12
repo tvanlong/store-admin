@@ -12,6 +12,7 @@ import NoData from '~/components/NoData'
 import PopupModal from '~/components/PopupModal'
 import SearchField from '~/components/SearchField'
 import UpdateButton from '~/components/UpdateButton'
+import { INITIAL_PAGE, LIMIT_ITEM } from '~/constants/default'
 import { priceOptions, sortOptions } from '~/constants/options'
 import { path } from '~/constants/path'
 import useDebounce from '~/hooks/useDebounce'
@@ -19,19 +20,17 @@ import useQueryParamsConfig from '~/hooks/useQueryParamsConfig'
 import { formatCurrency } from '~/utils/format'
 import { tableTheme } from '~/utils/theme'
 
-const LIMIT = 5
-
 function Version({ setProgress }) {
   const navigate = useNavigate()
   const queryParamsConfig = useQueryParamsConfig()
   const queryClient = useQueryClient()
   const [searchValue, setSearchValue] = useState('')
-  const [currentPage, setCurrentPage] = useState(1)
+  const [currentPage, setCurrentPage] = useState(INITIAL_PAGE)
   const [loading, setLoading] = useState(false)
   const [queryParams, setQueryParams] = useState({
     ...queryParamsConfig,
     page: currentPage,
-    limit: LIMIT
+    limit: LIMIT_ITEM
   })
   const debouncedValue = useDebounce(searchValue, 700)
 
