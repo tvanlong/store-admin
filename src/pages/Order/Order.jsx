@@ -73,7 +73,7 @@ function Order({ setProgress }) {
               setLoading={setLoading}
               searchValue={searchValue}
               setSearchValue={setSearchValue}
-              placeholder='Tìm kiếm theo tên sản phẩm...'
+              placeholder='Tìm kiếm theo mã đơn hàng...'
             />
             <div className='flex items-center w-full sm:justify-end'>
               <div className='flex pl-2 space-x-1'>
