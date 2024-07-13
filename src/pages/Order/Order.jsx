@@ -1,16 +1,42 @@
+import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { Badge, Checkbox, Table } from 'flowbite-react'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { toast } from 'sonner'
+import ordersApi from '~/apis/orders.api'
 import Breadcrumb from '~/components/Breadcrumb'
 import DetailOrderModal from '~/components/DetailOrderModal'
 import NoData from '~/components/NoData'
-import { useOrders } from '~/hooks/useOrders'
+import SearchField from '~/components/SearchField'
+import useDebounce from '~/hooks/useDebounce'
+import useQueryParamsConfig from '~/hooks/useQueryParamsConfig'
 import { formatCurrency, formatDateTime } from '~/utils/format'
 import { tableTheme } from '~/utils/theme'
 
 function Order({ setProgress }) {
-  const { data, isLoading } = useOrders()
+  const queryParamsConfig = useQueryParamsConfig()
+  const [searchValue, setSearchValue] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [queryParams, setQueryParams] = useState({
+    ...queryParamsConfig
+  })
+  const debouncedValue = useDebounce(searchValue, 700)
+
+  useEffect(() => {
+    setQueryParams((prev) => ({
+      ...prev,
+      keyword: debouncedValue === '' ? undefined : debouncedValue
+    }))
+  }, [debouncedValue])
+
+  const { data, isLoading } = useQuery({
+    queryKey: ['orders', queryParams],
+    queryFn: () => {
+      setLoading(false)
+      return ordersApi.getAllOrders(queryParams)
+    },
+    placeholderData: keepPreviousData
+  })
   const orders = data?.data?.data || []
 
   useEffect(() => {
@@ -23,6 +49,12 @@ function Order({ setProgress }) {
       clearTimeout(timeoutId)
     }
   }, [setProgress])
+
+  useEffect(() => {
+    if (!debouncedValue.trim()) {
+      setLoading(false)
+    }
+  }, [debouncedValue])
 
   if (isLoading) return <NoData />
 
@@ -37,20 +69,13 @@ function Order({ setProgress }) {
         <h2 className='mb-4 text-3xl font-extrabold text-gray-900'>Danh sách đơn hàng</h2>
         <div className='items-center justify-between block sm:flex md:divide-x md:divide-gray-100'>
           <div className='flex items-center mb-4 sm:mb-0'>
-            <form className='sm:pr-3'>
-              <label htmlFor='products-search' className='sr-only'>
-                Search
-              </label>
-              <div className='relative w-48 mt-1 sm:w-64 xl:w-96'>
-                <input
-                  type='text'
-                  name='email'
-                  id='products-search'
-                  className='bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5'
-                  placeholder='Tìm kiếm đơn hàng...'
-                />
-              </div>
-            </form>
+            <SearchField
+              loading={loading}
+              setLoading={setLoading}
+              searchValue={searchValue}
+              setSearchValue={setSearchValue}
+              placeholder='Tìm kiếm theo tên sản phẩm...'
+            />
             <div className='flex items-center w-full sm:justify-end'>
               <div className='flex pl-2 space-x-1'>
                 <div className='inline-flex justify-center p-1 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100'>
@@ -119,7 +144,7 @@ function Order({ setProgress }) {
                   <Checkbox />
                 </Table.Cell>
                 <Table.Cell className='whitespace-nowrap font-medium text-gray-900'>
-                  DH{order._id.toUpperCase()}
+                  {order.code.toUpperCase()}
                 </Table.Cell>
                 <Table.Cell>{order.user.name}</Table.Cell>
                 <Table.Cell>{formatDateTime(order.createdAt)}</Table.Cell>

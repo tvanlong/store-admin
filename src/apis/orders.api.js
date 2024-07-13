@@ -1,7 +1,7 @@
 import http from '~/utils/http'
 
 const ordersApi = {
-  getAllOrders: () => http.get('/api/orders'),
+  getAllOrders: (params) => http.get('/api/orders', { params }),
   updateStatusOrder: (userId, orderId, data) => http.patch(`/api/orders/${userId}/${orderId}`, data)
 }
 
