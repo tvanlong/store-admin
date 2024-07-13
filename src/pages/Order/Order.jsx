@@ -2,7 +2,6 @@ import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { Badge, Checkbox, Table } from 'flowbite-react'
 import { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
-import { toast } from 'sonner'
 import ordersApi from '~/apis/orders.api'
 import Breadcrumb from '~/components/Breadcrumb'
 import DetailOrderModal from '~/components/DetailOrderModal'
@@ -113,13 +112,6 @@ function Order({ setProgress }) {
               </div>
             </div>
           </div>
-          <button
-            className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 focus:outline-none'
-            type='button'
-            onClick={() => toast.warning('Chức năng chưa được hỗ trợ!')}
-          >
-            Thêm đơn hàng mới
-          </button>
         </div>
       </div>
       <div className='mx-10 overflow-x-auto'>
