@@ -7,160 +7,160 @@ import AreaChart from './components/AreaChart'
 const dataLineChart = [
   {
     name: 'T1',
-    uv: 4000,
-    pv: 2400,
-    amt: 2400
+    uv: 40000000,
+    pv: 24000000,
+    amt: 24000000
   },
   {
     name: 'T2',
-    uv: 3000,
-    pv: 1398,
-    amt: 2210
+    uv: 30000000,
+    pv: 13980000,
+    amt: 22100000
   },
   {
     name: 'T3',
-    uv: 2000,
-    pv: 9800,
-    amt: 2290
+    uv: 20000000,
+    pv: 98000000,
+    amt: 22900000
   },
   {
     name: 'T4',
-    uv: 2780,
-    pv: 3908,
-    amt: 2000
+    uv: 27800000,
+    pv: 39080000,
+    amt: 20000000
   },
   {
     name: 'T5',
-    uv: 1890,
-    pv: 4800,
-    amt: 2181
+    uv: 18900000,
+    pv: 48000000,
+    amt: 21810000
   },
   {
     name: 'T6',
-    uv: 2390,
-    pv: 3800,
-    amt: 2500
+    uv: 23900000,
+    pv: 38000000,
+    amt: 25000000
   },
   {
     name: 'T7',
-    uv: 3490,
-    pv: 4300,
-    amt: 2100
+    uv: 34900000,
+    pv: 43000000,
+    amt: 21000000
   },
   {
     name: 'T8',
-    uv: 3390,
-    pv: 4000,
-    amt: 2100
+    uv: 33900000,
+    pv: 40000000,
+    amt: 21000000
   },
   {
     name: 'T9',
-    uv: 2490,
-    pv: 3400,
-    amt: 2100
+    uv: 24900000,
+    pv: 34000000,
+    amt: 21000000
   },
   {
     name: 'T10',
-    uv: 3490,
-    pv: 4300,
-    amt: 2100
+    uv: 34900000,
+    pv: 43000000,
+    amt: 21000000
   },
   {
     name: 'T11',
-    uv: 3490,
-    pv: 4300,
-    amt: 2100
+    uv: 34900000,
+    pv: 43000000,
+    amt: 21000000
   },
   {
     name: 'T12',
-    uv: 3490,
-    pv: 4300,
-    amt: 2100
+    uv: 34900000,
+    pv: 43000000,
+    amt: 21000000
   }
 ]
 
 const dataStackedBarChart = [
   {
     name: 'T1',
-    uv: 4000,
-    pv: 2400,
-    amt: 2400
+    uv: 40000000,
+    pv: 24000000,
+    amt: 24000000
   },
   {
     name: 'T2',
-    uv: 3000,
-    pv: 1398,
-    amt: 2210
+    uv: 30000000,
+    pv: 13980000,
+    amt: 22100000
   },
   {
     name: 'T3',
-    uv: 2000,
-    pv: 9800,
-    amt: 2290
+    uv: 20000000,
+    pv: 98000000,
+    amt: 22900000
   },
   {
     name: 'T4',
-    uv: 2780,
-    pv: 3908,
-    amt: 2000
+    uv: 27800000,
+    pv: 39080000,
+    amt: 20000000
   },
   {
     name: 'T5',
-    uv: 1890,
-    pv: 4800,
-    amt: 2181
+    uv: 18900000,
+    pv: 48000000,
+    amt: 21810000
   },
   {
     name: 'T6',
-    uv: 2390,
-    pv: 3800,
-    amt: 2500
+    uv: 23900000,
+    pv: 38000000,
+    amt: 25000000
   },
   {
     name: 'T7',
-    uv: 3490,
-    pv: 4300,
-    amt: 2100
+    uv: 34900000,
+    pv: 43000000,
+    amt: 21000000
   },
   {
     name: 'T8',
-    uv: 3490,
-    pv: 4200,
-    amt: 2000
+    uv: 34900000,
+    pv: 42000000,
+    amt: 20000000
   },
   {
     name: 'T9',
-    uv: 3290,
-    pv: 4000,
-    amt: 2500
+    uv: 32900000,
+    pv: 40000000,
+    amt: 25000000
   },
   {
     name: 'T10',
-    uv: 3290,
-    pv: 4600,
-    amt: 2400
+    uv: 32900000,
+    pv: 46000000,
+    amt: 24000000
   },
   {
     name: 'T11',
-    uv: 3490,
-    pv: 4300,
-    amt: 2100
+    uv: 34900000,
+    pv: 43000000,
+    amt: 21000000
   },
   {
     name: 'T12',
-    uv: 3490,
-    pv: 4300,
-    amt: 2100
+    uv: 34900000,
+    pv: 43000000,
+    amt: 21000000
   }
 ]
 
 const dataTwoSimplePieChart = [
-  { name: 'Laptop Dell', value: 400 },
-  { name: 'Laptop Asus', value: 300 },
-  { name: 'Laptop Lenovo', value: 300 },
-  { name: 'Laptop Acer', value: 200 },
-  { name: 'Laptop MSI', value: 278 },
-  { name: 'Macbook', value: 189 }
+  { name: 'Laptop Dell', value: 28 },
+  { name: 'Laptop Asus', value: 7 },
+  { name: 'Laptop Lenovo', value: 15 },
+  { name: 'Laptop Acer', value: 19 },
+  { name: 'Laptop MSI', value: 10 },
+  { name: 'Macbook', value: 21 }
 ]
 
 function PageAnalytics({ setProgress }) {
@@ -214,8 +214,8 @@ function PageAnalytics({ setProgress }) {
               margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
             >
               <CartesianGrid strokeDasharray='3 3' />
-              <XAxis dataKey='name' />
-              <YAxis />
+              <XAxis fontSize={10} dataKey='name' />
+              <YAxis fontSize={10} />
               <Tooltip />
               <Legend />
               <Line type='monotone' dataKey='pv' stroke='#8884d8' />
@@ -258,8 +258,8 @@ function PageAnalytics({ setProgress }) {
               }}
             >
               <CartesianGrid strokeDasharray='3 3' />
-              <XAxis dataKey='name' />
-              <YAxis />
+              <XAxis fontSize={10} dataKey='name' />
+              <YAxis fontSize={10} />
               <Tooltip />
               <Legend />
               <Bar dataKey='pv' stackId='a' fill='#8884d8' />
