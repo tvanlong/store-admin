@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { Button, Checkbox, Table } from 'flowbite-react'
+import { Button, Table } from 'flowbite-react'
 import { useContext, useEffect } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { HiOutlineCursorClick } from 'react-icons/hi'
@@ -148,9 +148,6 @@ function TrashStaff({ setProgress }) {
       <div className='mx-10 overflow-x-auto'>
         <Table theme={tableTheme}>
           <Table.Head>
-            <Table.HeadCell className='p-4'>
-              <Checkbox />
-            </Table.HeadCell>
             <Table.HeadCell>Tên nhân viên</Table.HeadCell>
             <Table.HeadCell>Số điện thoại</Table.HeadCell>
             <Table.HeadCell>Địa chỉ email</Table.HeadCell>
@@ -163,9 +160,6 @@ function TrashStaff({ setProgress }) {
             {staffs.length > 0 ? (
               staffs.map((staff) => (
                 <Table.Row key={staff._id} className='bg-white'>
-                  <Table.Cell className='p-4'>
-                    <Checkbox />
-                  </Table.Cell>
                   <Table.Cell className='whitespace-nowrap font-medium text-gray-900'>{staff.name}</Table.Cell>
                   <Table.Cell>{staff.phone}</Table.Cell>
                   <Table.Cell>{staff.email}</Table.Cell>

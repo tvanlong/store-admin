@@ -1,5 +1,5 @@
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { Checkbox, Table } from 'flowbite-react'
+import { Table } from 'flowbite-react'
 import { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { useNavigate } from 'react-router-dom'
@@ -172,9 +172,6 @@ function Subcategory({ setProgress }) {
       <div className='mx-10 overflow-x-auto'>
         <Table theme={tableTheme}>
           <Table.Head>
-            <Table.HeadCell className='p-4'>
-              <Checkbox />
-            </Table.HeadCell>
             <Table.HeadCell>Tên danh mục nhỏ</Table.HeadCell>
             <Table.HeadCell>Thuộc danh mục</Table.HeadCell>
             <Table.HeadCell>Số lượng sản phẩm</Table.HeadCell>
@@ -189,9 +186,6 @@ function Subcategory({ setProgress }) {
                 className='bg-white'
                 onMouseEnter={() => handlePrefetchOnMouseEnter(subcategory._id)}
               >
-                <Table.Cell className='p-4'>
-                  <Checkbox />
-                </Table.Cell>
                 <Table.Cell className='whitespace-nowrap font-medium text-gray-900'>{subcategory.name}</Table.Cell>
                 <Table.Cell className='whitespace-nowrap font-medium text-gray-900'>
                   {subcategory.category.name}

@@ -9,6 +9,9 @@ export const sortOptions = [
   { param: 'price', value: 'asc', label: 'Giá thấp - cao' },
   { param: 'price', value: 'desc', label: 'Giá cao - thấp' }
 ]
+
+export const statusOptions = ['Chờ xác nhận', 'Đang giao hàng', 'Đã giao hàng', 'Đã hủy']
+
 export const priceOptions = [
   { param: ['price_min', 'price_max'], label: 'Dưới 10 triệu', value: [undefined, 10000000] },
   {

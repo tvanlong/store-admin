@@ -1,16 +1,19 @@
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
-import { Badge, Checkbox, Table } from 'flowbite-react'
+import { Badge, Table } from 'flowbite-react'
 import { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import ordersApi from '~/apis/orders.api'
 import Breadcrumb from '~/components/Breadcrumb'
 import DetailOrderModal from '~/components/DetailOrderModal'
+import FilterField from '~/components/FilterField'
 import NoData from '~/components/NoData'
 import SearchField from '~/components/SearchField'
+import { sortOptions, statusOptions } from '~/constants/options'
 import useDebounce from '~/hooks/useDebounce'
 import useQueryParamsConfig from '~/hooks/useQueryParamsConfig'
 import { formatCurrency, formatDateTime } from '~/utils/format'
 import { tableTheme } from '~/utils/theme'
+import StatusFilter from './components/StatusField'
 
 function Order({ setProgress }) {
   const queryParamsConfig = useQueryParamsConfig()
@@ -28,7 +31,7 @@ function Order({ setProgress }) {
     }))
   }, [debouncedValue])
 
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, refetch } = useQuery({
     queryKey: ['orders', queryParams],
     queryFn: () => {
       setLoading(false)
@@ -56,6 +59,25 @@ function Order({ setProgress }) {
   }, [debouncedValue])
 
   if (isLoading) return <NoData />
+
+  const onSortChange = (param, value) => {
+    setQueryParams((prev) => {
+      return {
+        ...prev,
+        sort: param,
+        order: value
+      }
+    })
+    refetch()
+  }
+
+  const onStatusChange = (status) => {
+    setQueryParams((prev) => ({
+      ...prev,
+      status
+    }))
+    refetch()
+  }
 
   return (
     <div className='mt-24 h-full'>
@@ -113,13 +135,14 @@ function Order({ setProgress }) {
             </div>
           </div>
         </div>
+        <div className='flex mt-5 gap-5'>
+          <FilterField options={sortOptions} onSortChange={onSortChange} />
+          <StatusFilter options={statusOptions} onStatusChange={onStatusChange} />
+        </div>
       </div>
       <div className='mx-10 overflow-x-auto'>
         <Table theme={tableTheme}>
           <Table.Head>
-            <Table.HeadCell className='p-4'>
-              <Checkbox />
-            </Table.HeadCell>
             <Table.HeadCell>Mã đơn hàng</Table.HeadCell>
             <Table.HeadCell>Tên khách hàng</Table.HeadCell>
             <Table.HeadCell>Ngày đặt hàng</Table.HeadCell>
@@ -132,9 +155,6 @@ function Order({ setProgress }) {
           <Table.Body className='divide-y'>
             {orders.map((order) => (
               <Table.Row key={order._id} className='bg-white'>
-                <Table.Cell className='p-4'>
-                  <Checkbox />
-                </Table.Cell>
                 <Table.Cell className='whitespace-nowrap font-medium text-gray-900'>
                   {order.code.toUpperCase()}
                 </Table.Cell>

@@ -1,5 +1,5 @@
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
-import { Checkbox, Table } from 'flowbite-react'
+import { Table } from 'flowbite-react'
 import { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { toast } from 'sonner'
@@ -135,9 +135,6 @@ function Customer({ setProgress }) {
       <div className='mx-10 overflow-x-auto'>
         <Table theme={tableTheme}>
           <Table.Head>
-            <Table.HeadCell className='p-4'>
-              <Checkbox />
-            </Table.HeadCell>
             <Table.HeadCell>Tên khách hàng</Table.HeadCell>
             <Table.HeadCell>Số điện thoại</Table.HeadCell>
             <Table.HeadCell>Địa chỉ Email</Table.HeadCell>
@@ -149,9 +146,6 @@ function Customer({ setProgress }) {
           <Table.Body className='divide-y'>
             {customers.map((customer) => (
               <Table.Row key={customer._id} className='bg-white'>
-                <Table.Cell className='p-4'>
-                  <Checkbox />
-                </Table.Cell>
                 <Table.Cell className='whitespace-nowrap font-medium text-gray-900'>{customer.name}</Table.Cell>
                 <Table.Cell>{customer.phone}</Table.Cell>
                 <Table.Cell>{customer.email}</Table.Cell>

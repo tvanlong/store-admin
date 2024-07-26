@@ -1,5 +1,5 @@
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { Checkbox, Pagination, Table } from 'flowbite-react'
+import { Pagination, Table } from 'flowbite-react'
 import { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import { useNavigate } from 'react-router-dom'
@@ -206,9 +206,6 @@ function Version({ setProgress }) {
       <div className='mx-10 overflow-x-auto'>
         <Table theme={tableTheme}>
           <Table.Head>
-            <Table.HeadCell className='p-4'>
-              <Checkbox />
-            </Table.HeadCell>
             <Table.HeadCell>Sản phẩm</Table.HeadCell>
             <Table.HeadCell>Ảnh sản phẩm</Table.HeadCell>
             <Table.HeadCell>Giá sản phẩm</Table.HeadCell>
@@ -224,9 +221,6 @@ function Version({ setProgress }) {
                   className='bg-white'
                   onMouseEnter={() => handlePrefetchOnMouseEnter(version._id)}
                 >
-                  <Table.Cell className='p-4'>
-                    <Checkbox />
-                  </Table.Cell>
                   <Table.Cell className='max-w-sm font-medium text-gray-900'>
                     {version.product.name} ({version.name})
                   </Table.Cell>
@@ -248,7 +242,6 @@ function Version({ setProgress }) {
                     </div>
                   </Table.Cell>
                   <Table.Cell>{formatCurrency(version.current_price)} VNĐ</Table.Cell>
-
                   <Table.Cell>
                     <div className='flex items-center gap-4'>
                       <PopupModal version={version} />
