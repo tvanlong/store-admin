@@ -1,7 +1,8 @@
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
-import { Table } from 'flowbite-react'
+import { Button, Table } from 'flowbite-react'
 import { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
+import { HiOutlinePencilAlt } from 'react-icons/hi'
 import { toast } from 'sonner'
 import usersApi from '~/apis/users.api'
 import Breadcrumb from '~/components/Breadcrumb'
@@ -9,9 +10,7 @@ import FilterField from '~/components/FilterField'
 import ModalDelete from '~/components/ModalDelete'
 import NoData from '~/components/NoData'
 import SearchField from '~/components/SearchField'
-import UpdateButton from '~/components/UpdateButton'
 import { sortOptions } from '~/constants/options'
-import { path } from '~/constants/path'
 import useDebounce from '~/hooks/useDebounce'
 import useQueryParamsConfig from '~/hooks/useQueryParamsConfig'
 import { formatDateTime } from '~/utils/format'
@@ -68,6 +67,10 @@ function Customer({ setProgress }) {
       }
     })
     refetch()
+  }
+
+  const handleNotSupport = () => {
+    toast.warning('Chức năng chưa được hỗ trợ!')
   }
 
   if (isLoading) return <NoData />
@@ -151,7 +154,10 @@ function Customer({ setProgress }) {
                 <Table.Cell>{customer.email}</Table.Cell>
                 <Table.Cell>{formatDateTime(customer.createdAt)}</Table.Cell>
                 <Table.Cell className='flex gap-5'>
-                  <UpdateButton path={path.customer} />
+                  <Button size='xs' className='bg-blue-600 hover:bg-blue-600 text-white' onClick={handleNotSupport}>
+                    <HiOutlinePencilAlt className='mr-2 h-5 w-5' />
+                    Cập nhật
+                  </Button>
                   <ModalDelete
                     title='Bạn có chắc chắn muốn xóa danh mục sản phẩm này không?'
                     handleDelete={() => toast.warning('Chức năng chưa được hỗ trợ!')}
